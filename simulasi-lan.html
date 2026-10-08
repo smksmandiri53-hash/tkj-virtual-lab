@@ -53,7 +53,7 @@ const missions=[
 ];
 
 let saved={mission:0,passed:[],attempts:0,best:{},xp:0};
-let idx=0,state={},mode="user",iface="",evidenceSet=new Set(),fixSet=new Set(),commandHistory=[];
+let idx=0,state={},mode="user",iface="",device="R1",evidenceSet=new Set(),fixSet=new Set(),commandHistory=[];
 
 const $=id=>document.getElementById(id);
 function toast(t){$("toast").textContent=t;$("toast").classList.add("show");setTimeout(()=>$("toast").classList.remove("show"),2200)}
