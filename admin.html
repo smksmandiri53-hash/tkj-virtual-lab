@@ -668,6 +668,126 @@
 
 
     /* =========================
+       DATA SISWA
+    ========================= */
+
+    .page-view {
+      display: none;
+    }
+
+    .page-view.active {
+      display: block;
+    }
+
+    .data-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+
+    .data-header h2 {
+      font-size: 22px;
+      margin-bottom: 5px;
+    }
+
+    .data-header p {
+      font-size: 12px;
+      color: rgba(255,255,255,.45);
+    }
+
+    .student-count {
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(22,119,255,.12);
+      color: #64a9ff;
+      font-size: 13px;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+
+    .table-card {
+      background: #0b1829;
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 15px;
+      overflow: hidden;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    .student-table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    .student-table th,
+    .student-table td {
+      padding: 15px 18px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,.06);
+      font-size: 13px;
+    }
+
+    .student-table th {
+      color: rgba(255,255,255,.5);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      background: rgba(255,255,255,.025);
+    }
+
+    .student-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .student-name {
+      font-weight: bold;
+    }
+
+    .student-email {
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+    }
+
+    .class-badge {
+      display: inline-block;
+      padding: 5px 9px;
+      border-radius: 7px;
+      background: rgba(22,119,255,.12);
+      color: #64a9ff;
+      font-size: 11px;
+      font-weight: bold;
+    }
+
+    .empty-state {
+      padding: 45px 20px;
+      text-align: center;
+      color: rgba(255,255,255,.45);
+    }
+
+    .empty-state-icon {
+      font-size: 38px;
+      margin-bottom: 10px;
+    }
+
+    .loading-state {
+      padding: 35px 20px;
+      text-align: center;
+      color: rgba(255,255,255,.5);
+    }
+
+    @media (max-width: 600px) {
+      .data-header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+
+    /* =========================
        MOBILE
     ========================= */
 
@@ -855,6 +975,7 @@
         <button
           class="active"
           type="button"
+          data-view="dashboardView"
         >
 
           <span class="menu-icon">
@@ -869,7 +990,7 @@
 
       <li>
 
-        <button type="button">
+        <button type="button" data-view="dataSiswaView">
 
           <span class="menu-icon">
             👨‍🎓
@@ -1108,6 +1229,7 @@
 
     <section class="content">
 
+      <div class="page-view active" id="dashboardView">
 
       <!-- WELCOME -->
 
@@ -1259,7 +1381,7 @@
       <div class="quick-grid">
 
 
-        <div class="quick-card">
+        <div class="quick-card" id="quickDataSiswa">
 
           <div class="quick-icon">
             👨‍🎓
@@ -1331,6 +1453,51 @@
       </div>
 
 
+      </div>
+
+      <!-- DATA SISWA -->
+
+      <div
+        class="page-view"
+        id="dataSiswaView"
+      >
+
+        <div class="data-header">
+
+          <div>
+            <h2>Data Siswa</h2>
+            <p>Data siswa yang mendaftar mandiri akan tampil otomatis di sini.</p>
+          </div>
+
+          <div class="student-count" id="studentCountLabel">0 Siswa</div>
+
+        </div>
+
+        <div class="table-card">
+          <div class="table-wrap">
+            <table class="student-table">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Nama Siswa</th>
+                  <th>Email</th>
+                  <th>Kelas</th>
+                  <th>Status</th>
+                  <th>Terdaftar</th>
+                </tr>
+              </thead>
+              <tbody id="studentTableBody">
+                <tr>
+                  <td colspan="6" class="loading-state">Memuat data siswa...</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+
+
     </section>
 
   </main>
@@ -1359,7 +1526,11 @@
     import {
       getFirestore,
       doc,
-      getDoc
+      getDoc,
+      collection,
+      query,
+      where,
+      onSnapshot
     } from
     "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
@@ -1517,6 +1688,139 @@
 
       }
     );
+
+
+    /*
+      DATA SISWA REAL-TIME
+    */
+
+    const studentQuery = query(
+      collection(db, "users"),
+      where("role", "==", "siswa")
+    );
+
+    onSnapshot(
+      studentQuery,
+      (snapshot) => {
+
+        const students = [];
+
+        snapshot.forEach((studentDoc) => {
+          students.push({
+            id: studentDoc.id,
+            ...studentDoc.data()
+          });
+        });
+
+        students.sort((a, b) => {
+          const namaA = (a.nama || "").toLowerCase();
+          const namaB = (b.nama || "").toLowerCase();
+          return namaA.localeCompare(namaB, "id");
+        });
+
+        document.getElementById("totalSiswa").textContent = students.length;
+        document.getElementById("studentCountLabel").textContent = `${students.length} Siswa`;
+
+        const body = document.getElementById("studentTableBody");
+
+        if (!students.length) {
+          body.innerHTML = `
+            <tr>
+              <td colspan="6">
+                <div class="empty-state">
+                  <div class="empty-state-icon">👨‍🎓</div>
+                  <div>Belum ada siswa yang terdaftar.</div>
+                </div>
+              </td>
+            </tr>
+          `;
+          return;
+        }
+
+        body.innerHTML = students.map((student, index) => {
+          let tanggal = "-";
+
+          if (student.createdAt?.toDate) {
+            tanggal = student.createdAt.toDate().toLocaleDateString("id-ID", {
+              day: "2-digit",
+              month: "2-digit",
+              year: "numeric"
+            });
+          }
+
+          return `
+            <tr>
+              <td>${index + 1}</td>
+              <td>
+                <div class="student-name">${escapeHtml(student.nama || "Tanpa Nama")}</div>
+              </td>
+              <td>
+                <div class="student-email">${escapeHtml(student.email || "-")}</div>
+              </td>
+              <td>
+                <span class="class-badge">${escapeHtml(student.kelas || "-")}</span>
+              </td>
+              <td>Aktif</td>
+              <td>${tanggal}</td>
+            </tr>
+          `;
+        }).join("");
+      },
+      (error) => {
+        console.error("Gagal memuat data siswa:", error);
+        document.getElementById("studentTableBody").innerHTML = `
+          <tr>
+            <td colspan="6">
+              <div class="empty-state">
+                <div class="empty-state-icon">⚠️</div>
+                <div>Gagal memuat data siswa.</div>
+              </div>
+            </td>
+          </tr>
+        `;
+      }
+    );
+
+
+    function escapeHtml(value) {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+
+    /*
+      NAVIGASI HALAMAN
+    */
+
+    document.querySelectorAll(".menu button[data-view]").forEach((button) => {
+      button.addEventListener("click", () => {
+
+        document.querySelectorAll(".page-view").forEach((view) => {
+          view.classList.remove("active");
+        });
+
+        const target = document.getElementById(button.dataset.view);
+        if (target) target.classList.add("active");
+
+        document.querySelectorAll(".menu button").forEach((item) => {
+          item.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        document.getElementById("sidebar").classList.remove("open");
+      });
+    });
+
+
+    document.getElementById("quickDataSiswa").addEventListener("click", () => {
+      const dataButton = document.querySelector('.menu button[data-view="dataSiswaView"]');
+      if (dataButton) dataButton.click();
+    });
 
 
     /*
