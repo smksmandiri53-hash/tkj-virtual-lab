@@ -1510,6 +1510,17 @@
           </div>
           <div id="labConfigStatus" style="margin-top:13px;font-size:12px;color:#64a9ff"></div>
         </div>
+        <div class="table-card" style="padding:22px;margin-top:18px">
+          <h3 style="margin-bottom:6px">🧰 Pengaturan Virtual Workshop TKJ</h3>
+          <p style="font-size:12px;color:#8fa1b5;margin-bottom:18px">Pengaturan ini menjadi pusat kendali modul dunia kerja siswa.</p>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px">
+            <label style="font-size:12px;color:#9fb0c5">Nilai Kelulusan (%)<input id="vwPassing" type="number" min="1" max="100" style="display:block;width:100%;margin-top:7px;padding:12px;border-radius:9px;border:1px solid #334155;background:#081525;color:#fff"></label>
+            <label style="font-size:12px;color:#9fb0c5">XP per Modul<input id="vwXp" type="number" min="0" max="1000" style="display:block;width:100%;margin-top:7px;padding:12px;border-radius:9px;border:1px solid #334155;background:#081525;color:#fff"></label>
+          </div>
+          <div id="vwModules" style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:16px"></div>
+          <div style="margin-top:18px"><button id="saveWorkshopConfig" style="border:0;border-radius:9px;padding:11px 15px;background:#1677ff;color:#fff;font-weight:bold;cursor:pointer">💾 Simpan Pengaturan Workshop</button></div>
+          <div id="vwStatus" style="margin-top:13px;font-size:12px;color:#64a9ff"></div>
+        </div>
       </div>
 
 
@@ -1805,7 +1816,17 @@
     fillLabConfig(labDefaults);
     getDoc(doc(db,"settings","virtualLab")).then(s=>{if(s.exists())fillLabConfig({...labDefaults,...s.data()});}).catch(()=>{});
     document.getElementById("defaultLabConfig").addEventListener("click",()=>fillLabConfig(labDefaults));
-    document.getElementById("saveLabConfig").addEventListener("click",async()=>{
+    const workshopDefaults={passingScore:80,xpPerModule:50,modules:{
+pc:{enabled:true,title:"PC Build Lab"},lan:{enabled:true,title:"Cable & LAN Bench"},wifi:{enabled:true,title:"Wi-Fi Site Survey"},rack:{enabled:true,title:"Network Rack"},mikrotik:{enabled:true,title:"MikroTik Office"},cisco:{enabled:true,title:"Cisco CLI Bench"},fiber:{enabled:true,title:"Fiber Workbench"},cctv:{enabled:true,title:"IP CCTV & PoE"}}};
+const vwLabels={pc:"🖥️ PC Build Lab",lan:"🔌 Cable & LAN Bench",wifi:"📶 Wi-Fi Site Survey",rack:"🗄️ Network Rack",mikrotik:"🟣 MikroTik Office",cisco:"🌐 Cisco CLI Bench",fiber:"🧵 Fiber Workbench",cctv:"📹 IP CCTV & PoE"};
+function renderWorkshopConfig(d){document.getElementById("vwPassing").value=d.passingScore??80;document.getElementById("vwXp").value=d.xpPerModule??50;document.getElementById("vwModules").innerHTML=Object.keys(workshopDefaults.modules).map(k=>'<label style="padding:12px;border:1px solid #24364d;border-radius:10px;background:#081525;color:#dbeafe;font-size:12px"><input type="checkbox" data-vw="'+k+'" '+(d.modules?.[k]?.enabled!==false?"checked":"")+' style="margin-right:8px">'+vwLabels[k]+'</label>').join("")}
+getDoc(doc(db,"settings","virtualWorkshop")).then(s=>renderWorkshopConfig(s.exists()?{...workshopDefaults,...s.data(),modules:{...workshopDefaults.modules,...(s.data().modules||{})}}:workshopDefaults)).catch(()=>renderWorkshopConfig(workshopDefaults));
+document.getElementById("saveWorkshopConfig").addEventListener("click",async()=>{
+ const modules={};Object.keys(workshopDefaults.modules).forEach(k=>modules[k]={...workshopDefaults.modules[k],enabled:document.querySelector('[data-vw="'+k+'"]').checked});
+ const data={passingScore:Math.max(1,Math.min(100,Number(document.getElementById("vwPassing").value)||80)),xpPerModule:Math.max(0,Number(document.getElementById("vwXp").value)||50),modules,updatedAt:serverTimestamp()};
+ try{await setDoc(doc(db,"settings","virtualWorkshop"),data,{merge:true});document.getElementById("vwStatus").textContent="✓ Pengaturan Virtual Workshop tersimpan ke Firebase."}catch(e){console.error(e);document.getElementById("vwStatus").textContent="Gagal menyimpan. Periksa Firestore Rules."}
+});
+document.getElementById("saveLabConfig").addEventListener("click",async()=>{
       const data={title:labFields.title.value.trim()||labDefaults.title,level:labFields.level.value,routerIp:labFields.routerIp.value.trim()||labDefaults.routerIp,pcIp:labFields.pcIp.value.trim()||labDefaults.pcIp,fault:labFields.fault.value.trim()||labDefaults.fault,updatedAt:serverTimestamp()};
       try{await setDoc(doc(db,"settings","virtualLab"),data,{merge:true});document.getElementById("labConfigStatus").textContent="✓ Konfigurasi Virtual Lab tersimpan dan dapat dibaca oleh simulator siswa.";}catch(e){console.error(e);document.getElementById("labConfigStatus").textContent="Gagal menyimpan. Periksa izin Firestore.";}
     });
