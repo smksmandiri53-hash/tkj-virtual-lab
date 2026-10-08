@@ -17,7 +17,7 @@
 <button data-view="materi"><span class="nav-icon">📚</span>Materi TKJ</button>
 <button data-view="alat"><span class="nav-icon">🧰</span>Kenali Alat</button>
 <button data-view="praktik"><span class="nav-icon">🧪</span>Praktikum</button>
-<button data-view="trouble"><span class="nav-icon">🛠️</span>Troubleshooting</button>
+<button data-view="trouble"><span class="nav-icon">🛠️</span>Troubleshooting</button><button data-view="kompetensi"><span class="nav-icon">🎯</span>Uji Kompetensi</button><button data-view="diskusi"><span class="nav-icon">💬</span>Diskusi Siswa</button>
 <button data-view="kuis"><span class="nav-icon">📝</span>Uji Pemahaman</button>
 <div class="nav-title">Perkembangan</div>
 <button data-view="nilai"><span class="nav-icon">⭐</span>Nilai & XP</button>
@@ -67,12 +67,36 @@
 <div class="card"><div class="scenario"><b>Kasus:</b> PC-01 tidak dapat melakukan ping ke router. Kamu diberi tiga petunjuk: interface router bisa saja mati, IP PC bisa salah, atau kabel belum terhubung. Jangan menebak.</div><div id="troubleTasks"></div><div id="troubleResult" style="margin-top:12px;font-weight:700"></div></div>
 </section>
 
+<section id="view-kompetensi" class="view">
+<div class="section-title"><h3>🎯 Uji Kompetensi TKJ</h3><span>Harus Lulus untuk menyelesaikan</span></div>
+<div class="scenario"><b>Aturan Uji Kompetensi:</b> Jangan menebak. Baca gejala, kumpulkan bukti, tentukan penyebab, pilih perbaikan, lalu jelaskan alasannya. Nilai minimal <b>80/100</b>. Jika belum lulus, kamu <b>wajib mengulang</b> sampai benar.</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><div><h4 style="margin:0">Misi <span id="compMissionNo">1</span> dari 3</h4><p id="compMissionTitle" style="color:#64748b;font-size:13px;margin:6px 0 0"></p></div><div style="font-weight:800">Percobaan: <span id="compAttempts">0</span></div></div>
+<div id="compCase" style="margin-top:15px"></div>
+<div id="compQuestions" style="margin-top:15px"></div>
+<div class="toolbar"><button id="compSubmit" class="btn">🔍 Periksa Jawaban</button><button id="compRetry" class="btn secondary" style="display:none">🔁 Ulangi Misi</button></div>
+<div id="compResult" class="notice"></div>
+</div>
+<div class="card" style="margin-top:16px"><h4>🏁 Status Kelulusan</h4><p id="compStatus" style="color:#64748b;font-size:13px;line-height:1.7;margin-bottom:0">Belum lulus. Selesaikan seluruh misi dengan nilai minimal 80.</p></div>
+</section>
 <section id="view-kuis" class="view">
 <div class="section-title"><h3>📝 Uji Pemahaman</h3><span>5 soal</span></div><div id="quizBox" class="card"></div>
 </section>
 
+<section id="view-diskusi" class="view">
+<div class="section-title"><h3>💬 Ruang Diskusi Siswa</h3><span>Komunikasi antar akun siswa</span></div>
+<div class="card">
+<div class="scenario"><b>Gunakan untuk berdiskusi.</b> Tanyakan konsep, bandingkan hasil troubleshooting, dan jelaskan alasanmu kepada teman. Jangan hanya mengirim jawaban akhir—jelaskan proses berpikirmu.</div>
+<div id="chatMessages" style="height:360px;overflow:auto;background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:12px"></div>
+<div style="display:flex;gap:9px;margin-top:10px">
+<input id="chatInput" maxlength="500" placeholder="Tulis pesan untuk siswa lain..." style="flex:1;border:1px solid #dbe2ea;border-radius:10px;padding:12px;outline:none">
+<button id="chatSend" class="btn">Kirim</button>
+</div>
+<div style="font-size:11px;color:#64748b;margin-top:8px">Maksimal 500 karakter. Chat hanya dapat digunakan setelah login sebagai siswa.</div>
+</div>
+</section>
 <section id="view-nilai" class="view">
-<div class="section-title"><h3>⭐ Nilai & XP</h3><span>Tersimpan di Firebase</span></div><div class="stats"><div class="stat"><div class="stat-label">XP</div><div id="scoreXp" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Level</div><div id="scoreLevel" class="stat-value">1</div></div><div class="stat"><div class="stat-label">Nilai Kuis</div><div id="scoreQuiz" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Praktikum</div><div id="scoreLab" class="stat-value">0</div></div></div><div class="card"><h4>Bagaimana XP diperoleh?</h4><p style="color:#64748b;font-size:13px;line-height:1.7">Kenali alat +10 XP • Selesaikan langkah praktikum +10 XP • Selesaikan troubleshooting +30 XP • Kuis maksimal +50 XP. Level naik setiap 100 XP.</p></div></section>
+<div class="section-title"><h3>⭐ Nilai & XP</h3><span>Tersimpan di Firebase</span></div><div class="stats"><div class="stat"><div class="stat-label">XP</div><div id="scoreXp" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Level</div><div id="scoreLevel" class="stat-value">1</div></div><div class="stat"><div class="stat-label">Nilai Kuis</div><div id="scoreQuiz" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Praktikum</div><div id="scoreLab" class="stat-value">0</div></div></div><div class="card"><h4>Bagaimana XP diperoleh?</h4><p style="color:#64748b;font-size:13px;line-height:1.7">Kenali alat +10 XP • Selesaikan langkah praktikum +10 XP • Selesaikan troubleshooting +30 XP • Kuis maksimal +50 XP. Uji Kompetensi wajib lulus minimal 80/100 dan akan diulang jika gagal. Level naik setiap 100 XP.</p></div></section>
 
 <section id="view-laporan" class="view">
 <div class="section-title"><h3>📄 Laporan Praktikum</h3><span>Riwayat aktivitasmu</span></div><div class="card"><div id="reportContent" style="color:#64748b;font-size:13px;line-height:1.8">Belum ada aktivitas.</div></div></section>
@@ -80,16 +104,112 @@
 <script type="module">
 import{initializeApp,getApps,getApp}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import{getAuth,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import{getFirestore,doc,getDoc,setDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+import{getFirestore,doc,getDoc,setDoc,serverTimestamp,collection,addDoc,query,orderBy,onSnapshot,limit}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyBD3EduiDBbGI9M381i9GMkfD74RfpCM78",authDomain:"tkj-virtual-lab-web-43aca.firebaseapp.com",projectId:"tkj-virtual-lab-web-43aca",storageBucket:"tkj-virtual-lab-web-43aca.firebasestorage.app",messagingSenderId:"860991490192",appId:"1:860991490192:web:019928cbca09128af4b015"};
 const app=getApps().length?getApp():initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
 let uid=null,profile={},labConfig={title:"Praktikum LAN Dasar",level:"Pemula",routerIp:"192.168.10.1",pcIp:"192.168.10.10",fault:"Interface G0/0 dibuat shutdown. Temukan penyebabnya."};
-let state={xp:0,alat:[],steps:[],trouble:false,quiz:0,quizDone:false,labDone:false};
+let state={xp:0,alat:[],steps:[],trouble:false,quiz:0,quizDone:false,labDone:false,competencyScore:0,competencyPassed:false,competencyAttempts:0};
 const $=id=>document.getElementById(id);
 function notify(msg,type="ok"){const n=$("notice");n.textContent=msg;n.className="notice show "+type;setTimeout(()=>n.className="notice",3500)}
-function render(){const xp=Number(state.xp||0),level=Math.max(1,Math.floor(xp/100)+1),prog=Math.min(100,Math.round((state.steps.length/5)*60+(state.trouble?20:0)+(state.quizDone?20:0)));["heroXp","statXp","scoreXp"].forEach(id=>$(id).textContent=xp);["heroLevel","statLevel","scoreLevel"].forEach(id=>$(id).textContent=level);$("statAlat").textContent=state.alat.length;$("statPraktikum").textContent=state.labDone?1:0;$("scoreQuiz").textContent=state.quiz;$("scoreLab").textContent=state.labDone?100:0;$("progressBar").style.width=prog+"%";$("progressPercent").textContent=prog+"%";$("progressText").textContent=prog+"% selesai";$("reportContent").innerHTML="XP: <b>"+xp+"</b><br>Alat dipelajari: <b>"+state.alat.length+"/8</b><br>Langkah praktikum: <b>"+state.steps.length+"/5</b><br>Troubleshooting: <b>"+(state.trouble?"Selesai":"Belum selesai")+"</b><br>Kuis: <b>"+(state.quizDone?state.quiz+"/50":"Belum dikerjakan")+"</b>"}
-async function save(){if(!uid)return;try{await setDoc(doc(db,"users",uid),{xp:state.xp,level:Math.max(1,Math.floor(state.xp/100)+1),praktikumSelesai:state.labDone?1:0,progress:Math.min(100,Math.round((state.steps.length/5)*60+(state.trouble?20:0)+(state.quizDone?20:0))),labLAN:{score:state.labDone?100:0,status:state.labDone?"selesai":"berjalan",updatedAt:serverTimestamp()},tkjVirtualLab:{alat:state.alat,steps:state.steps,troubleshooting:state.trouble,quizScore:state.quiz,quizDone:state.quizDone,updatedAt:serverTimestamp()}},{merge:true})}catch(e){console.error(e);notify("Progress gagal disimpan ke Firebase. Periksa Firestore Rules.","error")}}
+function render(){const xp=Number(state.xp||0),level=Math.max(1,Math.floor(xp/100)+1),prog=Math.min(100,Math.round((state.steps.length/5)*50+(state.trouble?15:0)+(state.competencyPassed?25:0)+(state.quizDone?10:0)));["heroXp","statXp","scoreXp"].forEach(id=>$(id).textContent=xp);["heroLevel","statLevel","scoreLevel"].forEach(id=>$(id).textContent=level);$("statAlat").textContent=state.alat.length;$("statPraktikum").textContent=state.labDone?1:0;$("scoreQuiz").textContent=state.quiz;$("scoreLab").textContent=state.labDone?100:0;$("progressBar").style.width=prog+"%";$("progressPercent").textContent=prog+"%";$("progressText").textContent=prog+"% selesai";$("reportContent").innerHTML="XP: <b>"+xp+"</b><br>Alat dipelajari: <b>"+state.alat.length+"/8</b><br>Langkah praktikum: <b>"+state.steps.length+"/5</b><br>Troubleshooting: <b>"+(state.trouble?"Selesai":"Belum selesai")+"</b><br>Uji Kompetensi: <b>"+(state.competencyPassed?"LULUS":"Belum lulus")+"</b> ("+state.competencyScore+"/100)<br>Kuis: <b>"+(state.quizDone?state.quiz+"/50":"Belum dikerjakan")+"</b>"}
+async function save(){if(!uid)return;try{await setDoc(doc(db,"users",uid),{xp:state.xp,level:Math.max(1,Math.floor(state.xp/100)+1),praktikumSelesai:state.labDone?1:0,progress:Math.min(100,Math.round((state.steps.length/5)*60+(state.trouble?20:0)+(state.quizDone?20:0))),labLAN:{score:state.labDone?100:0,status:state.labDone?"selesai":"berjalan",updatedAt:serverTimestamp()},tkjVirtualLab:{alat:state.alat,steps:state.steps,troubleshooting:state.trouble,quizScore:state.quiz,quizDone:state.quizDone,competencyScore:state.competencyScore,competencyPassed:state.competencyPassed,competencyAttempts:state.competencyAttempts,updatedAt:serverTimestamp()}},{merge:true})}catch(e){console.error(e);notify("Progress gagal disimpan ke Firebase. Periksa Firestore Rules.","error")}}
 function addXp(n){state.xp=Math.max(0,state.xp+n);render();save()}
+
+// ==============================
+// UJI KOMPETENSI BERBASIS KASUS
+// ==============================
+const competencyMissions=[
+ {title:"Misi 1 — PC Tidak Bisa Ping Router",case:"PC-01 memakai 192.168.10.10/24. Router G0/0 memakai 192.168.20.1/24. Kabel dan lampu link normal. Ping gagal.",q1:["Pilih penyebab utama.","IP PC dan router berada pada subnet berbeda.","Kabel UTP rusak.","Switch pasti rusak.","Router kehabisan memori."],a1:0,q2:["Perbaikan paling tepat?","Ganti nama PC.","Samakan alamat IP ke jaringan yang sama.","Matikan switch.","Hapus semua konfigurasi router."],a2:1,q3:["Mengapa perbaikan itu benar?","Karena ping selalu berhasil jika kabel terpasang.","Karena perangkat harus memiliki alamat yang dapat berkomunikasi pada jaringan yang sama untuk kasus ini.","Karena switch menentukan IP.","Karena RJ45 menentukan subnet."],a3:1},
+ {title:"Misi 2 — Interface Router Down",case:"PC-01 sudah 192.168.10.10/24 dan router G0/0 sudah 192.168.10.1/24. Hasil show ip interface brief menunjukkan G0/0 administratively down. Konfigurasi IP terlihat benar.",q1:["Bukti terkuat menunjukkan masalah apa?","Subnet salah.","Interface sedang shutdown secara administratif.","NIC PC pasti rusak.","DNS bermasalah."],a1:1,q2:["Perintah perbaikan yang tepat pada interface G0/0?","no shutdown","delete interface","restart pc","ping 8.8.8.8"],a2:0,q3:["Sebelum menyimpulkan berhasil, apa yang harus dilakukan?","Langsung mengganti router.","Verifikasi status interface lalu uji ping.","Hapus konfigurasi.","Mengganti kabel tanpa bukti."],a3:1},
+ {title:"Misi 3 — Diagnosa Gateway",case:"PC-01: 192.168.10.10/24. Router G0/0: 192.168.10.1/24. PC dapat berkomunikasi dengan perangkat satu LAN tetapi gagal mencapai jaringan lain. Tidak ada bukti kabel putus.",q1:["Komponen konfigurasi yang paling perlu diperiksa pada PC?","Default gateway.","Nama komputer.","Ukuran monitor.","Jenis keyboard."],a1:0,q2:["Gateway yang sesuai untuk skenario ini adalah...","192.168.10.1","192.168.20.1","255.255.255.0","127.0.0.1"],a2:0,q3:["Apa prinsip troubleshooting yang benar?","Mengubah semua konfigurasi sekaligus.","Mengumpulkan bukti dan mengubah satu penyebab yang paling mungkin, lalu menguji ulang.","Menebak perangkat rusak.","Mengulang konfigurasi tanpa pemeriksaan."],a3:1}
+];
+let compMissionIndex=0;
+function renderCompetency(){
+ const m=competencyMissions[compMissionIndex];
+ $("compMissionNo").textContent=compMissionIndex+1;
+ $("compMissionTitle").textContent=m.title;
+ $("compAttempts").textContent=state.competencyAttempts||0;
+ $("compCase").innerHTML="<div class='scenario'>"+m.case+"</div>";
+ const qs=[["1",m.q1,m.a1],["2",m.q2,m.a2],["3",m.q3,m.a3]];
+ $("compQuestions").innerHTML=qs.map(([n,q,a])=>"<div class='lesson'><h4>"+n+". "+q[0]+"</h4>"+q.slice(1).map((x,i)=>"<label style='display:block;margin:8px 0;padding:10px;border:1px solid #e5e7eb;border-radius:9px;cursor:pointer'><input type='radio' name='comp"+n+"' value='"+i+"'> "+x+"</label>").join("")+"</div>").join("");
+ $("compResult").className="notice";
+ $("compResult").textContent="";
+ $("compRetry").style.display="none";
+}
+function finishCompetency(score){
+ state.competencyScore=Math.max(state.competencyScore||0,score);
+ if(score>=80){
+   if(compMissionIndex<competencyMissions.length-1){
+     state.xp+=20;
+     compMissionIndex++;
+     notify("Misi benar. Lanjut ke misi berikutnya. +20 XP");
+     save(); renderCompetency(); render();
+   }else{
+     if(!state.competencyPassed) state.xp+=50;
+     state.competencyPassed=true;
+     notify("🎉 Selamat! Kamu LULUS Uji Kompetensi. +50 XP");
+     save(); render(); updateCompetencyStatus();
+   }
+ }else{
+   state.competencyPassed=false;
+   $("compResult").className="notice show error";
+   $("compResult").textContent="Belum lulus ("+score+"/100). Analisis kembali bukti kasus dan ulangi. Kamu wajib mencapai minimal 80.";
+   $("compRetry").style.display="inline-block";
+   save(); render(); updateCompetencyStatus();
+ }
+}
+function updateCompetencyStatus(){
+ $("compStatus").innerHTML=state.competencyPassed?"<b style='color:#166534'>LULUS UJI KOMPETENSI</b> — Nilai terbaik "+state.competencyScore+"/100. Seluruh misi berhasil diselesaikan.":"<b>Belum lulus.</b> Nilai terbaik "+state.competencyScore+"/100. Selesaikan 3 misi dengan nilai minimal 80.";
+}
+$("compSubmit").addEventListener("click",()=>{
+ const m=competencyMissions[compMissionIndex];
+ const answers=[document.querySelector('input[name="comp1"]:checked'),document.querySelector('input[name="comp2"]:checked'),document.querySelector('input[name="comp3"]:checked')];
+ if(answers.some(x=>!x)){notify("Jawab semua pertanyaan sebelum diperiksa.","error");return;}
+ state.competencyAttempts=(state.competencyAttempts||0)+1;
+ const correct=[m.a1,m.a2,m.a3];
+ const ok=answers.filter((x,i)=>Number(x.value)===correct[i]).length;
+ const score=ok*30+(ok===3?10:0);
+ finishCompetency(score);
+});
+$("compRetry").addEventListener("click",()=>{renderCompetency();});
+renderCompetency(); updateCompetencyStatus();
+
+// ==============================
+// RUANG DISKUSI ANTAR SISWA
+// ==============================
+let stopChat=null;
+function startStudentChat(){
+ if(stopChat) stopChat();
+ const q=query(collection(db,"chatMessages"),orderBy("createdAt","asc"),limit(100));
+ stopChat=onSnapshot(q,(snap)=>{
+   const box=$("chatMessages");
+   box.innerHTML="";
+   snap.forEach(d=>{
+     const m=d.data();
+     const mine=m.senderId===uid;
+     const row=document.createElement("div");
+     row.style.cssText="margin:7px 0;display:flex;justify-content:"+(mine?"flex-end":"flex-start");
+     const bubble=document.createElement("div");
+     bubble.style.cssText="max-width:80%;padding:9px 11px;border-radius:12px;background:"+(mine?"#dbeafe":"#fff")+";border:1px solid #e5e7eb";
+     bubble.innerHTML="<b>"+escapeHtml(m.senderName||"Siswa")+"</b><div style='margin-top:4px;line-height:1.45'>"+escapeHtml(m.text||"")+"</div><small style='color:#64748b'>"+(m.kelas?escapeHtml(m.kelas):"")+"</small>";
+     row.appendChild(bubble);box.appendChild(row);
+   });
+   box.scrollTop=box.scrollHeight;
+ },(e)=>{console.error(e);$("chatMessages").innerHTML="<div style='padding:20px;color:#991b1b'>Chat belum dapat dimuat. Periksa Firestore Rules untuk <b>chatMessages</b>.</div>";});
+}
+$("chatSend").addEventListener("click",sendChat);
+$("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat();});
+async function sendChat(){
+ const input=$("chatInput"),text=input.value.trim();
+ if(!text||!uid)return;
+ if(text.length>500)return;
+ try{
+   await addDoc(collection(db,"chatMessages"),{senderId:uid,senderName:profile.nama||"Siswa",kelas:profile.kelas||"",text,createdAt:serverTimestamp()});
+   input.value="";
+ }catch(e){console.error(e);notify("Pesan gagal dikirim. Periksa Firestore Rules chat.","error");}
+}
+startStudentChat();
+
 const tools=[["💻","PC / Komputer","Perangkat akhir untuk menjalankan aplikasi dan berkomunikasi melalui jaringan.","Port LAN/NIC","Digunakan sebagai endpoint jaringan."],["🔀","Switch","Menghubungkan banyak perangkat dalam satu LAN.","Fa0/1, Gi0/1","Meneruskan frame berdasarkan MAC address."],["🌐","Router","Menghubungkan jaringan yang berbeda.","G0/0, G0/1","Interface router dapat diberi IP dan diaktifkan."],["🔌","Kabel UTP","Media transmisi Ethernet berbahan pasangan kabel tembaga.","RJ45","Menghubungkan PC, switch, dan perangkat jaringan."],["🔗","RJ45","Konektor yang dipasang pada ujung kabel UTP.","8 pin","Harus tercrimping dan tersusun benar."],["🪪","NIC / LAN Card","Antarmuka jaringan pada komputer.","MAC address, port LAN","Menyediakan koneksi Ethernet ke jaringan."],["⌨️","Console Cable","Kabel untuk konfigurasi awal perangkat Cisco.","Console","Digunakan saat konfigurasi melalui terminal."],["📶","Access Point","Menghubungkan perangkat wireless ke jaringan kabel.","LAN/WLAN","Menyediakan akses Wi-Fi ke jaringan."]];
 function buildTools(){const g=$("toolGrid");g.innerHTML="";tools.forEach((t,i)=>{const d=document.createElement("div");d.className="tool";d.innerHTML="<div style='font-size:28px'>"+t[0]+"</div><strong>"+t[1]+"</strong><small>"+t[2]+"</small>";d.onclick=()=>{$("toolDetail").innerHTML="<h3>"+t[0]+" "+t[1]+"</h3><p style='color:#64748b;line-height:1.7'>"+t[2]+"</p><p><b>Bagian penting:</b> "+t[3]+"<br><b>Penggunaan:</b> "+t[4]+"</p>";if(!state.alat.includes(i)){state.alat.push(i);addXp(10);notify("Alat dipelajari: "+t[1]+" (+10 XP)")}else render()};g.appendChild(d)})}
 const stepData=[["1","Rancang topologi","Pastikan urutannya PC → Switch → Router."],["2","Atur IP PC","Gunakan "+labConfig.pcIp+"/24."],["3","Konfigurasi router","Atur G0/0 menjadi "+labConfig.routerIp+" dengan subnet 255.255.255.0."],["4","Aktifkan interface","Gunakan no shutdown lalu cek show ip interface brief."],["5","Uji koneksi","Lakukan ping dari PC ke "+labConfig.routerIp+"."]];
