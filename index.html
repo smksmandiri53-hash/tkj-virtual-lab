@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TKJ Virtual Lab</title>
+
+  <meta
+    name="description"
+    content="TKJ Virtual Lab - Laboratorium Virtual Teknik Komputer dan Jaringan"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #ffffff;
+
+      background:
+        linear-gradient(
+          rgba(3, 12, 25, 0.78),
+          rgba(3, 12, 25, 0.94)
+        ),
+        url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=2000&q=85")
+        center center / cover fixed;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(
+        circle at center,
+        rgba(0, 119, 255, 0.12),
+        transparent 60%
+      );
+      pointer-events: none;
+    }
+
+    .container {
+      width: min(1000px, 92%);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      padding: 40px 20px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+
+      padding: 9px 18px;
+
+      border: 1px solid rgba(255,255,255,.18);
+      border-radius: 50px;
+
+      background: rgba(255,255,255,.08);
+      backdrop-filter: blur(10px);
+
+      font-size: 13px;
+      letter-spacing: 1px;
+      margin-bottom: 25px;
+    }
+
+    .logo {
+      font-size: 70px;
+      margin-bottom: 10px;
+
+      filter:
+        drop-shadow(0 0 20px rgba(0, 145, 255, .55));
+    }
+
+    h1 {
+      font-size: clamp(42px, 8vw, 82px);
+      line-height: 1;
+      margin-bottom: 20px;
+
+      background: linear-gradient(
+        90deg,
+        #ffffff,
+        #72b9ff
+      );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .subtitle {
+      font-size: clamp(18px, 3vw, 25px);
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+
+    .description {
+      max-width: 720px;
+      margin: 0 auto;
+
+      color: rgba(255,255,255,.76);
+
+      font-size: 16px;
+      line-height: 1.8;
+    }
+
+    .buttons {
+      margin-top: 35px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-width: 210px;
+
+      padding: 15px 25px;
+
+      border-radius: 12px;
+
+      text-decoration: none;
+
+      color: white;
+
+      font-weight: bold;
+      font-size: 15px;
+
+      transition:
+        transform .2s ease,
+        box-shadow .2s ease,
+        background .2s ease;
+    }
+
+    .btn-primary {
+      background: #1677ff;
+
+      box-shadow:
+        0 10px 30px rgba(22,119,255,.30);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+
+      box-shadow:
+        0 15px 35px rgba(22,119,255,.45);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,.08);
+
+      border: 1px solid rgba(255,255,255,.18);
+
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      transform: translateY(-3px);
+      background: rgba(255,255,255,.14);
+    }
+
+    .features {
+      margin-top: 55px;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(4, 1fr);
+
+      gap: 15px;
+    }
+
+    .feature {
+      padding: 20px 15px;
+
+      border-radius: 16px;
+
+      background: rgba(255,255,255,.06);
+
+      border:
+        1px solid rgba(255,255,255,.10);
+
+      backdrop-filter: blur(10px);
+
+      transition:
+        transform .2s ease,
+        background .2s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-4px);
+      background: rgba(255,255,255,.10);
+    }
+
+    .feature-icon {
+      font-size: 30px;
+      margin-bottom: 10px;
+    }
+
+    .feature-title {
+      font-weight: bold;
+      font-size: 14px;
+    }
+
+    .footer {
+      margin-top: 35px;
+
+      font-size: 12px;
+
+      color:
+        rgba(255,255,255,.45);
+    }
+
+    @media (max-width: 750px) {
+
+      .features {
+        grid-template-columns:
+          repeat(2, 1fr);
+      }
+
+      .logo {
+        font-size: 55px;
+      }
+
+      .container {
+        padding-top: 25px;
+        padding-bottom: 25px;
+      }
+    }
+
+    @media (max-width: 450px) {
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      .btn {
+        width: 100%;
+      }
+
+      .description {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="overlay"></div>
+
+  <main class="container">
+
+    <div class="badge">
+      🖥️ LABORATORIUM VIRTUAL TKJ
+    </div>
+
+    <div class="logo">
+      🛠️
+    </div>
+
+    <h1>
+      TKJ Virtual Lab
+    </h1>
+
+    <div class="subtitle">
+      Laboratorium Teknik Komputer dan Jaringan
+    </div>
+
+    <p class="description">
+      Tempat belajar, berlatih, melakukan simulasi,
+      troubleshooting, dan menyelesaikan pekerjaan
+      seperti teknisi komputer dan jaringan di dunia nyata.
+    </p>
+
+    <div class="buttons">
+
+      <a
+        href="login.html"
+        class="btn btn-primary"
+      >
+        🔐 Masuk ke Laboratorium
+      </a>
+
+      <a
+        href="register.html"
+        class="btn btn-secondary"
+      >
+        👤 Daftar Akun Siswa
+      </a>
+
+    </div>
+
+    <section class="features">
+
+      <div class="feature">
+        <div class="feature-icon">🖥️</div>
+        <div class="feature-title">Perangkat TKJ</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🌐</div>
+        <div class="feature-title">Simulasi Jaringan</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🔧</div>
+        <div class="feature-title">Praktikum</div>
+      </div>
+
+      <div class="feature">
+        <div class="feature-icon">🧰</div>
+        <div class="feature-title">Troubleshooting</div>
+      </div>
+
+    </section>
+
+    <div class="footer">
+      TKJ Virtual Lab © 2026
+    </div>
+
+  </main>
+
+</body>
+</html>
