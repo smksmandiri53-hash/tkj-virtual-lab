@@ -1,864 +1,107 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard Siswa - TKJ Virtual Lab</title>
-
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #f4f7fb;
-      color: #172033;
-      min-height: 100vh;
-    }
-
-    .app {
-      display: flex;
-      min-height: 100vh;
-    }
-
-    .sidebar {
-      width: 260px;
-      background: #111827;
-      color: #fff;
-      padding: 22px 16px;
-      position: fixed;
-      inset: 0 auto 0 0;
-      z-index: 100;
-      overflow-y: auto;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 4px 8px 24px;
-      border-bottom: 1px solid rgba(255,255,255,.09);
-      margin-bottom: 18px;
-    }
-
-    .brand-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
-      font-size: 21px;
-      font-weight: 800;
-    }
-
-    .brand h1 {
-      font-size: 17px;
-      line-height: 1.15;
-    }
-
-    .brand p {
-      color: #94a3b8;
-      font-size: 11px;
-      margin-top: 4px;
-    }
-
-    .nav-title {
-      color: #64748b;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: .12em;
-      margin: 18px 10px 8px;
-      text-transform: uppercase;
-    }
-
-    .nav {
-      display: grid;
-      gap: 6px;
-    }
-
-    .nav button {
-      border: 0;
-      background: transparent;
-      color: #cbd5e1;
-      width: 100%;
-      text-align: left;
-      padding: 12px 13px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      transition: .2s;
-    }
-
-    .nav button:hover,
-    .nav button.active {
-      background: rgba(37, 99, 235, .18);
-      color: #fff;
-    }
-
-    .nav-icon {
-      width: 24px;
-      text-align: center;
-      font-size: 17px;
-    }
-
-    .main {
-      width: calc(100% - 260px);
-      margin-left: 260px;
-      padding: 25px;
-    }
-
-    .topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      margin-bottom: 24px;
-    }
-
-    .menu-btn {
-      display: none;
-      border: 0;
-      background: #fff;
-      border-radius: 10px;
-      padding: 10px 13px;
-      cursor: pointer;
-      box-shadow: 0 5px 20px rgba(15,23,42,.06);
-    }
-
-    .welcome h2 {
-      font-size: 25px;
-      margin-bottom: 4px;
-    }
-
-    .welcome p {
-      color: #64748b;
-      font-size: 14px;
-    }
-
-    .profile {
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      background: #fff;
-      padding: 8px 12px 8px 8px;
-      border-radius: 14px;
-      box-shadow: 0 5px 20px rgba(15,23,42,.06);
-    }
-
-    .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: linear-gradient(135deg, #2563eb, #06b6d4);
-      color: #fff;
-      font-weight: 800;
-    }
-
-    .profile-name {
-      font-weight: 700;
-      font-size: 13px;
-    }
-
-    .profile-role {
-      color: #64748b;
-      font-size: 11px;
-      margin-top: 2px;
-    }
-
-    .logout {
-      border: 0;
-      background: #fee2e2;
-      color: #b91c1c;
-      border-radius: 9px;
-      padding: 8px 10px;
-      cursor: pointer;
-      font-weight: 700;
-      font-size: 12px;
-    }
-
-    .hero {
-      border-radius: 20px;
-      padding: 28px;
-      color: #fff;
-      background:
-        radial-gradient(circle at 90% 15%, rgba(34,211,238,.28), transparent 30%),
-        radial-gradient(circle at 10% 90%, rgba(59,130,246,.28), transparent 35%),
-        linear-gradient(135deg, #0f172a, #1e3a8a);
-      margin-bottom: 22px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .hero h3 {
-      font-size: 25px;
-      margin-bottom: 8px;
-    }
-
-    .hero p {
-      color: #dbeafe;
-      max-width: 680px;
-      line-height: 1.6;
-      font-size: 14px;
-    }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 9px;
-      margin-top: 18px;
-    }
-
-    .pill {
-      background: rgba(255,255,255,.12);
-      border: 1px solid rgba(255,255,255,.12);
-      padding: 8px 12px;
-      border-radius: 999px;
-      font-size: 12px;
-    }
-
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 22px;
-    }
-
-    .stat {
-      background: #fff;
-      border-radius: 16px;
-      padding: 18px;
-      box-shadow: 0 5px 20px rgba(15,23,42,.05);
-    }
-
-    .stat-top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .stat-label {
-      color: #64748b;
-      font-size: 12px;
-      font-weight: 600;
-    }
-
-    .stat-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      display: grid;
-      place-items: center;
-      background: #eff6ff;
-      font-size: 17px;
-    }
-
-    .stat-value {
-      font-size: 25px;
-      font-weight: 800;
-      margin-top: 12px;
-    }
-
-    .section-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 25px 0 13px;
-    }
-
-    .section-title h3 {
-      font-size: 18px;
-    }
-
-    .section-title span {
-      color: #64748b;
-      font-size: 12px;
-    }
-
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-
-    .feature {
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 5px 20px rgba(15,23,42,.05);
-      border: 1px solid #edf1f7;
-      cursor: pointer;
-      transition: transform .2s, box-shadow .2s;
-    }
-
-    .feature:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 28px rgba(15,23,42,.08);
-    }
-
-    .feature-icon {
-      width: 46px;
-      height: 46px;
-      border-radius: 13px;
-      display: grid;
-      place-items: center;
-      background: #eff6ff;
-      font-size: 22px;
-      margin-bottom: 14px;
-    }
-
-    .feature h4 {
-      margin-bottom: 7px;
-      font-size: 15px;
-    }
-
-    .feature p {
-      color: #64748b;
-      font-size: 12px;
-      line-height: 1.55;
-    }
-
-    .progress-box {
-      background: #fff;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 5px 20px rgba(15,23,42,.05);
-    }
-
-    .progress-row {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      margin-bottom: 9px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .progress-row span:last-child {
-      color: #2563eb;
-    }
-
-    .progress-track {
-      height: 10px;
-      border-radius: 999px;
-      background: #e5e7eb;
-      overflow: hidden;
-    }
-
-    .progress-bar {
-      width: 0%;
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, #2563eb, #06b6d4);
-      transition: width .5s ease;
-    }
-
-    .notice {
-      display: none;
-      margin-bottom: 18px;
-      padding: 12px 15px;
-      border-radius: 12px;
-      font-size: 13px;
-    }
-
-    .notice.show {
-      display: block;
-    }
-
-    .notice.error {
-      background: #fee2e2;
-      color: #991b1b;
-    }
-
-    .loading {
-      position: fixed;
-      inset: 0;
-      z-index: 1000;
-      display: grid;
-      place-items: center;
-      background: #f4f7fb;
-    }
-
-    .loading-box {
-      text-align: center;
-      background: #fff;
-      padding: 28px;
-      border-radius: 18px;
-      box-shadow: 0 10px 40px rgba(15,23,42,.1);
-    }
-
-    .spinner {
-      width: 36px;
-      height: 36px;
-      margin: 0 auto 13px;
-      border: 4px solid #dbeafe;
-      border-top-color: #2563eb;
-      border-radius: 50%;
-      animation: spin .8s linear infinite;
-    }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
-
-    .overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(15,23,42,.45);
-      z-index: 90;
-    }
-
-    @media (max-width: 1100px) {
-      .stats {
-        grid-template-columns: repeat(2, 1fr);
-      }
-
-      .cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
-
-    @media (max-width: 800px) {
-      .sidebar {
-        transform: translateX(-100%);
-        transition: transform .25s ease;
-      }
-
-      .sidebar.open {
-        transform: translateX(0);
-      }
-
-      .overlay.show {
-        display: block;
-      }
-
-      .main {
-        width: 100%;
-        margin-left: 0;
-        padding: 17px;
-      }
-
-      .menu-btn {
-        display: block;
-      }
-
-      .topbar {
-        align-items: flex-start;
-      }
-
-      .profile {
-        display: none;
-      }
-
-      .welcome h2 {
-        font-size: 20px;
-      }
-
-      .hero {
-        padding: 22px;
-      }
-
-      .hero h3 {
-        font-size: 21px;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .stats,
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .hero-meta {
-        display: grid;
-      }
-
-      .section-title {
-        align-items: flex-start;
-        gap: 8px;
-        flex-direction: column;
-      }
-    }
-  </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Dashboard Siswa - TKJ Virtual Lab</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:#f4f7fb;color:#172033}.app{display:flex;min-height:100vh}.sidebar{width:260px;background:#111827;color:#fff;padding:22px 16px;position:fixed;inset:0 auto 0 0;z-index:100;overflow:auto}.brand{display:flex;gap:12px;align-items:center;padding:4px 8px 24px;border-bottom:1px solid #ffffff12;margin-bottom:18px}.brand-icon{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#06b6d4);font-weight:800}.brand h1{font-size:17px;margin:0}.brand p{font-size:11px;color:#94a3b8;margin:4px 0 0}.nav-title{font-size:10px;color:#64748b;font-weight:800;letter-spacing:.12em;margin:18px 10px 8px;text-transform:uppercase}.nav{display:grid;gap:6px}.nav button{border:0;background:transparent;color:#cbd5e1;width:100%;text-align:left;padding:12px 13px;border-radius:10px;cursor:pointer;font-size:14px;display:flex;gap:11px;align-items:center}.nav button:hover,.nav button.active{background:#2563eb2e;color:#fff}.nav-icon{width:24px;text-align:center}.main{width:calc(100% - 260px);margin-left:260px;padding:25px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.menu-btn{display:none;border:0;background:#fff;border-radius:10px;padding:10px}.welcome h2{font-size:25px;margin:0 0 4px}.welcome p{color:#64748b;font-size:14px;margin:0}.profile{display:flex;align-items:center;gap:10px;background:#fff;padding:8px 12px 8px 8px;border-radius:14px;box-shadow:0 5px 20px #0f172a0a}.avatar{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#06b6d4);color:#fff;font-weight:800}.profile-name{font-weight:700;font-size:13px}.profile-role{font-size:11px;color:#64748b}.logout{border:0;background:#fee2e2;color:#b91c1c;border-radius:9px;padding:8px 10px;cursor:pointer;font-weight:700}.view{display:none}.view.active{display:block}.hero{border-radius:20px;padding:28px;color:#fff;background:radial-gradient(circle at 90% 15%,#22d3ee47,transparent 30%),linear-gradient(135deg,#0f172a,#1e3a8a);margin-bottom:22px}.hero h3{font-size:25px;margin:0 0 8px}.hero p{color:#dbeafe;max-width:760px;line-height:1.6;font-size:14px}.pills{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px}.pill{background:#ffffff1f;border:1px solid #ffffff20;padding:8px 12px;border-radius:999px;font-size:12px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}.stat,.card{background:#fff;border-radius:16px;padding:18px;box-shadow:0 5px 20px #0f172a0d;border:1px solid #edf1f7}.stat-label{color:#64748b;font-size:12px;font-weight:600}.stat-value{font-size:25px;font-weight:800;margin-top:10px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:25px 0 13px}.section-title h3{margin:0;font-size:18px}.section-title span{color:#64748b;font-size:12px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.feature{background:#fff;border-radius:16px;padding:20px;box-shadow:0 5px 20px #0f172a0d;border:1px solid #edf1f7;cursor:pointer}.feature:hover{transform:translateY(-2px)}.feature-icon{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;background:#eff6ff;font-size:22px;margin-bottom:14px}.feature h4{margin:0 0 7px;font-size:15px}.feature p{color:#64748b;font-size:12px;line-height:1.55;margin:0}.progress-track{height:10px;border-radius:999px;background:#e5e7eb;overflow:hidden}.progress-bar{width:0;height:100%;background:linear-gradient(90deg,#2563eb,#06b6d4);transition:.4s}.toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:15px 0}.btn{border:0;border-radius:9px;padding:10px 14px;background:#2563eb;color:#fff;font-weight:700;cursor:pointer}.btn.secondary{background:#e2e8f0;color:#172033}.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.lesson{border:1px solid #e5e7eb;border-radius:13px;padding:16px;margin-bottom:10px;background:#fff}.lesson h4{margin:0 0 7px}.lesson p{color:#64748b;font-size:13px;line-height:1.6}.tool-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tool{padding:15px;border:1px solid #e5e7eb;border-radius:13px;background:#fff;cursor:pointer}.tool strong{display:block;margin-top:8px}.tool small{color:#64748b;line-height:1.5}.scenario{border-left:4px solid #2563eb;padding:14px;background:#eff6ff;border-radius:9px;margin-bottom:15px}.terminal{background:#07111f;color:#b8f7c2;border-radius:12px;padding:15px;font:13px Consolas,monospace;min-height:170px;white-space:pre-wrap}.terminal input{width:100%;background:transparent;border:0;outline:0;color:#fff;font:inherit}.quiz-option{display:block;width:100%;text-align:left;margin:8px 0;padding:12px;border:1px solid #dbe2ea;background:#fff;border-radius:9px;cursor:pointer}.quiz-option.correct{border-color:#16a34a;background:#dcfce7}.quiz-option.wrong{border-color:#dc2626;background:#fee2e2}.notice{padding:12px;border-radius:10px;margin-bottom:15px;font-size:13px;display:none}.notice.show{display:block}.notice.error{background:#fee2e2;color:#991b1b}.notice.ok{background:#dcfce7;color:#166534}.loading{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#f4f7fb}.loading-box{text-align:center;background:#fff;padding:28px;border-radius:18px}.spinner{width:36px;height:36px;margin:auto auto 13px;border:4px solid #dbeafe;border-top-color:#2563eb;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:1100px){.stats{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:repeat(2,1fr)}.tool-grid{grid-template-columns:repeat(2,1fr)}}@media(max-width:800px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin:0;padding:17px}.menu-btn{display:block}.profile{display:none}.grid2{grid-template-columns:1fr}}@media(max-width:560px){.stats,.cards,.tool-grid{grid-template-columns:1fr}.hero{padding:22px}.hero h3{font-size:21px}}
+</style>
 </head>
-
 <body>
-
-  <div id="loading" class="loading">
-    <div class="loading-box">
-      <div class="spinner"></div>
-      <strong>Memuat Dashboard...</strong>
-      <p style="color:#64748b;font-size:12px;margin-top:6px;">Menghubungkan ke TKJ Virtual Lab</p>
-    </div>
-  </div>
-
-  <div id="overlay" class="overlay"></div>
-
-  <div class="app">
-
-    <aside id="sidebar" class="sidebar">
-      <div class="brand">
-        <div class="brand-icon">TKJ</div>
-        <div>
-          <h1>TKJ Virtual Lab</h1>
-          <p>Laboratorium Komputer & Jaringan</p>
-        </div>
-      </div>
-
-      <div class="nav-title">Menu Utama</div>
-
-      <nav class="nav">
-        <button class="active" data-feature="Dashboard">
-          <span class="nav-icon">🏠</span>
-          Dashboard
-        </button>
-
-        <button onclick="window.location.href='materi.html'">
-          <span class="nav-icon">📚</span>
-          Materi TKJ
-        </button>
-
-        <button data-feature="Simulasi Lab">
-          <span class="nav-icon">💻</span>
-          Simulasi Lab
-        </button>
-
-        <button data-feature="Praktikum">
-          <span class="nav-icon">🧪</span>
-          Praktikum
-        </button>
-
-        <button data-feature="Troubleshooting">
-          <span class="nav-icon">🛠️</span>
-          Troubleshooting
-        </button>
-
-        <button data-feature="Tugas">
-          <span class="nav-icon">📝</span>
-          Tugas
-        </button>
-
-        <div class="nav-title">Perkembangan</div>
-
-        <button data-feature="Nilai & XP">
-          <span class="nav-icon">⭐</span>
-          Nilai & XP
-        </button>
-
-        <button data-feature="Progress">
-          <span class="nav-icon">📊</span>
-          Progress Belajar
-        </button>
-
-        <button data-feature="Laporan">
-          <span class="nav-icon">📄</span>
-          Laporan Praktikum
-        </button>
-      </nav>
-    </aside>
-
-    <main class="main">
-
-      <div class="topbar">
-        <div style="display:flex;align-items:center;gap:12px;">
-          <button id="menuBtn" class="menu-btn">☰</button>
-          <div class="welcome">
-            <h2>Dashboard Siswa</h2>
-            <p>Selamat datang kembali di TKJ Virtual Lab.</p>
-          </div>
-        </div>
-
-        <div class="profile">
-          <div id="avatar" class="avatar">S</div>
-          <div>
-            <div id="profileName" class="profile-name">Siswa</div>
-            <div id="profileRole" class="profile-role">SISWA</div>
-          </div>
-          <button id="logoutBtn" class="logout">Keluar</button>
-        </div>
-      </div>
-
-      <div id="notice" class="notice"></div>
-
-      <section class="hero">
-        <h3>Halo, <span id="heroName">Siswa</span>! 👋</h3>
-        <p>
-          Selamat datang di laboratorium virtual TKJ. Pelajari perangkat,
-          lakukan simulasi jaringan, kerjakan praktikum, dan tingkatkan
-          kemampuanmu melalui pengalaman belajar yang interaktif.
-        </p>
-
-        <div class="hero-meta">
-          <span class="pill">👤 Kelas: <strong id="heroClass">-</strong></span>
-          <span class="pill">⭐ XP: <strong id="heroXp">0</strong></span>
-          <span class="pill">🏆 Level: <strong id="heroLevel">1</strong></span>
-        </div>
-      </section>
-
-      <section class="stats">
-        <div class="stat">
-          <div class="stat-top">
-            <span class="stat-label">Praktikum Selesai</span>
-            <span class="stat-icon">🧪</span>
-          </div>
-          <div id="statPraktikum" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-top">
-            <span class="stat-label">Tugas Selesai</span>
-            <span class="stat-icon">📝</span>
-          </div>
-          <div id="statTugas" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-top">
-            <span class="stat-label">XP Diperoleh</span>
-            <span class="stat-icon">⭐</span>
-          </div>
-          <div id="statXp" class="stat-value">0</div>
-        </div>
-
-        <div class="stat">
-          <div class="stat-top">
-            <span class="stat-label">Level</span>
-            <span class="stat-icon">🏆</span>
-          </div>
-          <div id="statLevel" class="stat-value">1</div>
-        </div>
-      </section>
-
-      <div class="section-title">
-        <h3>Mulai Belajar</h3>
-        <span>Pilih aktivitas belajar</span>
-      </div>
-
-      <section class="cards">
-        <article class="feature" onclick="window.location.href='materi.html'">
-          <div class="feature-icon">📚</div>
-          <h4>Materi TKJ</h4>
-          <p>Pelajari konsep komputer, jaringan, perangkat keras, sistem operasi, dan materi TKJ lainnya.</p>
-        </article>
-
-        <article class="feature" data-feature="Simulasi Lab">
-          <div class="feature-icon">💻</div>
-          <h4>Simulasi Lab</h4>
-          <p>Latihan menggunakan perangkat dan membangun jaringan secara virtual sebelum praktik nyata.</p>
-        </article>
-
-        <article class="feature" data-feature="Praktikum">
-          <div class="feature-icon">🧪</div>
-          <h4>Praktikum</h4>
-          <p>Kerjakan kegiatan praktikum secara bertahap dan kirimkan hasil pekerjaanmu.</p>
-        </article>
-
-        <article class="feature" data-feature="Troubleshooting">
-          <div class="feature-icon">🛠️</div>
-          <h4>Troubleshooting</h4>
-          <p>Latih kemampuan menemukan masalah dan menentukan solusi pada perangkat komputer dan jaringan.</p>
-        </article>
-
-        <article class="feature" data-feature="Tugas">
-          <div class="feature-icon">📝</div>
-          <h4>Tugas</h4>
-          <p>Lihat tugas yang diberikan Admin dan selesaikan sesuai instruksi yang tersedia.</p>
-        </article>
-
-        <article class="feature" data-feature="Nilai & XP">
-          <div class="feature-icon">⭐</div>
-          <h4>Nilai & XP</h4>
-          <p>Pantau nilai, XP, level, dan perkembangan kemampuanmu selama mengikuti pembelajaran.</p>
-        </article>
-      </section>
-
-      <div class="section-title">
-        <h3>Progress Belajar</h3>
-        <span id="progressText">0% selesai</span>
-      </div>
-
-      <section class="progress-box">
-        <div class="progress-row">
-          <span>Perkembangan pembelajaran</span>
-          <span id="progressPercent">0%</span>
-        </div>
-        <div class="progress-track">
-          <div id="progressBar" class="progress-bar"></div>
-        </div>
-        <p style="color:#64748b;font-size:12px;margin-top:11px;">
-          Progress akan terisi otomatis ketika fitur materi, simulasi, praktikum, dan tugas mulai digunakan.
-        </p>
-      </section>
-
-    </main>
-  </div>
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-    import {
-      getFirestore,
-      doc,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyBD3EduiDBbGI9M381i9GMkfD74RfpCM78",
-      authDomain: "tkj-virtual-lab-web-43aca.firebaseapp.com",
-      projectId: "tkj-virtual-lab-web-43aca",
-      storageBucket: "tkj-virtual-lab-web-43aca.firebasestorage.app",
-      messagingSenderId: "860991490192",
-      appId: "1:860991490192:web:019928cbca09128af4b015"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    const loading = document.getElementById("loading");
-    const notice = document.getElementById("notice");
-
-    function showError(message) {
-      notice.textContent = message;
-      notice.className = "notice show error";
-    }
-
-    function hideLoading() {
-      loading.style.display = "none";
-    }
-
-    function setProfile(data) {
-      const nama = data.nama || "Siswa";
-      const kelas = data.kelas || "-";
-
-      document.getElementById("profileName").textContent = nama;
-      document.getElementById("heroName").textContent = nama;
-      document.getElementById("heroClass").textContent = kelas;
-
-      const initial = nama.trim().charAt(0).toUpperCase() || "S";
-      document.getElementById("avatar").textContent = initial;
-
-      const xp = Number(data.xp || 0);
-      const level = Number(data.level || Math.max(1, Math.floor(xp / 100) + 1));
-      const progress = Math.min(100, Number(data.progress || 0));
-
-      document.getElementById("heroXp").textContent = xp;
-      document.getElementById("heroLevel").textContent = level;
-      document.getElementById("statXp").textContent = xp;
-      document.getElementById("statLevel").textContent = level;
-
-      document.getElementById("progressBar").style.width = progress + "%";
-      document.getElementById("progressPercent").textContent = progress + "%";
-      document.getElementById("progressText").textContent = progress + "% selesai";
-
-      document.getElementById("statPraktikum").textContent =
-        Number(data.praktikumSelesai || 0);
-
-      document.getElementById("statTugas").textContent =
-        Number(data.tugasSelesai || 0);
-    }
-
-    onAuthStateChanged(auth, async (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-        return;
-      }
-
-      try {
-        const profileRef = doc(db, "users", user.uid);
-        const profileSnap = await getDoc(profileRef);
-
-        if (!profileSnap.exists()) {
-          showError("Data profil siswa belum ditemukan.");
-          hideLoading();
-          return;
-        }
-
-        const data = profileSnap.data();
-
-        if (data.role !== "siswa") {
-          if (data.role === "admin") {
-            window.location.href = "admin.html";
-            return;
-          }
-
-          await signOut(auth);
-          window.location.href = "login.html";
-          return;
-        }
-
-        setProfile(data);
-        hideLoading();
-
-      } catch (error) {
-        console.error(error);
-        showError("Gagal memuat data siswa. Periksa koneksi dan Firestore Rules.");
-        hideLoading();
-      }
-    });
-
-    document.getElementById("logoutBtn").addEventListener("click", async () => {
-      try {
-        await signOut(auth);
-        window.location.href = "login.html";
-      } catch (error) {
-        console.error(error);
-        showError("Gagal keluar dari akun.");
-      }
-    });
-
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("overlay");
-
-    function closeSidebar() {
-      sidebar.classList.remove("open");
-      overlay.classList.remove("show");
-    }
-
-    document.getElementById("menuBtn").addEventListener("click", () => {
-      sidebar.classList.add("open");
-      overlay.classList.add("show");
-    });
-
-    overlay.addEventListener("click", closeSidebar);
-
-    document.querySelectorAll("[data-feature]").forEach((element) => {
-      element.addEventListener("click", () => {
-        const feature = element.dataset.feature;
-
-        if (feature === "Dashboard") {
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        } else if (feature === "Simulasi Lab") {
-          window.location.href = "simulasi-lan.html";
-        } else {
-          alert(
-            feature +
-            " sedang disiapkan dan akan kita hubungkan ke Firebase pada tahap berikutnya."
-          );
-        }
-
-        closeSidebar();
-
-        document.querySelectorAll(".nav button").forEach(btn => {
-          btn.classList.toggle("active", btn.dataset.feature === feature);
-        });
-      });
-    });
-  </script>
-
-</body>
-</html>
+<div id="loading" class="loading"><div class="loading-box"><div class="spinner"></div><strong>Memuat Virtual Lab...</strong><p style="color:#64748b;font-size:12px">Menghubungkan Firebase</p></div></div>
+<div class="app">
+<aside id="sidebar" class="sidebar">
+<div class="brand"><div class="brand-icon">TKJ</div><div><h1>TKJ Virtual Lab</h1><p>Laboratorium Komputer & Jaringan</p></div></div>
+<div class="nav-title">Pembelajaran</div><nav class="nav">
+<button class="active" data-view="dashboard"><span class="nav-icon">🏠</span>Dashboard</button>
+<button data-view="materi"><span class="nav-icon">📚</span>Materi TKJ</button>
+<button data-view="alat"><span class="nav-icon">🧰</span>Kenali Alat</button>
+<button data-view="praktik"><span class="nav-icon">🧪</span>Praktikum</button>
+<button data-view="trouble"><span class="nav-icon">🛠️</span>Troubleshooting</button>
+<button data-view="kuis"><span class="nav-icon">📝</span>Uji Pemahaman</button>
+<div class="nav-title">Perkembangan</div>
+<button data-view="nilai"><span class="nav-icon">⭐</span>Nilai & XP</button>
+<button data-view="laporan"><span class="nav-icon">📄</span>Laporan Praktikum</button>
+</nav></aside>
+<main class="main">
+<div class="topbar"><div style="display:flex;align-items:center;gap:12px"><button id="menuBtn" class="menu-btn">☰</button><div class="welcome"><h2>Dashboard Siswa</h2><p>Belajar, praktik, dan selesaikan masalah seperti teknisi sungguhan.</p></div></div><div class="profile"><div id="avatar" class="avatar">S</div><div><div id="profileName" class="profile-name">Siswa</div><div class="profile-role">SISWA</div></div><button id="logoutBtn" class="logout">Keluar</button></div></div>
+<div id="notice" class="notice"></div>
+
+<section id="view-dashboard" class="view active">
+<div class="hero"><h3>Halo, <span id="heroName">Siswa</span>! 👋</h3><p>Gunakan lab ini untuk memahami fungsi perangkat, membangun jaringan, melakukan konfigurasi Cisco, menemukan gangguan, dan memperbaikinya. Sistem akan menyimpan perkembanganmu ke Firebase.</p><div class="pills"><span class="pill">👤 Kelas: <b id="heroClass">-</b></span><span class="pill">⭐ XP: <b id="heroXp">0</b></span><span class="pill">🏆 Level: <b id="heroLevel">1</b></span></div></div>
+<div class="stats"><div class="stat"><div class="stat-label">Praktikum Selesai</div><div id="statPraktikum" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Alat Dipelajari</div><div id="statAlat" class="stat-value">0</div></div><div class="stat"><div class="stat-label">XP Diperoleh</div><div id="statXp" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Level</div><div id="statLevel" class="stat-value">1</div></div></div>
+<div class="section-title"><h3>Mulai Belajar</h3><span>Pilih aktivitas</span></div>
+<div class="cards">
+<div class="feature" data-go="materi"><div class="feature-icon">📚</div><h4>Materi</h4><p>Pahami konsep sebelum menyentuh simulator.</p></div>
+<div class="feature" data-go="alat"><div class="feature-icon">🧰</div><h4>Kenali Alat</h4><p>Kenali bentuk, port, fungsi, dan penggunaan perangkat.</p></div>
+<div class="feature" data-go="praktik"><div class="feature-icon">🧪</div><h4>Praktikum Nyata</h4><p>Bangun LAN, konfigurasi router, dan uji koneksi.</p></div>
+<div class="feature" data-go="trouble"><div class="feature-icon">🛠️</div><h4>Troubleshooting</h4><p>Cari penyebab gangguan tanpa langsung diberi jawabannya.</p></div>
+<div class="feature" data-go="kuis"><div class="feature-icon">📝</div><h4>Uji Pemahaman</h4><p>Uji pemahaman setelah materi dan praktik.</p></div>
+<div class="feature" data-go="nilai"><div class="feature-icon">⭐</div><h4>Nilai & XP</h4><p>Lihat perkembangan, XP, level, dan hasil praktik.</p></div>
+</div>
+<div class="section-title"><h3>Progress Belajar</h3><span id="progressText">0%</span></div><div class="card"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:9px"><span>Perkembangan</span><span id="progressPercent">0%</span></div><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></div>
+</section>
+
+<section id="view-materi" class="view">
+<div class="section-title"><h3>📚 Materi TKJ — LAN Dasar & Cisco</h3><span>Belajar sebelum praktik</span></div>
+<div class="grid2"><div>
+<div class="lesson"><h4>1. Apa itu jaringan komputer?</h4><p>Jaringan adalah hubungan beberapa perangkat agar dapat bertukar data dan menggunakan sumber daya bersama. Dalam praktik TKJ, kamu perlu memahami perangkat, media transmisi, alamat IP, dan cara menguji koneksi.</p></div>
+<div class="lesson"><h4>2. IP Address</h4><p>IP adalah alamat logis perangkat di jaringan. Contoh <b>192.168.10.10/24</b>. Pada jaringan /24, subnet mask-nya adalah <b>255.255.255.0</b>.</p></div>
+<div class="lesson"><h4>3. Switch dan Router</h4><p><b>Switch</b> menghubungkan perangkat dalam LAN. <b>Router</b> menghubungkan jaringan yang berbeda dan memiliki interface yang dapat diberi alamat IP.</p></div>
+<div class="lesson"><h4>4. Ping</h4><p>Ping digunakan untuk menguji keterjangkauan perangkat. Jika gagal, jangan langsung menyimpulkan router rusak. Periksa kabel, interface, IP, subnet, dan gateway.</p></div>
+</div><div class="card"><h4>Urutan berpikir teknisi</h4><p style="color:#64748b;line-height:1.7;font-size:13px;margin-top:8px">1️⃣ Amati gejala<br>2️⃣ Periksa fisik dan koneksi<br>3️⃣ Periksa konfigurasi<br>4️⃣ Uji dengan perintah<br>5️⃣ Tentukan penyebab<br>6️⃣ Perbaiki<br>7️⃣ Uji ulang<br><br><b>Jangan asal mengganti konfigurasi.</b> Teknisi yang baik mencari bukti terlebih dahulu.</p><button class="btn" data-go="alat">Kenali alat →</button></div></div>
+</section>
+
+<section id="view-alat" class="view">
+<div class="section-title"><h3>🧰 Kenali Alat</h3><span>Klik alat untuk melihat kegunaannya</span></div><div id="toolGrid" class="tool-grid"></div><div id="toolDetail" class="card" style="margin-top:16px">Pilih salah satu alat di atas untuk melihat fungsi, port penting, dan contoh penggunaannya.</div>
+</section>
+
+<section id="view-praktik" class="view">
+<div class="section-title"><h3>🧪 Praktikum LAN Dasar</h3><span id="labLevel">Pemula</span></div>
+<div class="scenario"><b>Skenario:</b> Bangun koneksi <b>PC → Switch → Router</b>. PC menggunakan IP <b id="pcIp">192.168.10.10/24</b> dan router G0/0 menggunakan <b id="routerIp">192.168.10.1/24</b>. Setelah konfigurasi, lakukan ping. <br><br><b>Gangguan latihan:</b> <span id="faultText">Interface G0/0 dibuat shutdown. Temukan penyebabnya.</span></div>
+<div class="grid2"><div class="card"><h4>Langkah Praktikum</h4><div id="steps"></div><div class="toolbar"><button id="resetLab" class="btn secondary">Reset</button><button id="openSimulator" class="btn">Buka Simulator CLI</button></div></div><div class="card"><h4>CLI Router</h4><div class="terminal" id="terminal">Router&gt; <input id="cliInput" autocomplete="off" placeholder="ketik perintah, contoh: enable"></div><p style="font-size:12px;color:#64748b;margin-top:10px">Perintah dasar: <code>enable</code>, <code>configure terminal</code>, <code>interface g0/0</code>, <code>ip address ...</code>, <code>no shutdown</code>, <code>end</code>, <code>show ip interface brief</code>, <code>ping ...</code></p></div></div>
+</section>
+
+<section id="view-trouble" class="view">
+<div class="section-title"><h3>🛠️ Mission Troubleshooting</h3><span>Temukan masalah dengan bukti</span></div>
+<div class="card"><div class="scenario"><b>Kasus:</b> PC-01 tidak dapat melakukan ping ke router. Kamu diberi tiga petunjuk: interface router bisa saja mati, IP PC bisa salah, atau kabel belum terhubung. Jangan menebak.</div><div id="troubleTasks"></div><div id="troubleResult" style="margin-top:12px;font-weight:700"></div></div>
+</section>
+
+<section id="view-kuis" class="view">
+<div class="section-title"><h3>📝 Uji Pemahaman</h3><span>5 soal</span></div><div id="quizBox" class="card"></div>
+</section>
+
+<section id="view-nilai" class="view">
+<div class="section-title"><h3>⭐ Nilai & XP</h3><span>Tersimpan di Firebase</span></div><div class="stats"><div class="stat"><div class="stat-label">XP</div><div id="scoreXp" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Level</div><div id="scoreLevel" class="stat-value">1</div></div><div class="stat"><div class="stat-label">Nilai Kuis</div><div id="scoreQuiz" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Praktikum</div><div id="scoreLab" class="stat-value">0</div></div></div><div class="card"><h4>Bagaimana XP diperoleh?</h4><p style="color:#64748b;font-size:13px;line-height:1.7">Kenali alat +10 XP • Selesaikan langkah praktikum +10 XP • Selesaikan troubleshooting +30 XP • Kuis maksimal +50 XP. Level naik setiap 100 XP.</p></div></section>
+
+<section id="view-laporan" class="view">
+<div class="section-title"><h3>📄 Laporan Praktikum</h3><span>Riwayat aktivitasmu</span></div><div class="card"><div id="reportContent" style="color:#64748b;font-size:13px;line-height:1.8">Belum ada aktivitas.</div></div></section>
+</main></div>
+<script type="module">
+import{initializeApp,getApps,getApp}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+import{getAuth,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+import{getFirestore,doc,getDoc,setDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyBD3EduiDBbGI9M381i9GMkfD74RfpCM78",authDomain:"tkj-virtual-lab-web-43aca.firebaseapp.com",projectId:"tkj-virtual-lab-web-43aca",storageBucket:"tkj-virtual-lab-web-43aca.firebasestorage.app",messagingSenderId:"860991490192",appId:"1:860991490192:web:019928cbca09128af4b015"};
+const app=getApps().length?getApp():initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
+let uid=null,profile={},labConfig={title:"Praktikum LAN Dasar",level:"Pemula",routerIp:"192.168.10.1",pcIp:"192.168.10.10",fault:"Interface G0/0 dibuat shutdown. Temukan penyebabnya."};
+let state={xp:0,alat:[],steps:[],trouble:false,quiz:0,quizDone:false,labDone:false};
+const $=id=>document.getElementById(id);
+function notify(msg,type="ok"){const n=$("notice");n.textContent=msg;n.className="notice show "+type;setTimeout(()=>n.className="notice",3500)}
+function render(){const xp=Number(state.xp||0),level=Math.max(1,Math.floor(xp/100)+1),prog=Math.min(100,Math.round((state.steps.length/5)*60+(state.trouble?20:0)+(state.quizDone?20:0)));["heroXp","statXp","scoreXp"].forEach(id=>$(id).textContent=xp);["heroLevel","statLevel","scoreLevel"].forEach(id=>$(id).textContent=level);$("statAlat").textContent=state.alat.length;$("statPraktikum").textContent=state.labDone?1:0;$("scoreQuiz").textContent=state.quiz;$("scoreLab").textContent=state.labDone?100:0;$("progressBar").style.width=prog+"%";$("progressPercent").textContent=prog+"%";$("progressText").textContent=prog+"% selesai";$("reportContent").innerHTML="XP: <b>"+xp+"</b><br>Alat dipelajari: <b>"+state.alat.length+"/8</b><br>Langkah praktikum: <b>"+state.steps.length+"/5</b><br>Troubleshooting: <b>"+(state.trouble?"Selesai":"Belum selesai")+"</b><br>Kuis: <b>"+(state.quizDone?state.quiz+"/50":"Belum dikerjakan")+"</b>"}
+async function save(){if(!uid)return;try{await setDoc(doc(db,"users",uid),{xp:state.xp,level:Math.max(1,Math.floor(state.xp/100)+1),praktikumSelesai:state.labDone?1:0,progress:Math.min(100,Math.round((state.steps.length/5)*60+(state.trouble?20:0)+(state.quizDone?20:0))),labLAN:{score:state.labDone?100:0,status:state.labDone?"selesai":"berjalan",updatedAt:serverTimestamp()},tkjVirtualLab:{alat:state.alat,steps:state.steps,troubleshooting:state.trouble,quizScore:state.quiz,quizDone:state.quizDone,updatedAt:serverTimestamp()}},{merge:true})}catch(e){console.error(e);notify("Progress gagal disimpan ke Firebase. Periksa Firestore Rules.","error")}}
+function addXp(n){state.xp=Math.max(0,state.xp+n);render();save()}
+const tools=[["💻","PC / Komputer","Perangkat akhir untuk menjalankan aplikasi dan berkomunikasi melalui jaringan.","Port LAN/NIC","Digunakan sebagai endpoint jaringan."],["🔀","Switch","Menghubungkan banyak perangkat dalam satu LAN.","Fa0/1, Gi0/1","Meneruskan frame berdasarkan MAC address."],["🌐","Router","Menghubungkan jaringan yang berbeda.","G0/0, G0/1","Interface router dapat diberi IP dan diaktifkan."],["🔌","Kabel UTP","Media transmisi Ethernet berbahan pasangan kabel tembaga.","RJ45","Menghubungkan PC, switch, dan perangkat jaringan."],["🔗","RJ45","Konektor yang dipasang pada ujung kabel UTP.","8 pin","Harus tercrimping dan tersusun benar."],["🪪","NIC / LAN Card","Antarmuka jaringan pada komputer.","MAC address, port LAN","Menyediakan koneksi Ethernet ke jaringan."],["⌨️","Console Cable","Kabel untuk konfigurasi awal perangkat Cisco.","Console","Digunakan saat konfigurasi melalui terminal."],["📶","Access Point","Menghubungkan perangkat wireless ke jaringan kabel.","LAN/WLAN","Menyediakan akses Wi-Fi ke jaringan."]];
+function buildTools(){const g=$("toolGrid");g.innerHTML="";tools.forEach((t,i)=>{const d=document.createElement("div");d.className="tool";d.innerHTML="<div style='font-size:28px'>"+t[0]+"</div><strong>"+t[1]+"</strong><small>"+t[2]+"</small>";d.onclick=()=>{$("toolDetail").innerHTML="<h3>"+t[0]+" "+t[1]+"</h3><p style='color:#64748b;line-height:1.7'>"+t[2]+"</p><p><b>Bagian penting:</b> "+t[3]+"<br><b>Penggunaan:</b> "+t[4]+"</p>";if(!state.alat.includes(i)){state.alat.push(i);addXp(10);notify("Alat dipelajari: "+t[1]+" (+10 XP)")}else render()};g.appendChild(d)})}
+const stepData=[["1","Rancang topologi","Pastikan urutannya PC → Switch → Router."],["2","Atur IP PC","Gunakan "+labConfig.pcIp+"/24."],["3","Konfigurasi router","Atur G0/0 menjadi "+labConfig.routerIp+" dengan subnet 255.255.255.0."],["4","Aktifkan interface","Gunakan no shutdown lalu cek show ip interface brief."],["5","Uji koneksi","Lakukan ping dari PC ke "+labConfig.routerIp+"."]];
+function buildSteps(){const s=$("steps");s.innerHTML="";stepData.forEach((x,i)=>{const d=document.createElement("div");d.className="lesson";const done=state.steps.includes(i);d.innerHTML="<b>"+x[0]+". "+x[1]+"</b><p>"+x[2]+"</p><button class='btn "+(done?"secondary":"")+"'>"+(done?"✓ Selesai":"Tandai selesai +10 XP")+"</button>";d.querySelector("button").onclick=()=>{if(!state.steps.includes(i)){state.steps.push(i);addXp(10);buildSteps();if(state.steps.length===5){state.labDone=true;addXp(20);notify("Praktikum selesai! Bonus +20 XP")}}};s.appendChild(d)})}
+function buildTrouble(){const tasks=[["Periksa interface","show ip interface brief"],["Periksa konfigurasi IP","show running-config"],["Uji koneksi","ping "+labConfig.routerIp]];const box=$("troubleTasks");box.innerHTML=tasks.map((x,i)=>"<div class='lesson'><b>"+(i+1)+". "+x[0]+"</b><p>Perintah yang tepat: <code>"+x[1]+"</code></p><button class='btn secondary' data-t='"+i+"'>Saya sudah memeriksa</button></div>").join("");let done=[];box.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const i=+b.dataset.t;if(!done.includes(i)){done.push(i);b.textContent="✓ Diperiksa";b.disabled=true}if(done.length===3&&!state.trouble){state.trouble=true;addXp(30);$("troubleResult").textContent="✓ Diagnosis selesai. Kamu berhasil menggunakan bukti sebelum memperbaiki jaringan. +30 XP";}})}
+const questions=[["Perangkat yang menghubungkan beberapa komputer dalam satu LAN adalah... ",["Router","Switch","Modem","Printer"],1],["Subnet mask untuk /24 adalah...",["255.0.0.0","255.255.0.0","255.255.255.0","255.255.255.255"],2],["Perintah Cisco untuk mengaktifkan interface yang shutdown adalah...",["shutdown","enable port","no shutdown","start"],2],["Perintah untuk melihat ringkasan status interface Cisco adalah...",["show ip interface brief","show users","dir","copy"],0],["Jika ping gagal, langkah yang benar adalah...",["Langsung ganti router","Periksa kabel, IP, interface, dan subnet","Matikan semua perangkat","Hapus konfigurasi"],1]];
+let qi=0,qscore=0;function buildQuiz(){if(qi>=questions.length){$("quizBox").innerHTML="<h3>🎉 Kuis selesai</h3><p>Nilai: <b>"+qscore+"/50</b></p><button class='btn' id='retryQuiz'>Ulangi Kuis</button>";$("retryQuiz").onclick=()=>{qi=0;qscore=0;state.quizDone=false;buildQuiz()};if(!state.quizDone){state.quiz=qscore;state.quizDone=true;addXp(qscore)}return}const q=questions[qi];$("quizBox").innerHTML="<div style='color:#64748b;font-size:12px'>Soal "+(qi+1)+" dari "+questions.length+"</div><h3 style='margin:10px 0 15px'>"+q[0]+"</h3>"+q[1].map((o,i)=>"<button class='quiz-option' data-q='"+i+"'>"+String.fromCharCode(65+i)+". "+o+"</button>").join("");$("quizBox").querySelectorAll(".quiz-option").forEach(b=>b.onclick=()=>{const i=+b.dataset.q;$("quizBox").querySelectorAll(".quiz-option").forEach(x=>x.disabled=true);if(i===q[2]){b.classList.add("correct");qscore+=10}else b.classList.add("wrong");setTimeout(()=>{qi++;buildQuiz()},650)})}
+async function load(){onAuthStateChanged(auth,async user=>{if(!user){location.href="login.html";return}uid=user.uid;try{const snap=await getDoc(doc(db,"users",uid));if(!snap.exists()){notify("Profil siswa tidak ditemukan.","error");$("loading").style.display="none";return}profile=snap.data();if(profile.role!=="siswa"){if(profile.role==="admin"){location.href="admin.html";return}await signOut(auth);location.href="login.html";return}$("profileName").textContent=profile.nama||"Siswa";$("heroName").textContent=profile.nama||"Siswa";$("heroClass").textContent=profile.kelas||"-";$("avatar").textContent=(profile.nama||"S").trim().charAt(0).toUpperCase();state={...state,xp:Number(profile.xp||0),alat:profile.tkjVirtualLab?.alat||[],steps:profile.tkjVirtualLab?.steps||[],trouble:!!profile.tkjVirtualLab?.troubleshooting,quiz:Number(profile.tkjVirtualLab?.quizScore||0),quizDone:!!profile.tkjVirtualLab?.quizDone,labDone:profile.labLAN?.status==="selesai"};const cfg=await getDoc(doc(db,"settings","virtualLab"));if(cfg.exists())labConfig={...labConfig,...cfg.data()};$("labLevel").textContent=labConfig.level;$("pcIp").textContent=labConfig.pcIp+"/24";$("routerIp").textContent=labConfig.routerIp+"/24";$("faultText").textContent=labConfig.fault;buildTools();buildSteps();buildTrouble();buildQuiz();render();$("loading").style.display="none"}catch(e){console.error(e);notify("Gagal memuat data Firebase: "+e.message,"error");$("loading").style.display="none"}})}
+load();
+document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>showView(b.dataset.view));document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>showView(b.dataset.go));
+function showView(v){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("view-"+v).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));$("sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"})}
+$("menuBtn").onclick=()=>$("sidebar").classList.add("open");$("logoutBtn").onclick=async()=>{await signOut(auth);location.href="login.html"};$("resetLab").onclick=()=>{state.steps=[];state.labDone=false;buildSteps();render();save();notify("Langkah praktikum direset.")};$("openSimulator").onclick=()=>location.href="simulasi-lan.html";
+const cli=$("cliInput");cli.addEventListener("keydown",e=>{if(e.key!=="Enter")return;const cmd=cli.value.trim().toLowerCase();const term=$("terminal");const known=["enable","configure terminal","conf t","interface g0/0","ip address","no shutdown","end","show ip interface brief","show running-config","ping"];let out=term.textContent+"\nRouter# "+cmd;if(cmd==="enable")out+="\nRouter#";else if(cmd.includes("show ip interface brief"))out+="\nG0/0 "+labConfig.routerIp+" YES manual "+(state.steps.includes(3)?"up up":"administratively down");else if(cmd==="no shutdown"){if(!state.steps.includes(3)){state.steps.push(3);addXp(10);buildSteps()}out+="\nInterface G0/0 enabled.";state.labDone=state.steps.length===5;render();save()}else if(cmd.startsWith("ping "))out+="\nSuccess rate is "+(state.steps.length>=4?"100":"0")+" percent.";else if(known.some(k=>cmd===k||cmd.startsWith(k+" ")))out+="\nCommand accepted.";else out+="\n% Unknown command. Periksa kembali perintah.";term.innerText=out+"\nRouter# ";cli.value="";});
+</script>
+</body></html>
