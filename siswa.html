@@ -1,404 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Dashboard Siswa - TKJ Virtual Lab</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TKJ WorkLab — Siswa</title>
 <style>
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:radial-gradient(circle at 20% 0%,#e0f2fe 0,transparent 28%),#f5f7fb;color:#172033}.app{display:flex;min-height:100vh}.sidebar{width:272px;background:linear-gradient(180deg,#07111f,#0f172a 65%,#111827);color:#fff;padding:20px 15px;position:fixed;inset:0 auto 0 0;z-index:100;overflow:auto;border-right:1px solid #ffffff10;box-shadow:12px 0 40px #02061718}.brand{display:flex;gap:12px;align-items:center;padding:4px 8px 22px;border-bottom:1px solid #ffffff10;margin-bottom:17px}.brand-icon{width:46px;height:46px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#06b6d4);font-weight:900;box-shadow:0 10px 28px #0891b255}.brand h1{font-size:16px;margin:0}.brand p{font-size:10px;color:#94a3b8;margin:4px 0 0}.nav-title{font-size:9px;color:#64748b;font-weight:900;letter-spacing:.14em;margin:18px 10px 8px;text-transform:uppercase}.nav{display:grid;gap:5px}.nav button{border:1px solid transparent;background:transparent;color:#cbd5e1;width:100%;text-align:left;padding:11px 12px;border-radius:12px;cursor:pointer;font-size:13px;display:flex;gap:11px;align-items:center;transition:.2s}.nav button:hover{background:#ffffff09;color:#fff;transform:translateX(2px)}.nav button.active{background:linear-gradient(90deg,#2563eb35,#06b6d41c);color:#fff;border-color:#38bdf833;box-shadow:inset 3px 0 #38bdf8}.nav-icon{width:25px;text-align:center;font-size:16px}.main{width:calc(100% - 272px);margin-left:272px;padding:25px 30px 50px;max-width:1700px}.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}.menu-btn{display:none;border:0;background:#fff;border-radius:11px;padding:10px}.welcome h2{font-size:26px;margin:0 0 4px;letter-spacing:-.02em}.welcome p{color:#64748b;font-size:13px;margin:0}.profile{display:flex;align-items:center;gap:10px;background:#ffffffd9;padding:8px 10px 8px 8px;border-radius:16px;box-shadow:0 8px 30px #0f172a0c;border:1px solid #e7edf5}.avatar{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#06b6d4);color:#fff;font-weight:900}.profile-name{font-weight:800;font-size:13px}.profile-role{font-size:10px;color:#64748b;letter-spacing:.08em}.logout{border:0;background:#fff1f2;color:#be123c;border-radius:10px;padding:8px 10px;cursor:pointer;font-weight:800}.view{display:none}.view.active{display:block;animation:viewIn .28s ease}@keyframes viewIn{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}.hero{position:relative;overflow:hidden;border-radius:25px;padding:31px;color:#fff;background:radial-gradient(circle at 85% 20%,#22d3ee4d,transparent 25%),radial-gradient(circle at 70% 100%,#2563eb55,transparent 30%),linear-gradient(135deg,#07111f,#172554 62%,#0e7490);margin-bottom:20px;box-shadow:0 22px 50px #0f172a1c}.hero:after{content:"";position:absolute;width:230px;height:230px;border:1px solid #ffffff15;border-radius:50%;right:-65px;bottom:-100px;box-shadow:0 0 0 35px #ffffff08,0 0 0 70px #ffffff04}.hero h3{font-size:27px;margin:0 0 8px;position:relative;z-index:1}.hero p{color:#dbeafe;max-width:780px;line-height:1.65;font-size:13px;position:relative;z-index:1}.pills{display:flex;flex-wrap:wrap;gap:9px;margin-top:18px;position:relative;z-index:1}.pill{background:#ffffff14;border:1px solid #ffffff1e;padding:8px 12px;border-radius:999px;font-size:11px;backdrop-filter:blur(8px)}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}.stat,.card{background:#ffffffec;border-radius:18px;padding:18px;box-shadow:0 10px 35px #0f172a0b;border:1px solid #e8eef6;backdrop-filter:blur(8px)}.stat{position:relative;overflow:hidden}.stat:after{content:"";position:absolute;width:65px;height:65px;border-radius:50%;right:-25px;top:-25px;background:#e0f2fe}.stat-label{color:#64748b;font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.06em}.stat-value{font-size:27px;font-weight:900;margin-top:9px;position:relative;z-index:1}.section-title{display:flex;justify-content:space-between;align-items:center;margin:27px 0 13px}.section-title h3{margin:0;font-size:18px;letter-spacing:-.01em}.section-title span{color:#64748b;font-size:11px}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.feature{background:#fff;border-radius:18px;padding:19px;box-shadow:0 9px 28px #0f172a0a;border:1px solid #e8eef6;cursor:pointer;transition:.22s;position:relative;overflow:hidden}.feature:hover{transform:translateY(-4px);box-shadow:0 15px 35px #0f172a16;border-color:#bfdbfe}.feature-icon{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:linear-gradient(135deg,#eff6ff,#ecfeff);font-size:22px;margin-bottom:14px}.feature h4{margin:0 0 7px;font-size:15px}.feature p{color:#64748b;font-size:12px;line-height:1.55;margin:0}.progress-track{height:11px;border-radius:999px;background:#e8edf3;overflow:hidden}.progress-bar{width:0;height:100%;background:linear-gradient(90deg,#2563eb,#06b6d4,#22c55e);transition:.5s}.toolbar{display:flex;flex-wrap:wrap;gap:9px;margin:15px 0}.btn{border:0;border-radius:11px;padding:10px 14px;background:linear-gradient(135deg,#2563eb,#0ea5e9);color:#fff;font-weight:800;cursor:pointer;box-shadow:0 7px 18px #2563eb22;transition:.2s}.btn:hover{transform:translateY(-1px);filter:brightness(1.04)}.btn.secondary{background:#e8eef6;color:#172033;box-shadow:none}.btn:disabled{opacity:.55;cursor:not-allowed;transform:none}.grid2{display:grid;grid-template-columns:1.2fr .8fr;gap:15px}.lesson{border:1px solid #e4eaf2;border-radius:14px;padding:16px;margin-bottom:10px;background:#fff}.lesson h4{margin:0 0 7px}.lesson p{color:#64748b;font-size:13px;line-height:1.6}.tool-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.tool{padding:15px;border:1px solid #e4eaf2;border-radius:15px;background:#fff;cursor:pointer;transition:.2s}.tool:hover{transform:translateY(-3px);border-color:#93c5fd;box-shadow:0 10px 25px #0f172a0d}.tool strong{display:block;margin-top:8px}.tool small{color:#64748b;line-height:1.5}.scenario{border-left:4px solid #0ea5e9;padding:15px;background:linear-gradient(90deg,#eff6ff,#f0fdfa);border-radius:11px;margin-bottom:15px;color:#334155;line-height:1.6}.terminal{background:linear-gradient(180deg,#020617,#07111f);color:#b8f7c2;border-radius:14px;padding:15px;font:13px Consolas,monospace;min-height:185px;white-space:pre-wrap;border:1px solid #1e293b;box-shadow:inset 0 0 25px #0005}.terminal input{width:100%;background:transparent;border:0;outline:0;color:#fff;font:inherit}.quiz-option{display:block;width:100%;text-align:left;margin:8px 0;padding:13px;border:1px solid #dbe2ea;background:#fff;border-radius:11px;cursor:pointer;transition:.15s}.quiz-option:hover{border-color:#60a5fa;background:#eff6ff}.quiz-option.correct{border-color:#16a34a;background:#dcfce7}.quiz-option.wrong{border-color:#dc2626;background:#fee2e2}.notice{padding:12px;border-radius:11px;margin-bottom:15px;font-size:13px;display:none}.notice.show{display:block}.notice.error{background:#fee2e2;color:#991b1b}.notice.ok{background:#dcfce7;color:#166534}.loading{position:fixed;inset:0;z-index:1000;display:grid;place-items:center;background:#f4f7fb}.loading-box{text-align:center;background:#fff;padding:30px;border-radius:20px;box-shadow:0 20px 60px #0f172a18}.spinner{width:38px;height:38px;margin:auto auto 13px;border:4px solid #dbeafe;border-top-color:#2563eb;border-radius:50%;animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}@media(max-width:1150px){.stats{grid-template-columns:repeat(2,1fr)}.cards{grid-template-columns:repeat(2,1fr)}.tool-grid{grid-template-columns:repeat(2,1fr)}.main{padding:22px}}@media(max-width:800px){.sidebar{transform:translateX(-100%);transition:.25s}.sidebar.open{transform:translateX(0)}.main{width:100%;margin:0;padding:16px}.menu-btn{display:block}.profile{display:none}.grid2{grid-template-columns:1fr}}@media(max-width:560px){.stats,.cards,.tool-grid{grid-template-columns:1fr}.hero{padding:22px}.hero h3{font-size:22px}.section-title{gap:10px;align-items:flex-start;flex-direction:column}}
-.work-card{background:#fff;border:1px solid #e2e8f0;border-radius:18px;padding:18px;box-shadow:0 8px 25px #0f172a0a}.work-card h4{margin:8px 0}.work-badge{display:inline-block;padding:6px 9px;border-radius:999px;background:#ecfeff;color:#0e7490;font-size:10px;font-weight:900}.work-meta{display:flex;gap:7px;flex-wrap:wrap;margin:10px 0}.work-step{border:1px solid #e2e8f0;border-radius:14px;padding:15px;margin:10px 0;background:#f8fafc}.work-option{display:block;width:100%;text-align:left;margin:7px 0;padding:11px;border:1px solid #dbe2ea;background:#fff;border-radius:10px;cursor:pointer}.work-option:hover{border-color:#60a5fa;background:#eff6ff}.work-option.selected{border-color:#2563eb;background:#eff6ff}.work-result{padding:13px;border-radius:11px;margin-top:12px;line-height:1.6}.work-success{background:#dcfce7;color:#166534}.work-fail{background:#fee2e2;color:#991b1b}.work-tools{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0}.work-tool{padding:7px 10px;background:#f1f5f9;border-radius:8px;font-size:11px;font-weight:800}.work-report{width:100%;min-height:90px;padding:11px;border:1px solid #cbd5e1;border-radius:10px;resize:vertical;font-family:inherit}@media(max-width:800px){.work-card{padding:14px}}</style>
-</head>
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;background:#f4f7fb;color:#172033}
+.app{display:flex;min-height:100vh}.side{width:255px;position:fixed;inset:0 auto 0 0;background:#07111f;color:#fff;padding:20px 14px;z-index:10}.brand{display:flex;gap:11px;align-items:center;padding:5px 8px 20px;border-bottom:1px solid #ffffff12}.logo{width:44px;height:44px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#2563eb,#06b6d4);font-weight:900}.brand b{font-size:15px}.brand small{display:block;color:#94a3b8;margin-top:3px}.nav-title{font-size:9px;letter-spacing:.15em;color:#64748b;font-weight:900;margin:20px 9px 8px}.nav button{width:100%;border:0;background:transparent;color:#cbd5e1;text-align:left;padding:11px 12px;border-radius:11px;cursor:pointer;margin:2px 0;font-weight:700}.nav button:hover,.nav button.active{background:#ffffff10;color:#fff}.main{margin-left:255px;width:calc(100% - 255px);padding:25px;max-width:1600px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}.top h1{margin:0;font-size:24px}.top p{margin:4px 0;color:#64748b;font-size:12px}.profile{display:flex;align-items:center;gap:10px;background:#fff;padding:7px 10px;border-radius:14px;border:1px solid #e5eaf1}.avatar{width:38px;height:38px;border-radius:11px;background:#2563eb;color:#fff;display:grid;place-items:center;font-weight:900}.logout{border:0;background:#fff1f2;color:#be123c;border-radius:9px;padding:8px 10px;font-weight:800;cursor:pointer}.view{display:none}.view.active{display:block}.hero{padding:28px;border-radius:22px;color:#fff;background:linear-gradient(135deg,#07111f,#172554 58%,#0e7490);box-shadow:0 18px 45px #0f172a20}.hero h2{margin:0 0 7px;font-size:27px}.hero p{max-width:850px;color:#dbeafe;line-height:1.65;font-size:13px}.badges{display:flex;gap:8px;flex-wrap:wrap}.badge{padding:8px 11px;border:1px solid #ffffff20;background:#ffffff10;border-radius:999px;font-size:11px}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:13px;margin:16px 0}.stat,.card{background:#fff;border:1px solid #e4eaf1;border-radius:17px;padding:17px;box-shadow:0 8px 28px #0f172a0b}.stat small{color:#64748b;font-weight:800}.stat strong{display:block;font-size:25px;margin-top:7px}.section{margin-top:22px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:11px}.section-head h3{margin:0;font-size:18px}.muted{color:#64748b;font-size:12px;line-height:1.6}.jobs{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}.job{background:#fff;border:1px solid #e4eaf1;border-radius:17px;padding:17px;cursor:pointer;transition:.2s}.job:hover{transform:translateY(-3px);box-shadow:0 14px 35px #0f172a12}.job .icon{font-size:28px}.job h4{margin:9px 0 6px}.job p{font-size:12px;color:#64748b;line-height:1.55;margin:0}.tag{display:inline-block;margin-top:11px;padding:5px 8px;border-radius:999px;background:#eff6ff;color:#1d4ed8;font-size:9px;font-weight:900}.btn{border:0;border-radius:10px;padding:10px 14px;background:#2563eb;color:#fff;font-weight:800;cursor:pointer}.btn.secondary{background:#e8eef6;color:#172033}.btn.green{background:#059669}.grid2{display:grid;grid-template-columns:1.4fr .6fr;gap:15px}.work-order{border-left:4px solid #2563eb;background:#f8fbff;padding:15px;border-radius:10px;line-height:1.65}.step{padding:11px;border:1px solid #e5eaf1;border-radius:11px;margin:8px 0;background:#fff}.progress{height:9px;background:#e5eaf1;border-radius:99px;overflow:hidden}.progress>i{display:block;height:100%;background:linear-gradient(90deg,#2563eb,#06b6d4,#10b981)}textarea,input{width:100%;padding:11px;border:1px solid #cbd5e1;border-radius:10px;font:inherit}.loading{position:fixed;inset:0;background:#f4f7fb;z-index:99;display:grid;place-items:center}.loading div{background:#fff;padding:28px;border-radius:18px;box-shadow:0 20px 60px #0f172a20;text-align:center}.mobile{display:none}.notice{padding:11px;border-radius:10px;margin:10px 0;font-size:12px}.ok{background:#dcfce7;color:#166534}.err{background:#fee2e2;color:#991b1b}
+@media(max-width:1000px){.jobs{grid-template-columns:repeat(2,1fr)}.stats{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}@media(max-width:700px){.side{transform:translateX(-100%);transition:.2s}.side.open{transform:none}.main{margin:0;width:100%;padding:15px}.mobile{display:block;border:0;background:#fff;padding:9px;border-radius:10px}.top{gap:10px}.profile{display:none}.jobs{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+</style></head>
 <body>
-<div id="loading" class="loading"><div class="loading-box"><div class="spinner"></div><strong>Memuat Virtual Lab...</strong><p style="color:#64748b;font-size:12px">Menghubungkan Firebase</p></div></div>
-<div class="app">
-<aside id="sidebar" class="sidebar">
-<div class="brand"><div class="brand-icon">TKJ</div><div><h1>TKJ Virtual Lab</h1><p>Laboratorium Komputer & Jaringan</p></div></div>
-<div class="nav-title">Pembelajaran</div><nav class="nav">
-<button class="active" data-view="dashboard"><span class="nav-icon">🏠</span>Dashboard</button>
-<button data-view="materi"><span class="nav-icon">📚</span>Materi TKJ</button>
-<button data-view="dunia-kerja"><span class="nav-icon">🧑‍🔧</span>Dunia Kerja TKJ</button><button data-view="workshop"><span class="nav-icon">🧰</span>Virtual Workshop</button>
-<button data-view="diskusi"><span class="nav-icon">💬</span>Diskusi Siswa</button>
-<div class="nav-title">Perkembangan</div>
-<button data-view="nilai"><span class="nav-icon">⭐</span>Nilai & XP</button>
-<button data-view="laporan"><span class="nav-icon">📄</span>Laporan Praktikum</button>
-</nav></aside>
-<main class="main">
-<div class="topbar"><div style="display:flex;align-items:center;gap:12px"><button id="menuBtn" class="menu-btn">☰</button><div class="welcome"><h2>Dashboard Siswa</h2><p>Belajar, praktik, dan selesaikan masalah seperti teknisi sungguhan.</p></div></div><div class="profile"><div id="avatar" class="avatar">S</div><div><div id="profileName" class="profile-name">Siswa</div><div class="profile-role">SISWA</div></div><button id="logoutBtn" class="logout">Keluar</button></div></div>
-<div id="notice" class="notice"></div>
+<div id="loading" class="loading"><div><b>TKJ WorkLab</b><p class="muted">Menyiapkan ruang kerja siswa...</p></div></div>
+<aside id="side" class="side"><div class="brand"><div class="logo">TKJ</div><div><b>TKJ WorkLab</b><small>Virtual Technical Workspace</small></div></div><div class="nav-title">WORKSPACE</div><div class="nav">
+<button class="active" data-v="dashboard">⌂ Dashboard</button><button data-v="dunia">🧑‍🔧 Work Order</button><button data-v="workshop">🧰 Virtual Workshop</button><button data-v="materi">📚 Referensi Kerja</button><button data-v="diskusi">💬 Diskusi</button>
+</div><div class="nav-title">PERFORMA</div><div class="nav"><button data-v="nilai">★ Nilai & XP</button><button data-v="laporan">▣ Laporan Pekerjaan</button></div></aside>
+<main class="main"><div class="top"><div style="display:flex;gap:10px;align-items:center"><button id="menu" class="mobile">☰</button><div><h1>Ruang Kerja Teknisi</h1><p>Kerjakan pekerjaan seperti teknisi TKJ di lapangan.</p></div></div><div class="profile"><div id="avatar" class="avatar">S</div><div><b id="name">Siswa</b><small style="display:block;color:#64748b">SISWA</small></div><button id="logout" class="logout">Keluar</button></div></div>
 
-<section id="view-dashboard" class="view active">
-<div class="hero"><h3>Halo, <span id="heroName">Siswa</span>! 👋</h3><p>Masuk sebagai teknisi junior: terima work order, lakukan pemeriksaan, kerjakan instalasi atau konfigurasi, uji hasil, lalu dokumentasikan pekerjaan. Fokus utama adalah keterampilan kerja nyata TKJ.</p><div class="pills"><span class="pill">👤 Kelas: <b id="heroClass">-</b></span><span class="pill">⭐ XP: <b id="heroXp">0</b></span><span class="pill">🏆 Level: <b id="heroLevel">1</b></span></div></div>
-<div class="stats"><div class="stat"><div class="stat-label">Pekerjaan Selesai</div><div id="statPraktikum" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Workshop TKJ</div><div id="statAlat" class="stat-value">0</div></div><div class="stat"><div class="stat-label">XP Diperoleh</div><div id="statXp" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Level</div><div id="statLevel" class="stat-value">1</div></div></div>
-<div class="section-title"><h3>Mulai Belajar</h3><span>Pilih aktivitas</span></div>
-<div class="cards">
-<div class="feature" data-go="dunia-kerja"><div class="feature-icon">🧑‍🔧</div><h4>Mulai Work Order</h4><p>Kerjakan tugas teknisi dari tiket pelanggan sampai laporan.</p></div><h4>Uji Kompetensi</h4><p style="color:#cbd5e1">Hadapi kasus jaringan, buktikan diagnosis, dan lulus tanpa menebak.</p></div>
-<h4>Kenali Alat</h4><p>Kenali bentuk, port, fungsi, dan penggunaan perangkat.</p></div>
-<h4>Praktikum Nyata</h4><p>Bangun LAN, konfigurasi router, dan uji koneksi.</p></div><div class="feature" data-go="dunia-kerja" style="background:linear-gradient(135deg,#07111f,#0f766e);color:#fff;border-color:#0f766e"><div class="feature-icon" style="background:#ffffff14">🧑‍🔧</div><h4>Simulasi Dunia Kerja</h4><p style="color:#d1fae5">Perakitan PC, Wi-Fi, kabel, router, server, CCTV, fiber, helpdesk, dan troubleshooting.</p></div><div class="feature" data-go="workshop" style="background:linear-gradient(135deg,#111827,#2563eb);color:#fff;border-color:#2563eb"><div class="feature-icon" style="background:#ffffff14">🧰</div><h4>Virtual Workshop</h4><p style="color:#dbeafe">Meja kerja interaktif: rakit PC, crimping, Wi-Fi, rack, MikroTik, Cisco, fiber dan CCTV.</p></div>
-<h4>Troubleshooting</h4><p>Cari penyebab gangguan tanpa langsung diberi jawabannya.</p></div>
-<h4>Uji Pemahaman</h4><p>Uji pemahaman setelah materi dan praktik.</p></div>
-<div class="feature" data-go="nilai"><div class="feature-icon">⭐</div><h4>Nilai & XP</h4><p>Lihat perkembangan, XP, level, dan hasil praktik.</p></div>
-</div>
-<div class="section-title"><h3>Progress Belajar</h3><span id="progressText">0%</span></div><div class="card"><div style="display:flex;justify-content:space-between;font-size:13px;font-weight:700;margin-bottom:9px"><span>Perkembangan</span><span id="progressPercent">0%</span></div><div class="progress-track"><div id="progressBar" class="progress-bar"></div></div></div>
-</section>
+<section id="v-dashboard" class="view active"><div class="hero"><h2>Selamat datang, <span id="heroName">Teknisi</span>.</h2><p>Di sini kamu tidak sekadar menjawab soal. Kamu menerima <b>work order</b>, membaca kebutuhan pelanggan, memilih tindakan, melakukan instalasi atau konfigurasi, menguji hasil, dan membuat laporan pekerjaan.</p><div class="badges"><span class="badge">Kelas: <b id="kelas">-</b></span><span class="badge">XP: <b id="xp">0</b></span><span class="badge">Level: <b id="level">1</b></span></div></div>
+<div class="stats"><div class="stat"><small>WORK ORDER SELESAI</small><strong id="done">0</strong></div><div class="stat"><small>MODUL WORKSHOP</small><strong id="mods">0/8</strong></div><div class="stat"><small>XP</small><strong id="xp2">0</strong></div><div class="stat"><small>LEVEL</small><strong id="level2">1</strong></div></div>
+<div class="section"><div class="section-head"><h3>⚡ Pekerjaan berikutnya</h3><span class="muted">Pilih tiket untuk mulai</span></div><div id="jobCards" class="jobs"></div></div></section>
 
-<section id="view-materi" class="view">
-<div class="section-title"><h3>📚 Materi TKJ — LAN Dasar & Cisco</h3><span>Belajar sebelum praktik</span></div>
-<div class="grid2"><div>
-<div class="lesson"><h4>1. Apa itu jaringan komputer?</h4><p>Jaringan adalah hubungan beberapa perangkat agar dapat bertukar data dan menggunakan sumber daya bersama. Dalam praktik TKJ, kamu perlu memahami perangkat, media transmisi, alamat IP, dan cara menguji koneksi.</p></div>
-<div class="lesson"><h4>2. IP Address</h4><p>IP adalah alamat logis perangkat di jaringan. Contoh <b>192.168.10.10/24</b>. Pada jaringan /24, subnet mask-nya adalah <b>255.255.255.0</b>.</p></div>
-<div class="lesson"><h4>3. Switch dan Router</h4><p><b>Switch</b> menghubungkan perangkat dalam LAN. <b>Router</b> menghubungkan jaringan yang berbeda dan memiliki interface yang dapat diberi alamat IP.</p></div>
-<div class="lesson"><h4>4. Ping</h4><p>Ping digunakan untuk menguji keterjangkauan perangkat. Jika gagal, jangan langsung menyimpulkan router rusak. Periksa kabel, interface, IP, subnet, dan gateway.</p></div>
-</div><div class="card"><h4>Urutan berpikir teknisi</h4><p style="color:#64748b;line-height:1.7;font-size:13px;margin-top:8px">1️⃣ Amati gejala<br>2️⃣ Periksa fisik dan koneksi<br>3️⃣ Periksa konfigurasi<br>4️⃣ Uji dengan perintah<br>5️⃣ Tentukan penyebab<br>6️⃣ Perbaiki<br>7️⃣ Uji ulang<br><br><b>Jangan asal mengganti konfigurasi.</b> Teknisi yang baik mencari bukti terlebih dahulu.</p><button class="btn" data-go="dunia-kerja">Mulai pekerjaan →</button></div></div>
-</section>
-
-<section id="view-alat" class="view">
-<div class="section-title"><h3>🧰 Kenali Alat</h3><span>Klik alat untuk melihat kegunaannya</span></div><div id="toolGrid" class="tool-grid"></div><div id="toolDetail" class="card" style="margin-top:16px">Pilih salah satu alat di atas untuk melihat fungsi, port penting, dan contoh penggunaannya.</div>
-</section>
-
-<section id="view-praktik" class="view">
-<div class="section-title"><h3>🧪 Praktikum LAN Dasar</h3><span id="labLevel">Pemula</span></div>
-<div class="scenario"><b>Skenario:</b> Bangun koneksi <b>PC → Switch → Router</b>. PC menggunakan IP <b id="pcIp">192.168.10.10/24</b> dan router G0/0 menggunakan <b id="routerIp">192.168.10.1/24</b>. Setelah konfigurasi, lakukan ping. <br><br><b>Gangguan latihan:</b> <span id="faultText">Interface G0/0 dibuat shutdown. Temukan penyebabnya.</span></div>
-<div class="grid2"><div class="card"><h4>Langkah Praktikum</h4><div id="steps"></div><div class="toolbar"><button id="resetLab" class="btn secondary">Reset</button><button id="openSimulator" class="btn">Buka Simulator CLI</button></div></div><div class="card"><h4>CLI Router</h4><div class="terminal" id="terminal">Router&gt; <input id="cliInput" autocomplete="off" placeholder="ketik perintah, contoh: enable"></div><p style="font-size:12px;color:#64748b;margin-top:10px">Perintah dasar: <code>enable</code>, <code>configure terminal</code>, <code>interface g0/0</code>, <code>ip address ...</code>, <code>no shutdown</code>, <code>end</code>, <code>show ip interface brief</code>, <code>ping ...</code></p></div></div>
-</section>
-
-<section id="view-dunia-kerja" class="view">
-<div class="section-title"><h3>🧑‍🔧 Simulasi Dunia Kerja TKJ</h3><span>Praktik seperti teknisi lapangan</span></div>
-<div class="scenario"><b>MODE KERJA NYATA:</b> Kamu berperan sebagai teknisi junior. Setiap pekerjaan dimulai dari <b>tiket pelanggan / work order</b>. Baca gejala, periksa alat, ambil bukti, lakukan pekerjaan, uji hasil, lalu tulis kesimpulan. <b>Jangan menebak.</b></div>
-<div id="workProgress" class="card" style="margin-bottom:15px"></div>
-<div id="workStations" class="cards"></div>
-<div id="workArea" class="card" style="margin-top:16px;display:none"></div>
-</section>
-
-<section id="view-workshop" class="view"><div class="section-title"><h3>🧰 Virtual Workshop TKJ</h3><span>Meja kerja teknisi interaktif</span></div><div class="scenario"><b>Praktik tingkat lanjut:</b> buka meja kerja, lakukan pekerjaan berdasarkan work order, uji hasil, lalu dokumentasikan. <b>Setiap modul terhubung ke simulasi lengkap.</b></div><div class="card"><h4>🔧 Virtual Workshop</h4><p style="color:#64748b;line-height:1.7">Latihan interaktif mencakup perakitan PC, crimping kabel, site survey Wi-Fi, network rack, MikroTik, Cisco VLAN, fiber optic, dan IP CCTV/PoE.</p><button class="btn" id="openWorkshop">Buka Meja Kerja →</button></div></section>
-
-<section id="view-trouble" class="view">
-<div class="section-title"><h3>🛠️ Mission Troubleshooting</h3><span>Temukan masalah dengan bukti</span></div>
-<div class="card"><div class="scenario"><b>Kasus:</b> PC-01 tidak dapat melakukan ping ke router. Kamu diberi tiga petunjuk: interface router bisa saja mati, IP PC bisa salah, atau kabel belum terhubung. Jangan menebak.</div><div id="troubleTasks"></div><div id="troubleResult" style="margin-top:12px;font-weight:700"></div></div>
-</section>
-
-<section id="view-kompetensi" class="view">
-<div class="section-title"><h3>🎯 Uji Kompetensi TKJ</h3><span>Harus Lulus untuk menyelesaikan</span></div>
-<div class="scenario"><b>Aturan Uji Kompetensi:</b> Jangan menebak. Baca gejala, kumpulkan bukti, tentukan penyebab, pilih perbaikan, lalu jelaskan alasannya. Nilai minimal <b>80/100</b>. Jika belum lulus, kamu <b>wajib mengulang</b> sampai benar.</div>
-<div class="card">
-<div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center"><div><h4 style="margin:0">Misi <span id="compMissionNo">1</span> dari 3</h4><p id="compMissionTitle" style="color:#64748b;font-size:13px;margin:6px 0 0"></p></div><div style="font-weight:800">Percobaan: <span id="compAttempts">0</span></div></div>
-<div id="compCase" style="margin-top:15px"></div>
-<div id="compQuestions" style="margin-top:15px"></div>
-<div class="toolbar"><button id="compSubmit" class="btn">🔍 Periksa Jawaban</button><button id="compRetry" class="btn secondary" style="display:none">🔁 Ulangi Misi</button></div>
-<div id="compResult" class="notice"></div>
-</div>
-<div class="card" style="margin-top:16px"><h4>🏁 Status Kelulusan</h4><p id="compStatus" style="color:#64748b;font-size:13px;line-height:1.7;margin-bottom:0">Belum lulus. Selesaikan seluruh misi dengan nilai minimal 80.</p></div>
-</section>
-<section id="view-kuis" class="view">
-<div class="section-title"><h3>📝 Uji Pemahaman</h3><span>5 soal</span></div><div id="quizBox" class="card"></div>
-</section>
-
-<section id="view-diskusi" class="view">
-<div class="section-title"><h3>💬 Ruang Diskusi Siswa</h3><span>Komunikasi antar akun siswa</span></div>
-<div class="card">
-<div class="scenario"><b>Gunakan untuk berdiskusi.</b> Tanyakan konsep, bandingkan hasil troubleshooting, dan jelaskan alasanmu kepada teman. Jangan hanya mengirim jawaban akhir—jelaskan proses berpikirmu.</div>
-<div id="chatMessages" style="height:360px;overflow:auto;background:#f8fafc;border:1px solid #e5e7eb;border-radius:12px;padding:12px"></div>
-<div style="display:flex;gap:9px;margin-top:10px">
-<input id="chatInput" maxlength="500" placeholder="Tulis pesan untuk siswa lain..." style="flex:1;border:1px solid #dbe2ea;border-radius:10px;padding:12px;outline:none">
-<button id="chatSend" class="btn">Kirim</button>
-</div>
-<div style="font-size:11px;color:#64748b;margin-top:8px">Maksimal 500 karakter. Chat hanya dapat digunakan setelah login sebagai siswa.</div>
-</div>
-</section>
-<section id="view-nilai" class="view">
-<div class="section-title"><h3>⭐ Nilai & XP</h3><span>Tersimpan di Firebase</span></div><div class="stats"><div class="stat"><div class="stat-label">XP</div><div id="scoreXp" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Level</div><div id="scoreLevel" class="stat-value">1</div></div><div class="stat"><div class="stat-label">Nilai Kuis</div><div id="scoreQuiz" class="stat-value">0</div></div><div class="stat"><div class="stat-label">Praktikum</div><div id="scoreLab" class="stat-value">0</div></div></div><div class="card"><h4>Bagaimana XP diperoleh?</h4><p style="color:#64748b;font-size:13px;line-height:1.7">Kenali alat +10 XP • Selesaikan langkah praktikum +10 XP • Selesaikan troubleshooting +30 XP • Kuis maksimal +50 XP. Uji Kompetensi wajib lulus minimal 80/100 dan akan diulang jika gagal. Level naik setiap 100 XP.</p></div></section>
-
-<section id="view-laporan" class="view">
-<div class="section-title"><h3>📄 Laporan Praktikum</h3><span>Riwayat aktivitasmu</span></div><div class="card"><div id="reportContent" style="color:#64748b;font-size:13px;line-height:1.8">Belum ada aktivitas.</div></div></section>
-</main></div>
+<section id="v-dunia" class="view"><div class="section-head"><h3>🧑‍🔧 Work Order — Dunia Kerja</h3><span class="muted">Simulasi pekerjaan teknisi</span></div><div id="jobArea"></div></section>
+<section id="v-workshop" class="view"><div class="card"><h3>🧰 Virtual Workshop TKJ</h3><p class="muted">Meja kerja interaktif untuk perakitan PC, kabel LAN, Wi-Fi, rack, MikroTik, Cisco, fiber optic, dan CCTV IP/PoE.</p><button class="btn" id="openWorkshop">Buka Virtual Workshop →</button></div></section>
+<section id="v-materi" class="view"><div class="card"><h3>📚 Referensi Kerja</h3><div class="work-order"><b>Standar kerja teknisi:</b><br>1. Baca tiket dan scope pekerjaan.<br>2. Identifikasi risiko dan alat.<br>3. Periksa kondisi awal.<br>4. Kerjakan perubahan secara terukur.<br>5. Uji hasil dari sisi pelanggan.<br>6. Dokumentasikan konfigurasi dan hasil.<br>7. Serah terima pekerjaan.</div></div></section>
+<section id="v-diskusi" class="view"><div class="card"><h3>💬 Diskusi Siswa</h3><p class="muted">Ruang diskusi tetap tersedia untuk berbagi pengalaman praktik.</p><div id="chatMessages" style="height:330px;overflow:auto;border:1px solid #e5eaf1;border-radius:12px;padding:10px"></div><div style="display:flex;gap:8px;margin-top:9px"><input id="chatInput" placeholder="Tulis pertanyaan atau pengalaman praktik..."><button class="btn" id="chatSend">Kirim</button></div></div></section>
+<section id="v-nilai" class="view"><div class="card"><h3>★ Nilai & XP</h3><p class="muted">XP diperoleh dari pekerjaan yang berhasil diselesaikan. Sistem tidak memberikan XP hanya karena membuka halaman.</p><div class="stats"><div class="stat"><small>XP</small><strong id="nxp">0</strong></div><div class="stat"><small>LEVEL</small><strong id="nlevel">1</strong></div><div class="stat"><small>WORK ORDER</small><strong id="ndone">0</strong></div><div class="stat"><small>WORKSHOP</small><strong id="nmods">0/8</strong></div></div></div></section>
+<section id="v-laporan" class="view"><div class="card"><h3>▣ Laporan Pekerjaan</h3><p class="muted">Laporan yang dibuat siswa tersimpan di akun dan dapat digunakan sebagai bukti pekerjaan.</p><div id="reports"></div></div></section>
+</main>
 <script type="module">
 import{initializeApp,getApps,getApp}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
 import{getAuth,onAuthStateChanged,signOut}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
-import{getFirestore,doc,getDoc,setDoc,serverTimestamp,collection,addDoc,query,orderBy,onSnapshot,limit}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
-const firebaseConfig={apiKey:"AIzaSyBD3EduiDBbGI9M381i9GMkfD74RfpCM78",authDomain:"tkj-virtual-lab-web-43aca.firebaseapp.com",projectId:"tkj-virtual-lab-web-43aca",storageBucket:"tkj-virtual-lab-web-43aca.firebasestorage.app",messagingSenderId:"860991490192",appId:"1:860991490192:web:019928cbca09128af4b015"};
-const app=getApps().length?getApp():initializeApp(firebaseConfig),auth=getAuth(app),db=getFirestore(app);
-let uid=null,profile={},labConfig={title:"Praktikum LAN Dasar",level:"Pemula",routerIp:"192.168.10.1",pcIp:"192.168.10.10",fault:"Interface G0/0 dibuat shutdown. Temukan penyebabnya."};
-let state={xp:0,alat:[],steps:[],trouble:false,quiz:0,quizDone:false,labDone:false,competencyScore:0,competencyPassed:false,competencyAttempts:0,competencyMission:0,workshopDone:[],workshopAttempts:{},workshopReports:{}};
+import{getFirestore,doc,getDoc,setDoc,serverTimestamp,collection,query,orderBy,limit,onSnapshot,addDoc}from"https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyBD3EduiDBbGI9M381i9GMkfD74RfpCM78",authDomain:"tkj-virtual-lab-web-43aca.firebaseapp.com",projectId:"tkj-virtual-lab-web-43aca",storageBucket:"tkj-virtual-lab-web-43aca.firebasestorage.app",messagingSenderId:"860991490192",appId:"1:860991490192:web:019928cbca09128af4b015"};
+const app=getApps().length?getApp():initializeApp(cfg),auth=getAuth(app),db=getFirestore(app);const RESET_VERSION=3;let uid,profile={},state={xp:0,work:[],reports:{},workshop:{}};
 const $=id=>document.getElementById(id);
-function notify(msg,type="ok"){const n=$("notice");n.textContent=msg;n.className="notice show "+type;setTimeout(()=>n.className="notice",3500)}
-function render(){const xp=Number(state.xp||0),level=Math.max(1,Math.floor(xp/100)+1),prog=Math.min(100,Math.round((state.steps.length/5)*50+(state.trouble?15:0)+(state.competencyPassed?25:0)+(state.quizDone?10:0)));["heroXp","statXp","scoreXp"].forEach(id=>$(id).textContent=xp);["heroLevel","statLevel","scoreLevel"].forEach(id=>$(id).textContent=level);$("statAlat").textContent=state.alat.length;$("statPraktikum").textContent=state.labDone?1:0;if($("workProgress"))renderWorkProgress();$("scoreQuiz").textContent=state.quiz;$("scoreLab").textContent=state.labDone?100:0;$("progressBar").style.width=prog+"%";$("progressPercent").textContent=prog+"%";$("progressText").textContent=prog+"% selesai";$("reportContent").innerHTML="XP: <b>"+xp+"</b><br>Alat dipelajari: <b>"+state.alat.length+"/8</b><br>Langkah praktikum: <b>"+state.steps.length+"/5</b><br>Troubleshooting: <b>"+(state.trouble?"Selesai":"Belum selesai")+"</b><br>Uji Kompetensi: <b>"+(state.competencyPassed?"LULUS":"Belum lulus")+"</b> ("+state.competencyScore+"/100)<br>Kuis: <b>"+(state.quizDone?state.quiz+"/50":"Belum dikerjakan")+"</b>"}
-async function save(){if(!uid)return;try{await setDoc(doc(db,"users",uid),{xp:state.xp,level:Math.max(1,Math.floor(state.xp/100)+1),praktikumSelesai:state.labDone?1:0,progress:Math.min(100,Math.round((state.steps.length/5)*60+(state.trouble?20:0)+(state.quizDone?20:0))),labLAN:{score:state.labDone?100:0,status:state.labDone?"selesai":"berjalan",updatedAt:serverTimestamp()},tkjVirtualLab:{alat:state.alat,steps:state.steps,troubleshooting:state.trouble,quizScore:state.quiz,quizDone:state.quizDone,competencyScore:state.competencyScore,competencyPassed:state.competencyPassed,competencyAttempts:state.competencyAttempts,competencyMission:compMissionIndex,workshopDone:state.workshopDone,workshopAttempts:state.workshopAttempts,workshopReports:state.workshopReports,updatedAt:serverTimestamp()}},{merge:true})}catch(e){console.error(e);notify("Progress gagal disimpan ke Firebase. Periksa Firestore Rules.","error")}}
-function addXp(n){state.xp=Math.max(0,state.xp+n);render();save()}
-
-// ==============================
-// SIMULASI DUNIA KERJA TKJ
-// ==============================
-const workStations=[
-{id:"pc",icon:"🖥️",title:"Perakitan PC Teknisi",role:"Teknisi PC",ticket:"PC kantor baru harus dirakit dari komponen terpisah. Setelah dirakit, komputer wajib POST dan siap diinstal OS.",tools:["Obeng PH2","Gelang anti-statis","Thermal paste","SATA/NVMe","Kabel power"],steps:[
-["Identifikasi komponen","Sebelum merakit, pilih kombinasi yang kompatibel.",["CPU dipasang ke socket motherboard yang sesuai","RAM dipasang tanpa memperhatikan jenis DDR","PSU dipilih hanya berdasarkan bentuk","SSD dipasang ke slot apa saja"],0],
-["Urutan pemasangan","Pilih urutan kerja teknisi yang aman.",["Pasang CPU/RAM/storage → motherboard → PSU/kabel → GPU → cek ulang","Nyalakan PSU lalu pasang CPU","Pasang GPU sebelum motherboard","Colok listrik sebelum semua kabel terpasang"],0],
-["CPU & thermal","Apa yang dilakukan sebelum memasang heatsink?",["Oles thermal paste secukupnya pada CPU","Melepas kipas CPU","Membasahi CPU","Mengoleskan pasta ke socket"],0],
-["Kabel daya","PC tidak menyala. Bukti menunjukkan ATX 24-pin belum terpasang.",["Pasang ATX 24-pin dan CPU EPS 4/8-pin sesuai motherboard","Ganti monitor","Instal driver","Ganti mouse"],0],
-["POST","Setelah power on, indikator POST normal dan BIOS mengenali RAM/SSD.",["Lanjut ke instalasi OS setelah cek BIOS","Langsung bongkar ulang","Ganti CPU","Cabut RAM"],0],
-["Kesimpulan","Pilih kesimpulan teknisi.",["Perakitan selesai karena komponen terpasang, POST normal, dan storage terdeteksi","PC selesai hanya karena kipas berputar","PC selesai tanpa uji BIOS","Ganti semua komponen"],0]]},
-{id:"os",icon:"💿",title:"Instalasi OS & Driver",role:"Teknisi IT Support",ticket:"PC kasir selesai dirakit tetapi belum memiliki sistem operasi. Teknisi harus menyiapkan boot, partisi, driver, dan verifikasi perangkat.",tools:["USB installer resmi","BIOS/UEFI","Driver LAN","Driver chipset","Device Manager"],steps:[
-["Boot mode","Media instalasi resmi sudah terpasang.",["Atur boot UEFI/USB sesuai kebutuhan lalu simpan perubahan","Hapus semua BIOS","Matikan Secure Boot tanpa alasan","Cabut SSD"],0],
-["Partisi","PC baru memiliki disk kosong.",["Buat partisi sesuai kebutuhan kerja dan pastikan disk target benar","Format semua disk tanpa membaca nama disk","Pilih disk secara acak","Matikan PC"],0],
-["Driver chipset","Setelah OS masuk, beberapa perangkat belum optimal.",["Instal driver chipset dari sumber resmi/vendor","Instal driver dari file acak","Hapus Device Manager","Ganti keyboard"],0],
-["Driver jaringan","Internet belum tersedia setelah OS terpasang.",["Periksa Device Manager lalu pasang driver NIC yang tepat","Ganti router dulu","Reset BIOS","Hapus akun Windows"],0],
-["Verifikasi","Teknisi harus memastikan perangkat siap digunakan.",["Cek Device Manager, IP, ping gateway, dan aplikasi kerja","Cukup melihat desktop","Restart tanpa tes","Cek wallpaper"],0],
-["Kesimpulan","Apa bukti PC siap diserahkan?",["OS aktif normal, driver penting terpasang, NIC bekerja, dan tes jaringan berhasil","Monitor menyala","Kipas berputar","Mouse menyala"],0]]},
-{id:"cable",icon:"🔌",title:"Crimping Kabel UTP & Cable Tester",role:"Teknisi Instalasi Jaringan",ticket:"Buat kabel patch straight-through untuk menghubungkan PC ke switch. Kabel harus lolos tester 1–8.",tools:["UTP Cat5e/Cat6","RJ45","Crimping tool","Cable tester","Stripper"],steps:[
-["Standar warna","Untuk kabel straight-through modern, pilih standar yang sama di kedua ujung.",["T568B ↔ T568B","T568A ↔ T568B","Warna bebas","Semua pin dibalik"],0],
-["Urutan T568B","Pilih urutan pin 1–8.",["Putih-Orange, Orange, Putih-Hijau, Biru, Putih-Biru, Hijau, Putih-Cokelat, Cokelat","Putih-Hijau, Hijau, Putih-Orange, Orange, Biru, Putih-Biru, Putih-Cokelat, Cokelat","Orange, Putih-Orange, Hijau, Putih-Hijau, Biru, Cokelat, Putih-Biru, Putih-Cokelat","Biru, Biru-Putih, Orange, Orange-Putih, Hijau, Hijau-Putih, Cokelat, Cokelat-Putih"],0],
-["Crimping","Setelah urutan benar, tindakan berikutnya?",["Potong rata, masukkan sampai ujung, pastikan jaket masuk, lalu crimp","Tarik semua pasangan","Potong konduktor sebelum masuk RJ45","Crimp tanpa konektor"],0],
-["Tester","Hasil tester: 1-2-3-4-5-6-7-8 normal.",["Kabel lulus continuity","Kabel pasti putus","Switch rusak","IP salah"],0],
-["Uji lapangan","Kabel dipasang dan link LED PC-switch menyala.",["Lanjut uji NIC dan ping","Langsung potong kabel","Ganti switch","Reset router"],0],
-["Kesimpulan","Apa yang dicatat di laporan?",["Jenis kabel, standar, hasil tester 1–8, titik A/B, dan hasil uji link","Hanya warna kabel","Nama teknisi saja","Harga RJ45 saja"],0]]},
-{id:"wifi",icon:"📶",title:"Teknisi Wi-Fi Rumah/Kantor",role:"Teknisi Wireless",ticket:"Pelanggan mengeluh Wi-Fi lantai 2 lambat dan sering putus. Teknisi harus melakukan survey, konfigurasi AP, keamanan, dan pengujian.",tools:["Access Point","Laptop survey","LAN cable","Wi-Fi analyzer","PoE injector"],steps:[
-["Survey awal","Di dekat tangga terdapat banyak jaringan pada channel yang sama.",["Pilih channel yang lebih sepi sesuai band dan lakukan pengujian ulang","Naikkan transmit power maksimum tanpa survey","Ganti SSID saja","Matikan keamanan"],0],
-["Penempatan AP","Sinyal lemah di ruang belakang.",["Tempatkan AP lebih sentral, tinggi, dan jauh dari penghalang/interferensi","Sembunyikan AP di lemari logam","Letakkan di lantai","Dekatkan ke microwave"],0],
-["SSID","Pelanggan meminta jaringan tamu terpisah.",["Buat SSID utama dan SSID guest dengan segmentasi yang sesuai","Gunakan satu password untuk semua perangkat","Nonaktifkan SSID","Buat 20 SSID"],0],
-["Keamanan","Jaringan kantor harus aman.",["Gunakan WPA2/WPA3 sesuai dukungan, password kuat, dan matikan WPS jika kebijakan mengharuskan","Gunakan password 12345678","Buka jaringan tanpa password","Bagikan password admin"],0],
-["Pengujian","Setelah konfigurasi, teknisi menguji dari beberapa titik.",["Uji RSSI, kecepatan, gateway, DNS, roaming/coverage, dan stabilitas","Cukup tes di dekat AP","Cek warna SSID","Restart laptop saja"],0],
-["Kesimpulan","Apa yang harus diserahkan?",["Peta titik uji, konfigurasi, hasil speed/ping, masalah awal, tindakan, dan rekomendasi","Hanya password Wi-Fi","Foto AP saja","Tidak perlu laporan"],0]]},
-{id:"router",icon:"🌐",title:"Instalasi Router & Internet Kantor",role:"Network Technician",ticket:"Kantor kecil memiliki modem/ONT ISP, router, switch, dan 10 PC. Internet harus berjalan tanpa mengganggu LAN internal.",tools:["Router","ONT/Modem","Switch","LAN tester","Laptop"],steps:[
-["Pahami jalur","Tentukan alur koneksi.",["ISP/ONT → WAN router → LAN router → switch → client","ISP → PC → switch → router","Switch → ONT → PC","AP → ISP langsung"],0],
-["WAN","ISP memberikan IP melalui DHCP.",["Set WAN sesuai metode ISP (DHCP) dan pastikan mendapat alamat","Set WAN 127.0.0.1","Gunakan IP random","Matikan WAN"],0],
-["LAN","LAN kantor menggunakan 192.168.50.0/24.",["Gateway LAN 192.168.50.1/24","Gateway 192.168.1.1 tanpa alasan","Gunakan 255.0.0.0","Tidak perlu gateway"],0],
-["DHCP","Client harus mendapatkan alamat otomatis.",["Buat DHCP scope 192.168.50.x dan exclude alamat perangkat penting","Semua client diberi IP sama","DHCP dimatikan","Gunakan gateway ISP sebagai IP PC"],0],
-["NAT","Client LAN perlu keluar internet melalui satu koneksi WAN.",["Aktifkan NAT/masquerade sesuai platform router","NAT tidak diperlukan dalam skenario ini","Ganti switch","Ganti RJ45"],0],
-["Uji serah terima","Tes dari client.",["Cek IP → ping gateway → ping IP publik → uji DNS/website","Langsung bilang selesai","Tes monitor","Reset router"],0]]},
-{id:"switch",icon:"🔀",title:"Konfigurasi Switch VLAN",role:"Network Technician",ticket:"Perusahaan membagi jaringan menjadi VLAN 10 STAFF dan VLAN 20 GUEST. Port user harus masuk VLAN yang benar.",tools:["Managed switch","Console cable","Laptop","Patch cable"],steps:[
-["Rancang VLAN","Tentukan segmentasi.",["VLAN 10 STAFF dan VLAN 20 GUEST","Satu VLAN untuk semua tanpa kebutuhan","VLAN berdasarkan warna kabel","VLAN berdasarkan merek PC"],0],
-["Access port","PC STAFF terhubung ke Fa0/1.",["Jadikan Fa0/1 access VLAN 10","Jadikan trunk tanpa alasan","Shutdown port","Masukkan VLAN 20"],0],
-["Guest","PC tamu di Fa0/10.",["Fa0/10 access VLAN 20","Fa0/10 VLAN 10","Hapus VLAN 20","Matikan switch"],0],
-["Trunk","Uplink antar switch membutuhkan beberapa VLAN.",["Gunakan trunk dan izinkan VLAN yang diperlukan","Gunakan access VLAN 10 saja","Cabut uplink","Ganti PC"],0],
-["Verifikasi","Perintah/bukti yang relevan?",["show vlan brief dan status trunk","show clock saja","ping monitor","dir"],0],
-["Kesimpulan","Apa yang diuji?",["Port membership, trunk, IP/gateway, dan komunikasi sesuai kebijakan antar-VLAN","Hanya lampu switch","Nama VLAN saja","Warna patch cord"],0]]},
-{id:"mikrotik",icon:"🟣",title:"MikroTik Dasar untuk Kantor",role:"Network Technician",ticket:"Router MikroTik dipasang untuk LAN kantor. Siswa harus memahami konsep interface, IP, DHCP, NAT, dan firewall dasar.",tools:["MikroTik","Winbox/WebFig","Laptop","Patch cable"],steps:[
-["Interface","Kenali WAN dan LAN.",["WAN ke ISP, LAN ke switch/client","Semua port dianggap sama","LAN langsung ke ISP tanpa router","Tidak perlu interface"],0],
-["IP LAN","LAN menggunakan 192.168.88.1/24.",["Pasang IP gateway pada interface LAN","Pasang 127.0.0.1","Pasang IP publik ke semua client","Tidak perlu IP"],0],
-["DHCP Server","Client harus mendapat IP otomatis.",["Buat DHCP server pada interface LAN dengan pool yang sesuai","DHCP di interface WAN","Semua client IP sama","Matikan DHCP"],0],
-["NAT","LAN perlu akses internet.",["Buat src-nat/masquerade dari LAN keluar WAN","Masquerade dari WAN ke LAN","Hapus route","Ganti AP"],0],
-["Firewall","Lindungi router dari akses tidak perlu.",["Terapkan aturan input/forward sesuai kebutuhan dan uji agar layanan sah tetap berjalan","Allow all tanpa alasan","Block semua trafik","Matikan firewall"],0],
-["Verifikasi","Bukti kerja selesai.",["Client mendapat DHCP, ping gateway, ping internet, DNS bekerja, dan rule sesuai kebijakan","Hanya Winbox terbuka","Restart router","Lihat CPU saja"],0]]},
-{id:"fiber",icon:"🧵",title:"Fiber Optic Technician",role:"Teknisi Fiber",ticket:"Link fiber antar ruangan down. Teknisi harus bekerja bersih dan aman, memeriksa konektor, power optik, dan jalur.",tools:["Fiber cleaner","VFL/visual fault locator","Optical power meter","Fusion splicer","Safety glasses"],steps:[
-["Keselamatan","Sebelum membuka konektor fiber.",["Gunakan prosedur keselamatan, jangan melihat langsung ke ujung fiber, dan jaga kebersihan","Lihat langsung cahaya fiber","Sentuh core dengan tangan","Tiup connector"],0],
-["Cleaning","Konektor terlihat kotor.",["Bersihkan dengan alat fiber cleaner yang sesuai","Lap dengan tangan","Gunakan air","Gosok dengan benda tajam"],0],
-["Visual test","VFL menunjukkan indikasi di dekat patch panel.",["Telusuri jalur dan periksa bending/connector pada area indikasi","Potong semua kabel","Ganti router","Reset switch"],0],
-["Power measurement","Power meter menunjukkan level di luar budget link.",["Bandingkan dengan budget link, periksa loss konektor/splice dan jalur","Abaikan hasil","Naikkan daya laser sembarangan","Ganti PC"],0],
-["Splicing","Jika splice diperlukan.",["Strip, cleave, align, fusion splice, protect sleeve, lalu uji loss","Sambung core dengan tangan","Gunakan RJ45","Crimp fiber seperti UTP"],0],
-["Serah terima","Bukti pekerjaan fiber.",["Catat jalur, jenis fiber, hasil power/loss, titik perbaikan, dan status link","Foto alat saja","Nama kabel saja","Tidak perlu pengukuran"],0]]},
-{id:"cctv",icon:"📹",title:"Instalasi CCTV IP & PoE",role:"Teknisi CCTV",ticket:"Toko memasang 4 kamera IP. Kamera harus terhubung PoE, memiliki IP yang benar, tampil di NVR, dan direkam.",tools:["IP Camera","PoE switch","NVR","UTP tester","Monitor"],steps:[
-["Topologi","Pilih jalur.",["Camera → PoE switch → LAN/NVR","Camera → HDMI langsung ke switch","Camera → RJ45 ke monitor","Camera → USB ke router"],0],
-["PoE","Kamera tidak menyala.",["Periksa PoE port, kabel, standar PoE, dan indikator link","Ganti monitor","Reset NVR saja","Ganti resolusi"],0],
-["IP plan","Kamera berada pada subnet CCTV.",["Beri IP unik sesuai subnet dan hindari konflik","Semua kamera IP sama","Gunakan 127.0.0.1","Tidak perlu IP"],0],
-["NVR","Kamera hidup tetapi belum tampil.",["Pastikan NVR dan kamera satu jalur jaringan, kredensial benar, dan stream didukung","Ganti mouse","Cabut semua kabel","Matikan PoE"],0],
-["Recording","Kamera tampil tetapi tidak merekam.",["Cek storage NVR, jadwal recording, stream, dan status disk","Naikkan brightness","Ganti keyboard","Reset monitor"],0],
-["Serah terima","Laporan teknisi.",["Catat ID kamera, IP, port PoE, posisi, hasil live view, recording, dan waktu uji","Hanya foto kamera","Password ditulis terbuka di laporan umum","Tidak perlu tes"],0]]},
-{id:"server",icon:"🖥️",title:"Server, NAS & Sharing",role:"IT Support/Server",ticket:"Kantor membutuhkan folder bersama dan printer jaringan. Akses harus sesuai hak pengguna dan dapat diuji.",tools:["Server/NAS","Switch","Client PC","Printer network","UPS"],steps:[
-["IP & hostname","Server harus mudah dikelola.",["Tetapkan hostname dan IP statis/reservasi sesuai desain jaringan","IP berubah setiap boot tanpa alasan","Gunakan IP konflik","Tanpa hostname"],0],
-["Share folder","Divisi keuangan tidak boleh dibuka untuk semua user.",["Buat share dengan permission sesuai kebutuhan dan prinsip least privilege","Everyone full control","Password dibagikan ke semua","Folder publik"],0],
-["Backup","Data kantor penting.",["Tentukan jadwal backup, lokasi backup, retensi, dan lakukan uji restore","Backup hanya jika ingat","Simpan satu-satunya copy di server","Tidak perlu restore test"],0],
-["Printer network","Printer harus digunakan beberapa PC.",["Hubungkan printer ke jaringan, beri IP/reservasi, instal driver/queue dan uji print","Colok USB ke setiap PC","Ganti switch","Matikan printer"],0],
-["UPS","Server harus tetap aman saat listrik terganggu.",["Gunakan UPS dan uji prosedur shutdown/backup","Cabut UPS","Pasang printer ke UPS tanpa perhitungan","Abaikan listrik"],0],
-["Serah terima","Bukti layanan.",["Uji akses user, file read/write sesuai hak, backup/restore, dan print test","Cukup login admin","Cukup lihat lampu","Tidak perlu uji"],0]]},
-{id:"helpdesk",icon:"🎫",title:"Helpdesk & Troubleshooting Profesional",role:"IT Support",ticket:"User melapor: 'Internet kantor mati'. Kamu harus menangani tiket tanpa langsung menyalahkan ISP.",tools:["Ticketing","Laptop teknisi","Cable tester","Ping/traceroute","Dokumentasi"],steps:[
-["Klarifikasi","Pertanyaan pertama yang paling berguna.",["Apakah satu perangkat atau semua user? Kapan mulai? Ada perubahan terakhir?","Siapa yang harus disalahkan?","Beli router baru","Restart semua perangkat"],0],
-["Scope","Hanya satu PC yang gagal, PC lain normal.",["Fokus ke endpoint: link, NIC, IP, gateway, DNS","Matikan router kantor","Hubungi ISP dulu","Ganti switch"],0],
-["Evidence","IP PC = 169.254.x.x.",["DHCP gagal; cek link, VLAN, DHCP scope/service","DNS pasti rusak","Monitor rusak","NVR bermasalah"],0],
-["Test berjenjang","PC mendapat IP valid tetapi tidak ping gateway.",["Periksa link/VLAN/gateway dan lakukan tes hop pertama","Tes website saja","Ganti DNS publik","Restart semua PC"],0],
-["Perbaikan","Setelah kabel patch diganti, ping gateway berhasil.",["Dokumentasikan penyebab, tindakan, hasil uji, dan waktu pemulihan","Tutup tiket tanpa catatan","Hapus konfigurasi","Ganti router"],0],
-["Kesimpulan","Sikap teknisi profesional.",["Berbasis bukti, perubahan terukur, komunikasi jelas, dan dokumentasi lengkap","Menebak cepat","Selalu reset","Menyembunyikan kesalahan"],0]]},
-{id:"security",icon:"🛡️",title:"Keamanan Jaringan Dasar",role:"Network/IT Support",ticket:"Ditemukan perangkat asing dan password Wi-Fi dibagikan terlalu luas. Teknisi diminta melakukan hardening tanpa mengganggu layanan.",tools:["Router/AP","Switch","Admin console","Password manager","Log"],steps:[
-["Akun admin","Password perangkat masih default.",["Ganti credential default dengan password kuat dan simpan aman","Biarkan default","Bagikan password admin di grup","Gunakan 123456"],0],
-["Wi-Fi","Password kantor tersebar.",["Rotasi credential sesuai kebijakan dan pisahkan guest network","Buka tanpa password","Gunakan password yang sama selamanya","Matikan enkripsi"],0],
-["Perangkat asing","Ada MAC tidak dikenal.",["Identifikasi melalui inventaris/log, isolasi sesuai prosedur, lalu verifikasi pemilik","Langsung blok semua","Abaikan","Hapus semua VLAN"],0],
-["Update","Firmware perangkat lama memiliki update resmi.",["Rencanakan update resmi, backup konfigurasi, maintenance window, lalu verifikasi","Download firmware acak","Update saat jam sibuk tanpa backup","Matikan update"],0],
-["Logging","Butuh jejak perubahan.",["Catat siapa, kapan, perubahan apa, dan hasil verifikasi","Hapus log","Gunakan catatan pribadi saja","Tidak perlu dokumentasi"],0],
-["Kesimpulan","Tujuan hardening.",["Mengurangi risiko sambil menjaga layanan tetap tersedia dan dapat diaudit","Membuat jaringan tidak bisa dipakai","Menghapus semua akun","Mengganti semua kabel"],0]]}
+const jobs=[
+{id:"pc",icon:"🖥️",title:"Instalasi PC Kantor",role:"Teknisi PC",ticket:"PC baru sudah dirakit. Lakukan pemeriksaan POST/BIOS, cek RAM dan SSD, lalu dokumentasikan kesiapan instalasi OS.",tools:"POST • BIOS • RAM • SSD"},
+{id:"lan",icon:"🔌",title:"Pembuatan Kabel LAN",role:"Teknisi Jaringan",ticket:"Buat patch cable T568B-T568B, lakukan continuity test pin 1–8, lalu buktikan link PC ke switch.",tools:"RJ45 • Crimping • Tester"},
+{id:"wifi",icon:"📶",title:"Survey Wi-Fi Kantor",role:"Teknisi Wireless",ticket:"Wi-Fi lantai 2 sering putus. Tentukan posisi AP, channel, keamanan, dan lakukan pengujian coverage.",tools:"AP • RF Scan • RSSI • Ping"},
+{id:"network",icon:"🌐",title:"Instalasi LAN Kantor",role:"Network Technician",ticket:"Bangun jalur ONT → Router → Switch → Client. Konfigurasi LAN dan uji gateway serta internet.",tools:"Router • Switch • IP • DHCP"},
+{id:"cisco",icon:"🔵",title:"Konfigurasi Cisco",role:"Network Technician",ticket:"Konfigurasikan VLAN STAFF/GUEST dan port access. Verifikasi dengan CLI sebelum serah terima.",tools:"Cisco CLI • VLAN • Access Port"},
+{id:"cctv",icon:"📹",title:"Instalasi CCTV IP",role:"Teknisi CCTV",ticket:"Pasang kamera melalui PoE, atur IP, tambahkan ke NVR, buktikan live view dan recording.",tools:"PoE • IP • NVR • Recording"}
 ];
+function visibleJobs(){return jobs}
+function level(){return Math.floor(state.xp/100)+1}
+function save(){return setDoc(doc(db,"users",uid),{xp:state.xp,level:level(),progress:state.work.length,praktikumSelesai:state.work.length,tkjVirtualLab:{workOrders:state.work,reports:state.reports,updatedAt:serverTimestamp()},virtualWorkshop:state.workshop},{merge:true})}
+function render(){const d=state.work.length;const ws=state.workshop?.done||[];$("xp").textContent=state.xp;$("xp2").textContent=state.xp;$("nxp").textContent=state.xp;$("level").textContent=level();$("level2").textContent=level();$("nlevel").textContent=level();$("done").textContent=d;$("ndone").textContent=d;$("mods").textContent=ws.length+"/8";$("nmods").textContent=ws.length+"/8";$("jobCards").innerHTML=visibleJobs().map(j=>{const done=state.work.includes(j.id);return '<article class="job" data-job="'+j.id+'"><div class="icon">'+j.icon+'</div><span class="tag">'+(done?"✓ SELESAI":j.role)+'</span><h4>'+j.title+'</h4><p>'+j.ticket+'</p><div class="muted" style="margin-top:9px">'+j.tools+'</div></article>'}).join("");document.querySelectorAll("[data-job]").forEach(x=>x.onclick=()=>openJob(x.dataset.job));renderReports()}
+function openJob(id){const j=jobs.find(x=>x.id===id);if(!j)return;show("dunia");$("jobArea").innerHTML='<div class="grid2"><div class="card"><span class="tag">WORK ORDER • '+j.role+'</span><h2>'+j.icon+' '+j.title+'</h2><div class="work-order"><b>Tiket pelanggan</b><br>'+j.ticket+'</div><h3>Alur pengerjaan</h3>'+["Baca scope dan risiko pekerjaan.","Periksa kondisi awal dan siapkan alat.","Lakukan instalasi/konfigurasi sesuai desain.","Uji hasil dari sisi teknisi dan pengguna.","Dokumentasikan pekerjaan dan rekomendasi."].map((x,i)=>'<div class="step"><b>'+(i+1)+'.</b> '+x+'</div>').join("")+'<h3>📝 Laporan teknisi</h3><textarea id="jobReport" placeholder="Tuliskan masalah, pemeriksaan, tindakan, hasil pengujian, dan rekomendasi..."></textarea><div style="display:flex;gap:8px;margin-top:9px"><button class="btn" id="finishJob">Tutup Work Order</button><button class="btn secondary" onclick="history.back()">Kembali</button></div><div id="jobMsg"></div></div><div class="card"><h3>🔧 Toolset</h3><p class="muted">'+j.tools+'</p><div class="work-order"><b>Standar serah terima</b><br>✓ Pekerjaan sesuai tiket<br>✓ Tidak ada konfigurasi sembarang<br>✓ Hasil diuji<br>✓ Bukti dicatat<br>✓ Laporan jelas</div></div></div>';$("finishJob").onclick=async()=>{const r=$("jobReport").value.trim();if(r.length<50){$("jobMsg").innerHTML='<div class="notice err">Laporan minimal 50 karakter dan harus menjelaskan pemeriksaan, tindakan, hasil, serta rekomendasi.</div>';return}if(!state.work.includes(id)){state.work.push(id);state.xp+=50}state.reports[id]={title:j.title,text:r,updatedAt:new Date().toISOString()};await save();$("jobMsg").innerHTML='<div class="notice ok">✓ Work Order selesai dan tersimpan. +50 XP.</div>';render()}}
+function renderReports(){const arr=Object.values(state.reports||{});$("reports").innerHTML=arr.length?arr.map(r=>'<div class="step"><b>'+r.title+'</b><p class="muted">'+r.text+'</p></div>').join(""):'<p class="muted">Belum ada laporan pekerjaan.</p>'}
+function show(v){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("v-"+v).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.v===v));$("side").classList.remove("open");scrollTo({top:0,behavior:"smooth"})}
+document.querySelectorAll(".nav button").forEach(b=>b.onclick=()=>show(b.dataset.v));$("menu").onclick=()=>$("side").classList.add("open");$("openWorkshop").onclick=()=>location.href="virtual-workshop.html";$("logout").onclick=async()=>{await signOut(auth);location.href="login.html"};
 
-function renderWorkProgress(){
- const done=state.workshopDone||[], total=workStations.length, pct=Math.round(done.length/total*100);
- $("workProgress").innerHTML="<div style='display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap'><b>📊 Kompetensi Dunia Kerja</b><b>"+done.length+"/"+total+" pekerjaan selesai</b></div><div class='progress-track' style='margin-top:10px'><div class='progress-bar' style='width:"+pct+"%'></div></div><p style='color:#64748b;font-size:12px;line-height:1.6;margin-bottom:0'>Targetnya bukan sekadar menjawab benar. Kamu harus memahami alur kerja: menerima tiket → survey → bukti → tindakan → pengujian → dokumentasi.</p>";
-}
-function renderWorkStations(){
- const box=$("workStations"),done=state.workshopDone||[];
- box.innerHTML=workStations.map((w,i)=>"<div class='work-card'><div style='font-size:30px'>"+w.icon+"</div><span class='work-badge'>"+w.role+"</span><h4>"+(done.includes(w.id)?"✅ ":"")+w.title+"</h4><p style='color:#64748b;font-size:12px;line-height:1.6'>"+w.ticket+"</p><div class='work-meta'><span class='work-tool'>🧰 "+w.tools.length+" alat</span><span class='work-tool'>📋 "+w.steps.length+" tahap</span><span class='work-tool'>⭐ 25 XP</span></div><button class='btn' data-work='"+w.id+"'>"+(done.includes(w.id)?"Lihat Ulang":"Mulai Pekerjaan")+"</button></div>").join("");
- box.querySelectorAll("[data-work]").forEach(b=>b.onclick=()=>openWork(b.dataset.work));
-}
-function openWork(id){
- const w=workStations.find(x=>x.id===id); if(!w)return;
- const area=$("workArea"); area.style.display="block"; area.scrollIntoView({behavior:"smooth",block:"start"});
- let answers={}; let current=0;
- const render=()=>{
-   area.innerHTML="<div style='display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;align-items:center'><div><span class='work-badge'>WORK ORDER • "+w.role+"</span><h3 style='margin:8px 0'>"+w.icon+" "+w.title+"</h3></div><button class='btn secondary' id='closeWork'>Tutup</button></div><div class='scenario'><b>🎫 Tiket:</b> "+w.ticket+"</div><div class='work-tools'>"+w.tools.map(x=>"<span class='work-tool'>"+x+"</span>").join("")+"</div><div id='workSteps'></div>";
-   const stepsBox=area.querySelector("#workSteps");
-   w.steps.forEach((s,i)=>{
-     const d=document.createElement("div"); d.className="work-step";
-     d.innerHTML="<b>Tahap "+(i+1)+"/"+w.steps.length+" — "+s[0]+"</b><p style='color:#64748b;font-size:12px'>"+(i===0?"Mulai dengan membaca kondisi dan bukti.":i<=3?"Pilih tindakan teknisi paling tepat berdasarkan data tiket.":"Tentukan bukti bahwa pekerjaan benar-benar selesai.")+"</p>";
-     s[2].forEach((o,j)=>{const b=document.createElement("button");b.className="work-option"+(answers[i]===j?" selected":"");b.textContent=String.fromCharCode(65+j)+". "+o;b.onclick=()=>{answers[i]=j;render()};d.appendChild(b)});
-     if(answers[i]!==undefined){const ok=answers[i]===s[3];const fb=document.createElement("div");fb.className="work-result "+(ok?"work-success":"work-fail");fb.innerHTML=ok?"✅ Pilihan sesuai prosedur kerja.":"⚠️ Pilihan belum tepat. Baca lagi gejala, alat, dan bukti sebelum memilih.";d.appendChild(fb)}
-     stepsBox.appendChild(d);
-   });
-   if(Object.keys(answers).length===w.steps.length){
-     const all=w.steps.every((s,i)=>answers[i]===s[3]);
-     const report=document.createElement("div");report.className="work-step";
-     report.innerHTML="<h4>📝 Laporan Teknisi</h4><p style='font-size:12px;color:#64748b'>Tuliskan kesimpulan dengan kalimatmu sendiri. Minimal jelaskan: <b>masalah → bukti → tindakan → hasil</b>.</p><textarea id='workReport' class='work-report' placeholder='Contoh: Masalah ditemukan pada ... Bukti ... Saya melakukan ... Setelah diuji ...'></textarea><div class='toolbar'><button class='btn' id='finishWork'>"+(all?"Tutup Pekerjaan & Simpan":"Periksa Pekerjaan")+"</button></div><div id='workFeedback'></div>";
-     stepsBox.appendChild(report);
-     const ta=report.querySelector("#workReport");ta.value=state.workshopReports?.[w.id]||"";
-     report.querySelector("#finishWork").onclick=()=>{
-       const text=(ta.value||"").trim(); if(text.length<30){$("workFeedback").innerHTML="<div class='work-result work-fail'>Laporan terlalu singkat. Teknisi harus menjelaskan masalah, bukti, tindakan, dan hasil.</div>";return;}
-       if(!all){$("workFeedback").innerHTML="<div class='work-result work-fail'>Pekerjaan belum benar. Jangan menutup tiket sebelum semua langkah tepat.</div>";return;}
-       const first=!state.workshopDone.includes(w.id);
-       state.workshopReports={...(state.workshopReports||{}),[w.id]:text};
-       if(first){state.workshopDone=[...(state.workshopDone||[]),w.id];state.xp+=25;notify("🎉 Pekerjaan selesai: "+w.title+" (+25 XP)");}
-       save();render();renderWorkStations();
-       $("workFeedback").innerHTML="<div class='work-result work-success'><b>✅ TIKET DITUTUP</b><br>Pekerjaan lulus. Laporan tersimpan. Kamu membuktikan proses kerja, bukan sekadar memilih jawaban.</div>";
-     };
-   }
-   $("closeWork").onclick=()=>{area.style.display="none";};
- };
- render();
-}
-function initWork(){
- renderWorkProgress();renderWorkStations();
-}
-initWork();
+let stopChat=null;function startChat(){try{const q=query(collection(db,"chatMessages"),orderBy("createdAt","asc"),limit(100));stopChat=onSnapshot(q,s=>{$("chatMessages").innerHTML="";s.forEach(d=>{const m=d.data(),mine=m.senderId===uid;const el=document.createElement("div");el.style.cssText="padding:9px;margin:6px 0;background:"+(mine?"#dbeafe":"#f8fafc")+";border-radius:10px";el.innerHTML="<b>"+(m.senderName||"Siswa")+"</b><div>"+(m.text||"")+"</div>";$("chatMessages").appendChild(el)});$("chatMessages").scrollTop=$("chatMessages").scrollHeight})}catch(e){}}
+$("chatSend").onclick=async()=>{const t=$("chatInput").value.trim();if(!t)return;try{await addDoc(collection(db,"chatMessages"),{senderId:uid,senderName:profile.nama||"Siswa",kelas:profile.kelas||"",text:t,createdAt:serverTimestamp()});$("chatInput").value=""}catch(e){}};
 
-// ==============================
-// UJI KOMPETENSI BERBASIS KASUS
-// ==============================
-const competencyMissions=[
- {title:"Misi 1 — Salah Subnet",case:"PC-01 = 192.168.10.10/24. Gateway = 192.168.20.1. Link fisik normal. PC dapat melihat switch tetapi tidak dapat ping gateway. Kamu harus menentukan akar masalah, bukan mengganti perangkat.",qs:[
- ["Bukti utama mengarah ke...",["IP dan gateway berbeda jaringan.","Switch rusak.","Kabel console salah.","DNS bermasalah."],0],
- ["Perbaikan paling tepat...",["Ganti switch.","Samakan jaringan IP PC dengan gateway.","Matikan NIC.","Reset router."],1],
- ["Tes setelah perbaikan...",["ping gateway.","ganti kabel.","restart monitor.","hapus konfigurasi."],0],
- ["Prinsip yang digunakan...",["ubah semua konfigurasi.","cari bukti lalu ubah penyebab paling mungkin.","tebak perangkat.","reset seluruh jaringan."],1]],cmd:"ping 192.168.20.1"},
- {title:"Misi 2 — Administratively Down",case:"Router G0/0 memiliki IP 192.168.10.1/24. Hasil show ip interface brief: G0/0 192.168.10.1 YES manual administratively down. Kabel terpasang dan PC menggunakan jaringan yang benar.",qs:[
- ["Status tersebut berarti...",["interface shutdown secara administratif.","kabel pasti putus.","IP konflik.","router mati total."],0],
- ["Perintah perbaikan...",["shutdown","no shutdown","erase startup-config","reload"],1],
- ["Verifikasi setelah perbaikan...",["show ip interface brief","show clock","dir","show users"],0],
- ["Sebelum menyatakan selesai...",["langsung logout.","uji ping dan pastikan status up/up.","hapus IP.","ganti router."],1]],cmd:"no shutdown"},
- {title:"Misi 3 — Gateway Salah",case:"PC-02 = 192.168.10.20/24. Router LAN = 192.168.10.1/24. PC dapat berkomunikasi dalam LAN tetapi gagal menuju jaringan lain. IP dan kabel sudah benar.",qs:[
- ["Konfigurasi yang paling dicurigai...",["default gateway.","nama komputer.","MAC keyboard.","resolusi layar."],0],
- ["Gateway yang tepat...",["192.168.10.1","192.168.20.1","255.255.255.0","127.0.0.1"],0],
- ["Bukti tambahan yang paling berguna...",["cek konfigurasi IP/gateway PC.","ganti monitor.","hapus switch.","cabut semua kabel."],0],
- ["Strategi teknisi...",["ubah banyak parameter.","ubah satu penyebab, lalu uji ulang.","reset semua perangkat.","menebak."],1]],cmd:"ping 192.168.10.1"},
- {title:"Misi 4 — VLAN Tidak Sesuai",case:"PC-A berada di port switch yang seharusnya VLAN 10. PC-A tidak bisa berkomunikasi dengan PC lain di VLAN 10. Link up, IP sudah benar, tetapi port ternyata masuk VLAN 20.",qs:[
- ["Penyebab paling kuat...",["port berada di VLAN yang salah.","router kehabisan memori.","DNS rusak.","kabel console."],0],
- ["Perbaikan konsep...",["masukkan port ke VLAN 10.","ganti IP menjadi 127.0.0.1.","shutdown router.","hapus NIC."],0],
- ["Mengapa IP yang benar belum cukup?",["VLAN menentukan segmentasi jaringan layer 2.","IP tidak pernah penting.","switch menentukan DNS.","RJ45 menentukan VLAN."],0],
- ["Setelah perubahan...",["verifikasi VLAN lalu uji koneksi.","langsung reset switch.","ganti semua kabel.","hapus konfigurasi."],0]],cmd:"show vlan brief"},
- {title:"Misi 5 — Routing Antar Jaringan",case:"LAN-A = 192.168.10.0/24 dan LAN-B = 192.168.20.0/24. Kedua interface router up/up. PC-A dapat ping gateway sendiri tetapi tidak dapat ping host di LAN-B. Konfigurasi IP lokal benar.",qs:[
- ["Pemeriksaan berikutnya...",["routing table.","monitor.","RJ45 saja.","nama PC."],0],
- ["Perintah pemeriksaan Cisco...",["show ip route","show users","dir","show clock"],0],
- ["Jika tidak ada route menuju 192.168.20.0/24...",["tambahkan rute yang sesuai.","ganti monitor.","matikan interface LAN-A.","hapus IP PC-A."],0],
- ["Apa yang harus dibuktikan setelah perbaikan?",["ping host jaringan B dan cek route.","cukup melihat lampu.","cukup restart PC.","tidak perlu tes."],0]],cmd:"show ip route"}
-];
-let compMissionIndex=0;
-function renderCompetency(){
- const m=competencyMissions[compMissionIndex];
- $("compMissionNo").textContent=compMissionIndex+1;
- $("compMissionTitle").textContent=m.title;
- $("compAttempts").textContent=state.competencyAttempts||0;
- $("compCase").innerHTML="<div class='scenario'><b>📡 CASE FILE</b><br>"+m.case+"</div>";
- $("compQuestions").innerHTML=m.qs.map((q,idx)=>"<div class='lesson'><h4>"+(idx+1)+". "+q[0]+"</h4>"+q[1].map((x,i)=>"<label style='display:block;margin:8px 0;padding:11px;border:1px solid #e5e7eb;border-radius:10px;cursor:pointer'><input type='radio' name='comp"+idx+"' value='"+i+"'> "+String.fromCharCode(65+i)+". "+x+"</label>").join("")+"</div>").join("")+
- "<div class='lesson'><h4>⌨️ Bukti Perintah</h4><p style='color:#64748b;font-size:12px'>Ketik satu perintah yang menurutmu paling tepat untuk memperoleh bukti/menyelesaikan kasus. Jangan melihat jawaban dari teman.</p><input id='compCommand' placeholder='contoh: show ip interface brief' style='width:100%;padding:12px;border:1px solid #cbd5e1;border-radius:10px;font-family:Consolas,monospace'></div>";
- $("compResult").className="notice";
- $("compResult").textContent="";
- $("compRetry").style.display="none";
-}
-function finishCompetency(score){
- if(state.competencyPassed){ $("compResult").className="notice show ok"; $("compResult").textContent="Uji Kompetensi sudah dinyatakan LULUS. Tidak ada XP tambahan dari pengulangan."; return; }
- state.competencyScore=Math.max(state.competencyScore||0,score);
- if(score>=80){
-   if(compMissionIndex<competencyMissions.length-1){
-     state.xp+=20;
-     compMissionIndex++;
-     state.competencyMission=compMissionIndex;
-     notify("Misi benar. Lanjut ke misi berikutnya. +20 XP");
-     save(); renderCompetency(); render();
-   }else{
-     if(!state.competencyPassed) state.xp+=50;
-     state.competencyPassed=true;
-     state.competencyMission=competencyMissions.length-1;
-     notify("🎉 Selamat! Kamu LULUS Uji Kompetensi. +50 XP");
-     save(); render(); updateCompetencyStatus();
-   }
- }else{
-   state.competencyPassed=false;
-   $("compResult").className="notice show error";
-   $("compResult").textContent="Belum lulus ("+score+"/100). Analisis kembali bukti kasus dan ulangi. Kamu wajib mencapai minimal 80.";
-   $("compRetry").style.display="inline-block";
-   save(); render(); updateCompetencyStatus();
- }
-}
-function updateCompetencyStatus(){
- $("compSubmit").disabled=!!state.competencyPassed;
- $("compSubmit").textContent=state.competencyPassed?"✓ Kompetensi Lulus":"🔍 Periksa Jawaban";
- $("compStatus").innerHTML=state.competencyPassed?"<b style='color:#166534'>LULUS UJI KOMPETENSI</b> — Nilai terbaik "+state.competencyScore+"/100. Seluruh 5 misi berhasil diselesaikan.":"<b>Belum lulus.</b> Nilai terbaik "+state.competencyScore+"/100. Selesaikan 5 misi dengan nilai minimal 80.";
-}
-$("compSubmit").addEventListener("click",()=>{
- const m=competencyMissions[compMissionIndex];
- const answers=m.qs.map((_,i)=>document.querySelector('input[name="comp'+i+'"]:checked'));
- const command=($("compCommand")?.value||"").trim().toLowerCase();
- if(answers.some(x=>!x)||!command){notify("Lengkapi seluruh analisis dan bukti perintah.","error");return;}
- state.competencyAttempts=(state.competencyAttempts||0)+1;
- const correct=m.qs.map(q=>q[2]);
- const ok=answers.filter((x,i)=>Number(x.value)===correct[i]).length;
- const commandOk=command.replace(/s+/g," ")===m.cmd.toLowerCase();
- const score=ok*20+(commandOk?20:0);
- if(!commandOk) $("compResult").className="notice show error";
- finishCompetency(score);
- if(!commandOk && score<80) $("compResult").textContent+=" Bukti perintah belum tepat. Periksa kembali gejala dan pilih perintah yang menghasilkan bukti paling relevan.";
-});
-$("compRetry").addEventListener("click",()=>{renderCompetency();});
-renderCompetency(); updateCompetencyStatus();
-
-// ==============================
-// RUANG DISKUSI ANTAR SISWA
-// ==============================
-let stopChat=null;
-function startStudentChat(){
- if(stopChat) stopChat();
- const q=query(collection(db,"chatMessages"),orderBy("createdAt","asc"),limit(100));
- stopChat=onSnapshot(q,(snap)=>{
-   const box=$("chatMessages");
-   box.innerHTML="";
-   snap.forEach(d=>{
-     const m=d.data();
-     const mine=m.senderId===uid;
-     const row=document.createElement("div");
-     row.style.cssText="margin:7px 0;display:flex;justify-content:"+(mine?"flex-end":"flex-start");
-     const bubble=document.createElement("div");
-     bubble.style.cssText="max-width:80%;padding:9px 11px;border-radius:12px;background:"+(mine?"#dbeafe":"#fff")+";border:1px solid #e5e7eb";
-     bubble.innerHTML="<b>"+escapeHtml(m.senderName||"Siswa")+"</b><div style='margin-top:4px;line-height:1.45'>"+escapeHtml(m.text||"")+"</div><small style='color:#64748b'>"+(m.kelas?escapeHtml(m.kelas):"")+"</small>";
-     row.appendChild(bubble);box.appendChild(row);
-   });
-   box.scrollTop=box.scrollHeight;
- },(e)=>{console.error(e);$("chatMessages").innerHTML="<div style='padding:20px;color:#991b1b'>Chat belum dapat dimuat. Periksa Firestore Rules untuk <b>chatMessages</b>.</div>";});
-}
-$("chatSend").addEventListener("click",sendChat);
-$("chatInput").addEventListener("keydown",e=>{if(e.key==="Enter")sendChat();});
-async function sendChat(){
- const input=$("chatInput"),text=input.value.trim();
- if(!text||!uid)return;
- if(text.length>500)return;
- try{
-   await addDoc(collection(db,"chatMessages"),{senderId:uid,senderName:profile.nama||"Siswa",kelas:profile.kelas||"",text,createdAt:serverTimestamp()});
-   input.value="";
- }catch(e){console.error(e);notify("Pesan gagal dikirim. Periksa Firestore Rules chat.","error");}
-}
-startStudentChat();
-
-const tools=[["💻","PC / Komputer","Perangkat akhir untuk menjalankan aplikasi dan berkomunikasi melalui jaringan.","Port LAN/NIC","Digunakan sebagai endpoint jaringan."],["🔀","Switch","Menghubungkan banyak perangkat dalam satu LAN.","Fa0/1, Gi0/1","Meneruskan frame berdasarkan MAC address."],["🌐","Router","Menghubungkan jaringan yang berbeda.","G0/0, G0/1","Interface router dapat diberi IP dan diaktifkan."],["🔌","Kabel UTP","Media transmisi Ethernet berbahan pasangan kabel tembaga.","RJ45","Menghubungkan PC, switch, dan perangkat jaringan."],["🔗","RJ45","Konektor yang dipasang pada ujung kabel UTP.","8 pin","Harus tercrimping dan tersusun benar."],["🪪","NIC / LAN Card","Antarmuka jaringan pada komputer.","MAC address, port LAN","Menyediakan koneksi Ethernet ke jaringan."],["⌨️","Console Cable","Kabel untuk konfigurasi awal perangkat Cisco.","Console","Digunakan saat konfigurasi melalui terminal."],["📶","Access Point","Menghubungkan perangkat wireless ke jaringan kabel.","LAN/WLAN","Menyediakan akses Wi-Fi ke jaringan."]];
-function buildTools(){const g=$("toolGrid");g.innerHTML="";tools.forEach((t,i)=>{const d=document.createElement("div");d.className="tool";d.innerHTML="<div style='font-size:28px'>"+t[0]+"</div><strong>"+t[1]+"</strong><small>"+t[2]+"</small>";d.onclick=()=>{$("toolDetail").innerHTML="<h3>"+t[0]+" "+t[1]+"</h3><p style='color:#64748b;line-height:1.7'>"+t[2]+"</p><p><b>Bagian penting:</b> "+t[3]+"<br><b>Penggunaan:</b> "+t[4]+"</p>";if(!state.alat.includes(i)){state.alat.push(i);addXp(10);notify("Alat dipelajari: "+t[1]+" (+10 XP)")}else render()};g.appendChild(d)})}
-const stepData=[["1","Rancang topologi","Pastikan urutannya PC → Switch → Router."],["2","Atur IP PC","Gunakan "+labConfig.pcIp+"/24."],["3","Konfigurasi router","Atur G0/0 menjadi "+labConfig.routerIp+" dengan subnet 255.255.255.0."],["4","Aktifkan interface","Gunakan no shutdown lalu cek show ip interface brief."],["5","Uji koneksi","Lakukan ping dari PC ke "+labConfig.routerIp+"."]];
-function buildSteps(){const s=$("steps");s.innerHTML="";stepData.forEach((x,i)=>{const d=document.createElement("div");d.className="lesson";const done=state.steps.includes(i);const locked=i>0&&!state.steps.includes(i-1);d.innerHTML="<b>"+x[0]+". "+x[1]+"</b><p>"+x[2]+"</p><button class='btn "+(done?"secondary":"")+"' "+(locked||done?"disabled":"")+">"+(done?"✓ Terverifikasi":locked?"🔒 Terkunci":"Buka tugas")+"</button>";if(!locked&&!done)d.querySelector("button").onclick=()=>{showView("praktik");if(i===0){state.steps.push(0);addXp(10);buildSteps();notify("Topologi diterima. Lanjut ke konfigurasi IP.")}else if(i===1){const ip=prompt("Masukkan IP PC yang digunakan:");if(ip===labConfig.pcIp){state.steps.push(1);addXp(10);buildSteps();notify("IP PC benar. Lanjut ke router.")}else notify("IP belum benar. Gunakan bukti dari skenario.","error")}else if(i===2){const ip=prompt("Masukkan IP G0/0 router:");if(ip===labConfig.routerIp){state.steps.push(2);addXp(10);buildSteps();notify("Alamat interface benar. Gunakan CLI untuk mengaktifkan interface.")}else notify("Alamat router belum tepat.","error")}else if(i===3){notify("Gunakan CLI: interface g0/0 lalu no shutdown.","ok")}else if(i===4){notify("Uji ping dari CLI setelah interface aktif.","ok")}};s.appendChild(d)})}
-function buildTrouble(){const tasks=[["Periksa interface","show ip interface brief"],["Periksa konfigurasi IP","show running-config"],["Uji koneksi","ping "+labConfig.routerIp]];const box=$("troubleTasks");box.innerHTML=tasks.map((x,i)=>"<div class='lesson'><b>"+(i+1)+". "+x[0]+"</b><p>Perintah yang tepat: <code>"+x[1]+"</code></p><button class='btn secondary' data-t='"+i+"'>Saya sudah memeriksa</button></div>").join("");let done=[];box.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const i=+b.dataset.t;if(!done.includes(i)){done.push(i);b.textContent="✓ Diperiksa";b.disabled=true}if(done.length===3&&!state.trouble){state.trouble=true;addXp(30);$("troubleResult").textContent="✓ Diagnosis selesai. Kamu berhasil menggunakan bukti sebelum memperbaiki jaringan. +30 XP";}})}
-const questions=[["Perangkat yang menghubungkan beberapa komputer dalam satu LAN adalah... ",["Router","Switch","Modem","Printer"],1],["Subnet mask untuk /24 adalah...",["255.0.0.0","255.255.0.0","255.255.255.0","255.255.255.255"],2],["Perintah Cisco untuk mengaktifkan interface yang shutdown adalah...",["shutdown","enable port","no shutdown","start"],2],["Perintah untuk melihat ringkasan status interface Cisco adalah...",["show ip interface brief","show users","dir","copy"],0],["Jika ping gagal, langkah yang benar adalah...",["Langsung ganti router","Periksa kabel, IP, interface, dan subnet","Matikan semua perangkat","Hapus konfigurasi"],1]];
-let qi=0,qscore=0;function buildQuiz(){if(qi>=questions.length){$("quizBox").innerHTML="<h3>🎉 Kuis selesai</h3><p>Nilai: <b>"+qscore+"/50</b></p><button class='btn' id='retryQuiz'>Ulangi Kuis</button>";$("retryQuiz").onclick=()=>{qi=0;qscore=0;state.quizDone=false;buildQuiz()};if(!state.quizDone){state.quiz=qscore;state.quizDone=true;addXp(qscore)}return}const q=questions[qi];$("quizBox").innerHTML="<div style='color:#64748b;font-size:12px'>Soal "+(qi+1)+" dari "+questions.length+"</div><h3 style='margin:10px 0 15px'>"+q[0]+"</h3>"+q[1].map((o,i)=>"<button class='quiz-option' data-q='"+i+"'>"+String.fromCharCode(65+i)+". "+o+"</button>").join("");$("quizBox").querySelectorAll(".quiz-option").forEach(b=>b.onclick=()=>{const i=+b.dataset.q;$("quizBox").querySelectorAll(".quiz-option").forEach(x=>x.disabled=true);if(i===q[2]){b.classList.add("correct");qscore+=10}else b.classList.add("wrong");setTimeout(()=>{qi++;buildQuiz()},650)})}
-async function load(){onAuthStateChanged(auth,async user=>{if(!user){location.href="login.html";return}uid=user.uid;try{const snap=await getDoc(doc(db,"users",uid));if(!snap.exists()){notify("Profil siswa tidak ditemukan.","error");$("loading").style.display="none";return}profile=snap.data();if(profile.role!=="siswa"){if(profile.role==="admin"){location.href="admin.html";return}await signOut(auth);location.href="login.html";return}$("profileName").textContent=profile.nama||"Siswa";$("heroName").textContent=profile.nama||"Siswa";$("heroClass").textContent=profile.kelas||"-";$("avatar").textContent=(profile.nama||"S").trim().charAt(0).toUpperCase();state={...state,xp:Number(profile.xp||0),alat:profile.tkjVirtualLab?.alat||[],steps:profile.tkjVirtualLab?.steps||[],trouble:!!profile.tkjVirtualLab?.troubleshooting,quiz:Number(profile.tkjVirtualLab?.quizScore||0),quizDone:!!profile.tkjVirtualLab?.quizDone,labDone:profile.labLAN?.status==="selesai",competencyScore:Number(profile.tkjVirtualLab?.competencyScore||0),competencyPassed:!!profile.tkjVirtualLab?.competencyPassed,competencyAttempts:Number(profile.tkjVirtualLab?.competencyAttempts||0),competencyMission:Number(profile.tkjVirtualLab?.competencyMission||0),workshopDone:profile.tkjVirtualLab?.workshopDone||[],workshopAttempts:profile.tkjVirtualLab?.workshopAttempts||{},workshopReports:profile.tkjVirtualLab?.workshopReports||{}};const cfg=await getDoc(doc(db,"settings","virtualLab"));if(cfg.exists())labConfig={...labConfig,...cfg.data()};$("labLevel").textContent=labConfig.level;$("pcIp").textContent=labConfig.pcIp+"/24";$("routerIp").textContent=labConfig.routerIp+"/24";$("faultText").textContent=labConfig.fault;buildTools();buildSteps();buildTrouble();buildQuiz();render();$("loading").style.display="none"}catch(e){console.error(e);notify("Gagal memuat data Firebase: "+e.message,"error");$("loading").style.display="none"}})}
-load();
-document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>showView(b.dataset.view));document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>showView(b.dataset.go));
-function showView(v){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("view-"+v).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));$("sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"})}
-$("menuBtn").onclick=()=>$("sidebar").classList.add("open");$("logoutBtn").onclick=async()=>{await signOut(auth);location.href="login.html"};$("resetLab").onclick=()=>{state.steps=[];state.labDone=false;buildSteps();render();save();notify("Langkah praktikum direset.")};$("openSimulator").onclick=()=>location.href="simulasi-lan.html";$("openWorkshop").onclick=()=>location.href="virtual-workshop.html";
-const cli=$("cliInput");cli.addEventListener("keydown",e=>{if(e.key!=="Enter")return;const cmd=cli.value.trim().toLowerCase();const term=$("terminal");const known=["enable","configure terminal","conf t","interface g0/0","ip address","no shutdown","end","show ip interface brief","show running-config","ping"];let out=term.textContent+"nRouter# "+cmd;if(cmd==="enable")out+="nRouter#";else if(cmd.includes("show ip interface brief"))out+="\nG0/0 "+labConfig.routerIp+" YES manual "+(state.steps.includes(3)?"up up":"administratively down");else if(cmd==="no shutdown"){if(!state.steps.includes(3)){state.steps.push(3);addXp(10);buildSteps()}out+="\nInterface G0/0 enabled.";state.labDone=state.steps.length===5;render();save()}else if(cmd.startsWith("ping "))out+="\nSuccess rate is "+(state.steps.length>=4?"100":"0")+" percent.";else if(known.some(k=>cmd===k||cmd.startsWith(k+" ")))out+="\nCommand accepted.";else out+="\n% Unknown command. Periksa kembali perintah.";term.innerText=out+"\nRouter# ";cli.value="";});
-</script>
-</body></html>
+onAuthStateChanged(auth,async u=>{if(!u){location.href="login.html";return}uid=u.uid;try{let s=await getDoc(doc(db,"users",uid));if(!s.exists()||s.data().role!=="siswa"){location.href="login.html";return}profile=s.data();
+// Reset seluruh progres siswa satu kali untuk versi workspace baru. Data identitas akun tetap dipertahankan.
+if(Number(profile.tkjWorkLabResetVersion||0)!==RESET_VERSION){await setDoc(doc(db,"users",uid),{xp:0,level:1,progress:0,praktikumSelesai:0,tkjWorkLabResetVersion:RESET_VERSION,tkjVirtualLab:{workOrders:[],reports:{},updatedAt:serverTimestamp()},labLAN:{score:0,status:"baru"},virtualWorkshop:{done:[],reports:{},scores:{},attempts:{},xp:0,updatedAt:serverTimestamp()}},{merge:true});s=await getDoc(doc(db,"users",uid));profile=s.data()}
+$("name").textContent=profile.nama||"Siswa";$("heroName").textContent=profile.nama||"Teknisi";$("kelas").textContent=profile.kelas||"-";$("avatar").textContent=(profile.nama||"S").trim().charAt(0).toUpperCase();state={xp:Number(profile.xp||0),work:profile.tkjVirtualLab?.workOrders||[],reports:profile.tkjVirtualLab?.reports||{},workshop:profile.virtualWorkshop||{}};render();startChat();$("loading").style.display="none"}catch(e){console.error(e);$("loading").innerHTML="<div><b>Gagal memuat</b><p class='muted'>"+e.message+"</p></div>"}});
+</script></body></html>
