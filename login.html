@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Login | TKJ Virtual Lab</title>
+
+  <meta
+    name="description"
+    content="Login TKJ Virtual Lab"
+  >
+
+  <style>
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+
+      font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+      color: #ffffff;
+
+      background:
+        linear-gradient(
+          rgba(3, 12, 25, .82),
+          rgba(3, 12, 25, .95)
+        ),
+        url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=2000&q=85")
+        center / cover fixed;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+    }
+
+    .login-container {
+
+      width: 100%;
+      max-width: 430px;
+
+      background:
+        rgba(10, 22, 40, .86);
+
+      border:
+        1px solid rgba(255,255,255,.12);
+
+      border-radius: 24px;
+
+      padding: 35px;
+
+      box-shadow:
+        0 25px 70px rgba(0,0,0,.45);
+
+      backdrop-filter:
+        blur(18px);
+    }
+
+    .logo {
+
+      text-align: center;
+
+      font-size: 60px;
+
+      margin-bottom: 8px;
+
+      filter:
+        drop-shadow(
+          0 0 20px
+          rgba(0,145,255,.55)
+        );
+    }
+
+    h1 {
+
+      text-align: center;
+
+      font-size: 28px;
+
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+
+      text-align: center;
+
+      color:
+        rgba(255,255,255,.62);
+
+      font-size: 14px;
+
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+
+      margin-bottom: 18px;
+    }
+
+    label {
+
+      display: block;
+
+      margin-bottom: 8px;
+
+      font-size: 14px;
+
+      font-weight: bold;
+    }
+
+    input {
+
+      width: 100%;
+
+      padding: 14px 15px;
+
+      border-radius: 11px;
+
+      border:
+        1px solid
+        rgba(255,255,255,.14);
+
+      background:
+        rgba(255,255,255,.07);
+
+      color: white;
+
+      font-size: 15px;
+
+      outline: none;
+
+      transition:
+        border .2s,
+        background .2s;
+    }
+
+    input:focus {
+
+      border-color:
+        #1677ff;
+
+      background:
+        rgba(255,255,255,.10);
+    }
+
+    input::placeholder {
+
+      color:
+        rgba(255,255,255,.38);
+    }
+
+    .password-wrapper {
+
+      position: relative;
+    }
+
+    .toggle-password {
+
+      position: absolute;
+
+      right: 13px;
+
+      top: 50%;
+
+      transform:
+        translateY(-50%);
+
+      border: none;
+
+      background: transparent;
+
+      color:
+        rgba(255,255,255,.65);
+
+      cursor: pointer;
+
+      font-size: 18px;
+    }
+
+    .login-button {
+
+      width: 100%;
+
+      padding: 15px;
+
+      margin-top: 5px;
+
+      border: none;
+
+      border-radius: 11px;
+
+      background:
+        #1677ff;
+
+      color: white;
+
+      font-size: 15px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition:
+        transform .2s,
+        box-shadow .2s,
+        opacity .2s;
+    }
+
+    .login-button:hover {
+
+      transform:
+        translateY(-2px);
+
+      box-shadow:
+        0 10px 25px
+        rgba(22,119,255,.35);
+    }
+
+    .login-button:disabled {
+
+      opacity: .6;
+
+      cursor:
+        not-allowed;
+
+      transform:
+        none;
+    }
+
+    .message {
+
+      min-height: 22px;
+
+      margin-top: 15px;
+
+      text-align: center;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+    }
+
+    .message.error {
+
+      color:
+        #ff9c9c;
+    }
+
+    .message.success {
+
+      color:
+        #76e5a3;
+    }
+
+    .bottom {
+
+      text-align: center;
+
+      margin-top: 24px;
+
+      font-size: 14px;
+
+      color:
+        rgba(255,255,255,.6);
+    }
+
+    .bottom a {
+
+      color:
+        #65aaff;
+
+      text-decoration:
+        none;
+
+      font-weight:
+        bold;
+    }
+
+    .bottom a:hover {
+
+      text-decoration:
+        underline;
+    }
+
+    .back {
+
+      display: block;
+
+      text-align: center;
+
+      margin-top: 18px;
+
+      color:
+        rgba(255,255,255,.45);
+
+      text-decoration:
+        none;
+
+      font-size: 13px;
+    }
+
+    .back:hover {
+
+      color: white;
+    }
+
+    .loading {
+
+      display: none;
+
+      margin-right: 7px;
+    }
+
+    @media (max-width: 480px) {
+
+      .login-container {
+
+        padding: 28px 22px;
+
+        border-radius: 20px;
+      }
+
+      .logo {
+
+        font-size: 50px;
+      }
+
+      h1 {
+
+        font-size: 24px;
+      }
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <main class="login-container">
+
+    <div class="logo">
+      🖥️
+    </div>
+
+    <h1>
+      TKJ Virtual Lab
+    </h1>
+
+    <div class="subtitle">
+      Masuk ke Laboratorium Virtual
+    </div>
+
+    <form id="loginForm">
+
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Masukkan email Anda"
+          autocomplete="email"
+          required
+        >
+
+      </div>
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <div class="password-wrapper">
+
+          <input
+            type="password"
+            id="password"
+            placeholder="Masukkan password"
+            autocomplete="current-password"
+            required
+          >
+
+          <button
+            type="button"
+            class="toggle-password"
+            id="togglePassword"
+            aria-label="Tampilkan password"
+          >
+            👁️
+          </button>
+
+        </div>
+
+      </div>
+
+      <button
+        type="submit"
+        class="login-button"
+        id="loginButton"
+      >
+
+        <span
+          class="loading"
+          id="loading"
+        >
+          ⏳
+        </span>
+
+        MASUK KE LABORATORIUM
+
+      </button>
+
+      <div
+        id="message"
+        class="message"
+      ></div>
+
+    </form>
+
+    <div class="bottom">
+
+      Belum memiliki akun?
+
+      <a href="register.html">
+        Daftar Siswa
+      </a>
+
+    </div>
+
+    <a
+      href="index.html"
+      class="back"
+    >
+      ← Kembali ke halaman utama
+    </a>
+
+  </main>
+
+
+  <!-- Firebase Login -->
+
+  <script type="module">
+
+    import {
+      initializeApp
+    } from
+    "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
+    import {
+      getAuth,
+      signInWithEmailAndPassword
+    } from
+    "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+    import {
+      getFirestore,
+      doc,
+      getDoc
+    } from
+    "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+
+    /*
+      FIREBASE TKJ VIRTUAL LAB
+    */
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyBD3EduiDBbGI9M381i9GMkfD74RfpCM78",
+
+      authDomain:
+        "tkj-virtual-lab-web-43aca.firebaseapp.com",
+
+      projectId:
+        "tkj-virtual-lab-web-43aca",
+
+      storageBucket:
+        "tkj-virtual-lab-web-43aca.firebasestorage.app",
+
+      messagingSenderId:
+        "860991490192",
+
+      appId:
+        "1:860991490192:web:019928cbca09128af4b015"
+
+    };
+
+
+    const app =
+      initializeApp(firebaseConfig);
+
+    const auth =
+      getAuth(app);
+
+    const db =
+      getFirestore(app);
+
+
+    /*
+      ELEMENT
+    */
+
+    const loginForm =
+      document.getElementById(
+        "loginForm"
+      );
+
+    const emailInput =
+      document.getElementById(
+        "email"
+      );
+
+    const passwordInput =
+      document.getElementById(
+        "password"
+      );
+
+    const loginButton =
+      document.getElementById(
+        "loginButton"
+      );
+
+    const loading =
+      document.getElementById(
+        "loading"
+      );
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+    const togglePassword =
+      document.getElementById(
+        "togglePassword"
+      );
+
+
+    /*
+      TAMPILKAN / SEMBUNYIKAN PASSWORD
+    */
+
+    togglePassword.addEventListener(
+      "click",
+      () => {
+
+        if (
+          passwordInput.type ===
+          "password"
+        ) {
+
+          passwordInput.type =
+            "text";
+
+          togglePassword.textContent =
+            "🙈";
+
+        } else {
+
+          passwordInput.type =
+            "password";
+
+          togglePassword.textContent =
+            "👁️";
+        }
+
+      }
+    );
+
+
+    /*
+      LOGIN
+    */
+
+    loginForm.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+
+        const email =
+          emailInput.value.trim();
+
+        const password =
+          passwordInput.value;
+
+
+        message.textContent = "";
+
+        message.className =
+          "message";
+
+
+        if (!email || !password) {
+
+          message.textContent =
+            "Email dan password wajib diisi.";
+
+          message.classList.add(
+            "error"
+          );
+
+          return;
+        }
+
+
+        loginButton.disabled =
+          true;
+
+        loading.style.display =
+          "inline";
+
+
+        try {
+
+          /*
+            LOGIN FIREBASE
+          */
+
+          const credential =
+            await signInWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+
+
+          const user =
+            credential.user;
+
+
+          /*
+            AMBIL PROFIL USER
+            DARI FIRESTORE
+          */
+
+          const userRef =
+            doc(
+              db,
+              "users",
+              user.uid
+            );
+
+          const userSnapshot =
+            await getDoc(
+              userRef
+            );
+
+
+          if (
+            !userSnapshot.exists()
+          ) {
+
+            throw new Error(
+              "Profil akun belum ditemukan di Firestore."
+            );
+          }
+
+
+          const profile =
+            userSnapshot.data();
+
+
+          const role =
+            String(
+              profile.role || ""
+            ).toLowerCase();
+
+
+          /*
+            ARAHKAN BERDASARKAN ROLE
+          */
+
+          if (
+            role === "admin"
+          ) {
+
+            window.location.href =
+              "admin.html";
+
+          }
+
+          else if (
+            role === "guru"
+          ) {
+
+            window.location.href =
+              "guru.html";
+
+          }
+
+          else if (
+            role === "siswa"
+          ) {
+
+            window.location.href =
+              "siswa.html";
+
+          }
+
+          else {
+
+            throw new Error(
+              "Role akun tidak dikenali."
+            );
+
+          }
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "LOGIN ERROR:",
+            error
+          );
+
+
+          let errorMessage =
+            "Login gagal.";
+
+
+          if (
+            error.code ===
+            "auth/invalid-credential"
+          ) {
+
+            errorMessage =
+              "Email atau password salah.";
+
+          }
+
+          else if (
+            error.code ===
+            "auth/user-not-found"
+          ) {
+
+            errorMessage =
+              "Akun tidak ditemukan.";
+
+          }
+
+          else if (
+            error.code ===
+            "auth/wrong-password"
+          ) {
+
+            errorMessage =
+              "Password yang dimasukkan salah.";
+
+          }
+
+          else if (
+            error.code ===
+            "auth/invalid-email"
+          ) {
+
+            errorMessage =
+              "Format email tidak valid.";
+
+          }
+
+          else if (
+            error.code ===
+            "auth/too-many-requests"
+          ) {
+
+            errorMessage =
+              "Terlalu banyak percobaan login. Silakan coba beberapa saat lagi.";
+
+          }
+
+          else if (
+            error.message
+          ) {
+
+            errorMessage =
+              error.message;
+          }
+
+
+          message.textContent =
+            errorMessage;
+
+          message.classList.add(
+            "error"
+          );
+
+
+          loginButton.disabled =
+            false;
+
+          loading.style.display =
+            "none";
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
