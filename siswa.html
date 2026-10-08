@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard Siswa - TKJ Virtual Lab</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #f4f7fb;
+      color: #172033;
+      min-height: 100vh;
+    }
+
+    .app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    .sidebar {
+      width: 260px;
+      background: #111827;
+      color: #fff;
+      padding: 22px 16px;
+      position: fixed;
+      inset: 0 auto 0 0;
+      z-index: 100;
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 4px 8px 24px;
+      border-bottom: 1px solid rgba(255,255,255,.09);
+      margin-bottom: 18px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      font-size: 21px;
+      font-weight: 800;
+    }
+
+    .brand h1 {
+      font-size: 17px;
+      line-height: 1.15;
+    }
+
+    .brand p {
+      color: #94a3b8;
+      font-size: 11px;
+      margin-top: 4px;
+    }
+
+    .nav-title {
+      color: #64748b;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      margin: 18px 10px 8px;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: grid;
+      gap: 6px;
+    }
+
+    .nav button {
+      border: 0;
+      background: transparent;
+      color: #cbd5e1;
+      width: 100%;
+      text-align: left;
+      padding: 12px 13px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      transition: .2s;
+    }
+
+    .nav button:hover,
+    .nav button.active {
+      background: rgba(37, 99, 235, .18);
+      color: #fff;
+    }
+
+    .nav-icon {
+      width: 24px;
+      text-align: center;
+      font-size: 17px;
+    }
+
+    .main {
+      width: calc(100% - 260px);
+      margin-left: 260px;
+      padding: 25px;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .menu-btn {
+      display: none;
+      border: 0;
+      background: #fff;
+      border-radius: 10px;
+      padding: 10px 13px;
+      cursor: pointer;
+      box-shadow: 0 5px 20px rgba(15,23,42,.06);
+    }
+
+    .welcome h2 {
+      font-size: 25px;
+      margin-bottom: 4px;
+    }
+
+    .welcome p {
+      color: #64748b;
+      font-size: 14px;
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      background: #fff;
+      padding: 8px 12px 8px 8px;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(15,23,42,.06);
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, #2563eb, #06b6d4);
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .profile-name {
+      font-weight: 700;
+      font-size: 13px;
+    }
+
+    .profile-role {
+      color: #64748b;
+      font-size: 11px;
+      margin-top: 2px;
+    }
+
+    .logout {
+      border: 0;
+      background: #fee2e2;
+      color: #b91c1c;
+      border-radius: 9px;
+      padding: 8px 10px;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+    }
+
+    .hero {
+      border-radius: 20px;
+      padding: 28px;
+      color: #fff;
+      background:
+        radial-gradient(circle at 90% 15%, rgba(34,211,238,.28), transparent 30%),
+        radial-gradient(circle at 10% 90%, rgba(59,130,246,.28), transparent 35%),
+        linear-gradient(135deg, #0f172a, #1e3a8a);
+      margin-bottom: 22px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero h3 {
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .hero p {
+      color: #dbeafe;
+      max-width: 680px;
+      line-height: 1.6;
+      font-size: 14px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 18px;
+    }
+
+    .pill {
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.12);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 22px;
+    }
+
+    .stat {
+      background: #fff;
+      border-radius: 16px;
+      padding: 18px;
+      box-shadow: 0 5px 20px rgba(15,23,42,.05);
+    }
+
+    .stat-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-label {
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .stat-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: #eff6ff;
+      font-size: 17px;
+    }
+
+    .stat-value {
+      font-size: 25px;
+      font-weight: 800;
+      margin-top: 12px;
+    }
+
+    .section-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 25px 0 13px;
+    }
+
+    .section-title h3 {
+      font-size: 18px;
+    }
+
+    .section-title span {
+      color: #64748b;
+      font-size: 12px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .feature {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(15,23,42,.05);
+      border: 1px solid #edf1f7;
+      cursor: pointer;
+      transition: transform .2s, box-shadow .2s;
+    }
+
+    .feature:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(15,23,42,.08);
+    }
+
+    .feature-icon {
+      width: 46px;
+      height: 46px;
+      border-radius: 13px;
+      display: grid;
+      place-items: center;
+      background: #eff6ff;
+      font-size: 22px;
+      margin-bottom: 14px;
+    }
+
+    .feature h4 {
+      margin-bottom: 7px;
+      font-size: 15px;
+    }
+
+    .feature p {
+      color: #64748b;
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .progress-box {
+      background: #fff;
+      border-radius: 16px;
+      padding: 20px;
+      box-shadow: 0 5px 20px rgba(15,23,42,.05);
+    }
+
+    .progress-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 9px;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .progress-row span:last-child {
+      color: #2563eb;
+    }
+
+    .progress-track {
+      height: 10px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+    }
+
+    .progress-bar {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #2563eb, #06b6d4);
+      transition: width .5s ease;
+    }
+
+    .notice {
+      display: none;
+      margin-bottom: 18px;
+      padding: 12px 15px;
+      border-radius: 12px;
+      font-size: 13px;
+    }
+
+    .notice.show {
+      display: block;
+    }
+
+    .notice.error {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .loading {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      background: #f4f7fb;
+    }
+
+    .loading-box {
+      text-align: center;
+      background: #fff;
+      padding: 28px;
+      border-radius: 18px;
+      box-shadow: 0 10px 40px rgba(15,23,42,.1);
+    }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      margin: 0 auto 13px;
+      border: 4px solid #dbeafe;
+      border-top-color: #2563eb;
+      border-radius: 50%;
+      animation: spin .8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(15,23,42,.45);
+      z-index: 90;
+    }
+
+    @media (max-width: 1100px) {
+      .stats {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 800px) {
+      .sidebar {
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .overlay.show {
+        display: block;
+      }
+
+      .main {
+        width: 100%;
+        margin-left: 0;
+        padding: 17px;
+      }
+
+      .menu-btn {
+        display: block;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .profile {
+        display: none;
+      }
+
+      .welcome h2 {
+        font-size: 20px;
+      }
+
+      .hero {
+        padding: 22px;
+      }
+
+      .hero h3 {
+        font-size: 21px;
+      }
+    }
+
+    @media (max-width: 560px) {
+      .stats,
+      .cards {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-meta {
+        display: grid;
+      }
+
+      .section-title {
+        align-items: flex-start;
+        gap: 8px;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="loading" class="loading">
+    <div class="loading-box">
+      <div class="spinner"></div>
+      <strong>Memuat Dashboard...</strong>
+      <p style="color:#64748b;font-size:12px;margin-top:6px;">Menghubungkan ke TKJ Virtual Lab</p>
+    </div>
+  </div>
+
+  <div id="overlay" class="overlay"></div>
+
+  <div class="app">
+
+    <aside id="sidebar" class="sidebar">
+      <div class="brand">
+        <div class="brand-icon">TKJ</div>
+        <div>
+          <h1>TKJ Virtual Lab</h1>
+          <p>Laboratorium Komputer & Jaringan</p>
+        </div>
+      </div>
+
+      <div class="nav-title">Menu Utama</div>
+
+      <nav class="nav">
+        <button class="active" data-feature="Dashboard">
+          <span class="nav-icon">🏠</span>
+          Dashboard
+        </button>
+
+        <button data-feature="Materi">
+          <span class="nav-icon">📚</span>
+          Materi TKJ
+        </button>
+
+        <button data-feature="Simulasi Lab">
+          <span class="nav-icon">💻</span>
+          Simulasi Lab
+        </button>
+
+        <button data-feature="Praktikum">
+          <span class="nav-icon">🧪</span>
+          Praktikum
+        </button>
+
+        <button data-feature="Troubleshooting">
+          <span class="nav-icon">🛠️</span>
+          Troubleshooting
+        </button>
+
+        <button data-feature="Tugas">
+          <span class="nav-icon">📝</span>
+          Tugas
+        </button>
+
+        <div class="nav-title">Perkembangan</div>
+
+        <button data-feature="Nilai & XP">
+          <span class="nav-icon">⭐</span>
+          Nilai & XP
+        </button>
+
+        <button data-feature="Progress">
+          <span class="nav-icon">📊</span>
+          Progress Belajar
+        </button>
+
+        <button data-feature="Laporan">
+          <span class="nav-icon">📄</span>
+          Laporan Praktikum
+        </button>
+      </nav>
+    </aside>
+
+    <main class="main">
+
+      <div class="topbar">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <button id="menuBtn" class="menu-btn">☰</button>
+          <div class="welcome">
+            <h2>Dashboard Siswa</h2>
+            <p>Selamat datang kembali di TKJ Virtual Lab.</p>
+          </div>
+        </div>
+
+        <div class="profile">
+          <div id="avatar" class="avatar">S</div>
+          <div>
+            <div id="profileName" class="profile-name">Siswa</div>
+            <div id="profileRole" class="profile-role">SISWA</div>
+          </div>
+          <button id="logoutBtn" class="logout">Keluar</button>
+        </div>
+      </div>
+
+      <div id="notice" class="notice"></div>
+
+      <section class="hero">
+        <h3>Halo, <span id="heroName">Siswa</span>! 👋</h3>
+        <p>
+          Selamat datang di laboratorium virtual TKJ. Pelajari perangkat,
+          lakukan simulasi jaringan, kerjakan praktikum, dan tingkatkan
+          kemampuanmu melalui pengalaman belajar yang interaktif.
+        </p>
+
+        <div class="hero-meta">
+          <span class="pill">👤 Kelas: <strong id="heroClass">-</strong></span>
+          <span class="pill">⭐ XP: <strong id="heroXp">0</strong></span>
+          <span class="pill">🏆 Level: <strong id="heroLevel">1</strong></span>
+        </div>
+      </section>
+
+      <section class="stats">
+        <div class="stat">
+          <div class="stat-top">
+            <span class="stat-label">Praktikum Selesai</span>
+            <span class="stat-icon">🧪</span>
+          </div>
+          <div id="statPraktikum" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-top">
+            <span class="stat-label">Tugas Selesai</span>
+            <span class="stat-icon">📝</span>
+          </div>
+          <div id="statTugas" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-top">
+            <span class="stat-label">XP Diperoleh</span>
+            <span class="stat-icon">⭐</span>
+          </div>
+          <div id="statXp" class="stat-value">0</div>
+        </div>
+
+        <div class="stat">
+          <div class="stat-top">
+            <span class="stat-label">Level</span>
+            <span class="stat-icon">🏆</span>
+          </div>
+          <div id="statLevel" class="stat-value">1</div>
+        </div>
+      </section>
+
+      <div class="section-title">
+        <h3>Mulai Belajar</h3>
+        <span>Pilih aktivitas belajar</span>
+      </div>
+
+      <section class="cards">
+        <article class="feature" data-feature="Materi TKJ">
+          <div class="feature-icon">📚</div>
+          <h4>Materi TKJ</h4>
+          <p>Pelajari konsep komputer, jaringan, perangkat keras, sistem operasi, dan materi TKJ lainnya.</p>
+        </article>
+
+        <article class="feature" data-feature="Simulasi Lab">
+          <div class="feature-icon">💻</div>
+          <h4>Simulasi Lab</h4>
+          <p>Latihan menggunakan perangkat dan membangun jaringan secara virtual sebelum praktik nyata.</p>
+        </article>
+
+        <article class="feature" data-feature="Praktikum">
+          <div class="feature-icon">🧪</div>
+          <h4>Praktikum</h4>
+          <p>Kerjakan kegiatan praktikum secara bertahap dan kirimkan hasil pekerjaanmu.</p>
+        </article>
+
+        <article class="feature" data-feature="Troubleshooting">
+          <div class="feature-icon">🛠️</div>
+          <h4>Troubleshooting</h4>
+          <p>Latih kemampuan menemukan masalah dan menentukan solusi pada perangkat komputer dan jaringan.</p>
+        </article>
+
+        <article class="feature" data-feature="Tugas">
+          <div class="feature-icon">📝</div>
+          <h4>Tugas</h4>
+          <p>Lihat tugas yang diberikan Admin dan selesaikan sesuai instruksi yang tersedia.</p>
+        </article>
+
+        <article class="feature" data-feature="Nilai & XP">
+          <div class="feature-icon">⭐</div>
+          <h4>Nilai & XP</h4>
+          <p>Pantau nilai, XP, level, dan perkembangan kemampuanmu selama mengikuti pembelajaran.</p>
+        </article>
+      </section>
+
+      <div class="section-title">
+        <h3>Progress Belajar</h3>
+        <span id="progressText">0% selesai</span>
+      </div>
+
+      <section class="progress-box">
+        <div class="progress-row">
+          <span>Perkembangan pembelajaran</span>
+          <span id="progressPercent">0%</span>
+        </div>
+        <div class="progress-track">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
+        <p style="color:#64748b;font-size:12px;margin-top:11px;">
+          Progress akan terisi otomatis ketika fitur materi, simulasi, praktikum, dan tugas mulai digunakan.
+        </p>
+      </section>
+
+    </main>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+    import {
+      getFirestore,
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBD3EduiDBbGI9M381i9GMkfD74RfpCM78",
+      authDomain: "tkj-virtual-lab-web-43aca.firebaseapp.com",
+      projectId: "tkj-virtual-lab-web-43aca",
+      storageBucket: "tkj-virtual-lab-web-43aca.firebasestorage.app",
+      messagingSenderId: "860991490192",
+      appId: "1:860991490192:web:019928cbca09128af4b015"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    const loading = document.getElementById("loading");
+    const notice = document.getElementById("notice");
+
+    function showError(message) {
+      notice.textContent = message;
+      notice.className = "notice show error";
+    }
+
+    function hideLoading() {
+      loading.style.display = "none";
+    }
+
+    function setProfile(data) {
+      const nama = data.nama || "Siswa";
+      const kelas = data.kelas || "-";
+
+      document.getElementById("profileName").textContent = nama;
+      document.getElementById("heroName").textContent = nama;
+      document.getElementById("heroClass").textContent = kelas;
+
+      const initial = nama.trim().charAt(0).toUpperCase() || "S";
+      document.getElementById("avatar").textContent = initial;
+
+      const xp = Number(data.xp || 0);
+      const level = Number(data.level || Math.max(1, Math.floor(xp / 100) + 1));
+      const progress = Math.min(100, Number(data.progress || 0));
+
+      document.getElementById("heroXp").textContent = xp;
+      document.getElementById("heroLevel").textContent = level;
+      document.getElementById("statXp").textContent = xp;
+      document.getElementById("statLevel").textContent = level;
+
+      document.getElementById("progressBar").style.width = progress + "%";
+      document.getElementById("progressPercent").textContent = progress + "%";
+      document.getElementById("progressText").textContent = progress + "% selesai";
+
+      document.getElementById("statPraktikum").textContent =
+        Number(data.praktikumSelesai || 0);
+
+      document.getElementById("statTugas").textContent =
+        Number(data.tugasSelesai || 0);
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      try {
+        const profileRef = doc(db, "users", user.uid);
+        const profileSnap = await getDoc(profileRef);
+
+        if (!profileSnap.exists()) {
+          showError("Data profil siswa belum ditemukan.");
+          hideLoading();
+          return;
+        }
+
+        const data = profileSnap.data();
+
+        if (data.role !== "siswa") {
+          if (data.role === "admin") {
+            window.location.href = "admin.html";
+            return;
+          }
+
+          await signOut(auth);
+          window.location.href = "login.html";
+          return;
+        }
+
+        setProfile(data);
+        hideLoading();
+
+      } catch (error) {
+        console.error(error);
+        showError("Gagal memuat data siswa. Periksa koneksi dan Firestore Rules.");
+        hideLoading();
+      }
+    });
+
+    document.getElementById("logoutBtn").addEventListener("click", async () => {
+      try {
+        await signOut(auth);
+        window.location.href = "login.html";
+      } catch (error) {
+        console.error(error);
+        showError("Gagal keluar dari akun.");
+      }
+    });
+
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("overlay");
+
+    function closeSidebar() {
+      sidebar.classList.remove("open");
+      overlay.classList.remove("show");
+    }
+
+    document.getElementById("menuBtn").addEventListener("click", () => {
+      sidebar.classList.add("open");
+      overlay.classList.add("show");
+    });
+
+    overlay.addEventListener("click", closeSidebar);
+
+    document.querySelectorAll("[data-feature]").forEach((element) => {
+      element.addEventListener("click", () => {
+        const feature = element.dataset.feature;
+
+        if (feature === "Dashboard") {
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          alert(
+            feature +
+            " sedang disiapkan dan akan kita hubungkan ke Firebase pada tahap berikutnya."
+          );
+        }
+
+        closeSidebar();
+
+        document.querySelectorAll(".nav button").forEach(btn => {
+          btn.classList.toggle("active", btn.dataset.feature === feature);
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
