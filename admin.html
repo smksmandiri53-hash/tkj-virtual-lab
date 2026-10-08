@@ -1071,14 +1071,19 @@
 
         <button type="button">
 
-          <span class="menu-icon">
-            🧰
-          </span>
+          <span class="menu-icon">🧰</span>
 
           Troubleshooting
 
         </button>
 
+      </li>
+
+      <li>
+        <button type="button" data-view="virtualLabView">
+          <span class="menu-icon">🧪</span>
+          Pengaturan Virtual Lab
+        </button>
       </li>
 
     </ul>
@@ -1498,6 +1503,28 @@
       </div>
 
 
+      <div class="page-view" id="virtualLabView">
+        <div class="data-header">
+          <div><h2>Pengaturan Virtual Lab</h2><p>Atur skenario latihan yang akan digunakan siswa. Perubahan tersimpan ke Firebase.</p></div>
+          <div class="student-count">🔐 Admin</div>
+        </div>
+        <div class="table-card" style="padding:22px">
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px">
+            <label style="font-size:12px;color:#9fb0c5">Judul Praktikum<input id="labTitle" style="display:block;width:100%;margin-top:7px;padding:12px;border-radius:9px;border:1px solid #334155;background:#081525;color:#fff" /></label>
+            <label style="font-size:12px;color:#9fb0c5">Level<select id="labLevel" style="display:block;width:100%;margin-top:7px;padding:12px;border-radius:9px;border:1px solid #334155;background:#081525;color:#fff"><option>Pemula</option><option>Menengah</option><option>Lanjutan</option></select></label>
+            <label style="font-size:12px;color:#9fb0c5">IP Router<input id="labRouterIp" style="display:block;width:100%;margin-top:7px;padding:12px;border-radius:9px;border:1px solid #334155;background:#081525;color:#fff" /></label>
+            <label style="font-size:12px;color:#9fb0c5">IP PC<input id="labPcIp" style="display:block;width:100%;margin-top:7px;padding:12px;border-radius:9px;border:1px solid #334155;background:#081525;color:#fff" /></label>
+            <label style="font-size:12px;color:#9fb0c5;grid-column:1/-1">Skenario Gangguan<textarea id="labFault" rows="3" style="display:block;width:100%;margin-top:7px;padding:12px;border-radius:9px;border:1px solid #334155;background:#081525;color:#fff" placeholder="Contoh: Interface G0/0 dibuat shutdown. Siswa harus menemukan penyebabnya."></textarea></label>
+          </div>
+          <div style="margin-top:18px;display:flex;gap:9px;flex-wrap:wrap">
+            <button id="saveLabConfig" style="border:0;border-radius:9px;padding:11px 15px;background:#1677ff;color:#fff;font-weight:bold;cursor:pointer">💾 Simpan Konfigurasi</button>
+            <button id="defaultLabConfig" style="border:0;border-radius:9px;padding:11px 15px;background:#1a2a3d;color:#fff;cursor:pointer">↺ Gunakan Default</button>
+          </div>
+          <div id="labConfigStatus" style="margin-top:13px;font-size:12px;color:#64a9ff"></div>
+        </div>
+      </div>
+
+
     </section>
 
   </main>
@@ -1530,7 +1557,9 @@
       collection,
       query,
       where,
-      onSnapshot
+      onSnapshot,
+      setDoc,
+      serverTimestamp
     } from
     "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
 
@@ -1781,6 +1810,17 @@
       }
     );
 
+
+    const labDefaults = {title:"Praktikum LAN Dasar",level:"Pemula",routerIp:"192.168.10.1",pcIp:"192.168.10.10",fault:"Interface G0/0 dibuat shutdown. Temukan penyebab dan perbaiki."};
+    const labFields = {title:document.getElementById("labTitle"),level:document.getElementById("labLevel"),routerIp:document.getElementById("labRouterIp"),pcIp:document.getElementById("labPcIp"),fault:document.getElementById("labFault")};
+    function fillLabConfig(d){Object.keys(labFields).forEach(k=>labFields[k].value=d[k]??labDefaults[k]);}
+    fillLabConfig(labDefaults);
+    getDoc(doc(db,"settings","virtualLab")).then(s=>{if(s.exists())fillLabConfig({...labDefaults,...s.data()});}).catch(()=>{});
+    document.getElementById("defaultLabConfig").addEventListener("click",()=>fillLabConfig(labDefaults));
+    document.getElementById("saveLabConfig").addEventListener("click",async()=>{
+      const data={title:labFields.title.value.trim()||labDefaults.title,level:labFields.level.value,routerIp:labFields.routerIp.value.trim()||labDefaults.routerIp,pcIp:labFields.pcIp.value.trim()||labDefaults.pcIp,fault:labFields.fault.value.trim()||labDefaults.fault,updatedAt:serverTimestamp()};
+      try{await setDoc(doc(db,"settings","virtualLab"),data,{merge:true});document.getElementById("labConfigStatus").textContent="✓ Konfigurasi Virtual Lab tersimpan dan dapat dibaca oleh simulator siswa.";}catch(e){console.error(e);document.getElementById("labConfigStatus").textContent="Gagal menyimpan. Periksa izin Firestore.";}
+    });
 
     function escapeHtml(value) {
       return String(value)
