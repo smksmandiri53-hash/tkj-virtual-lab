@@ -16,7 +16,7 @@
 <button class="active" data-view="dashboard"><span class="nav-icon">🏠</span>Dashboard</button>
 <button data-view="materi"><span class="nav-icon">📚</span>Materi TKJ</button>
 <button data-view="alat"><span class="nav-icon">🧰</span>Kenali Alat</button>
-<button data-view="praktik"><span class="nav-icon">🧪</span>Praktikum</button><button data-view="dunia-kerja"><span class="nav-icon">🧑‍🔧</span>Dunia Kerja TKJ</button>
+<button data-view="praktik"><span class="nav-icon">🧪</span>Praktikum</button><button data-view="dunia-kerja"><span class="nav-icon">🧑‍🔧</span>Dunia Kerja TKJ</button><button data-view="workshop"><span class="nav-icon">🧰</span>Virtual Workshop</button>
 <button data-view="trouble"><span class="nav-icon">🛠️</span>Troubleshooting</button><button data-view="kompetensi"><span class="nav-icon">🎯</span>Uji Kompetensi</button><button data-view="diskusi"><span class="nav-icon">💬</span>Diskusi Siswa</button>
 <button data-view="kuis"><span class="nav-icon">📝</span>Uji Pemahaman</button>
 <div class="nav-title">Perkembangan</div>
@@ -34,7 +34,7 @@
 <div class="cards">
 <div class="feature" data-go="materi"><div class="feature-icon">📚</div><h4>Materi</h4><p>Pahami konsep sebelum menyentuh simulator.</p></div><div class="feature" data-go="kompetensi" style="background:linear-gradient(135deg,#07111f,#172554);color:#fff;border-color:#1e40af"><div class="feature-icon" style="background:#ffffff14">🎯</div><h4>Uji Kompetensi</h4><p style="color:#cbd5e1">Hadapi kasus jaringan, buktikan diagnosis, dan lulus tanpa menebak.</p></div>
 <div class="feature" data-go="alat"><div class="feature-icon">🧰</div><h4>Kenali Alat</h4><p>Kenali bentuk, port, fungsi, dan penggunaan perangkat.</p></div>
-<div class="feature" data-go="praktik"><div class="feature-icon">🧪</div><h4>Praktikum Nyata</h4><p>Bangun LAN, konfigurasi router, dan uji koneksi.</p></div><div class="feature" data-go="dunia-kerja" style="background:linear-gradient(135deg,#07111f,#0f766e);color:#fff;border-color:#0f766e"><div class="feature-icon" style="background:#ffffff14">🧑‍🔧</div><h4>Simulasi Dunia Kerja</h4><p style="color:#d1fae5">Perakitan PC, Wi-Fi, kabel, router, server, CCTV, fiber, helpdesk, dan troubleshooting.</p></div>
+<div class="feature" data-go="praktik"><div class="feature-icon">🧪</div><h4>Praktikum Nyata</h4><p>Bangun LAN, konfigurasi router, dan uji koneksi.</p></div><div class="feature" data-go="dunia-kerja" style="background:linear-gradient(135deg,#07111f,#0f766e);color:#fff;border-color:#0f766e"><div class="feature-icon" style="background:#ffffff14">🧑‍🔧</div><h4>Simulasi Dunia Kerja</h4><p style="color:#d1fae5">Perakitan PC, Wi-Fi, kabel, router, server, CCTV, fiber, helpdesk, dan troubleshooting.</p></div><div class="feature" data-go="workshop" style="background:linear-gradient(135deg,#111827,#2563eb);color:#fff;border-color:#2563eb"><div class="feature-icon" style="background:#ffffff14">🧰</div><h4>Virtual Workshop</h4><p style="color:#dbeafe">Meja kerja interaktif: rakit PC, crimping, Wi-Fi, rack, MikroTik, Cisco, fiber dan CCTV.</p></div>
 <div class="feature" data-go="trouble"><div class="feature-icon">🛠️</div><h4>Troubleshooting</h4><p>Cari penyebab gangguan tanpa langsung diberi jawabannya.</p></div>
 <div class="feature" data-go="kuis"><div class="feature-icon">📝</div><h4>Uji Pemahaman</h4><p>Uji pemahaman setelah materi dan praktik.</p></div>
 <div class="feature" data-go="nilai"><div class="feature-icon">⭐</div><h4>Nilai & XP</h4><p>Lihat perkembangan, XP, level, dan hasil praktik.</p></div>
@@ -69,6 +69,8 @@
 <div id="workStations" class="cards"></div>
 <div id="workArea" class="card" style="margin-top:16px;display:none"></div>
 </section>
+
+<section id="view-workshop" class="view"><div class="section-title"><h3>🧰 Virtual Workshop TKJ</h3><span>Meja kerja teknisi interaktif</span></div><div class="scenario"><b>Praktik tingkat lanjut:</b> buka meja kerja, lakukan pekerjaan berdasarkan work order, uji hasil, lalu dokumentasikan. <b>Setiap modul terhubung ke simulasi lengkap.</b></div><div class="card"><h4>🔧 Virtual Workshop</h4><p style="color:#64748b;line-height:1.7">Latihan interaktif mencakup perakitan PC, crimping kabel, site survey Wi-Fi, network rack, MikroTik, Cisco VLAN, fiber optic, dan IP CCTV/PoE.</p><button class="btn" id="openWorkshop">Buka Meja Kerja →</button></div></section>
 
 <section id="view-trouble" class="view">
 <div class="section-title"><h3>🛠️ Mission Troubleshooting</h3><span>Temukan masalah dengan bukti</span></div>
@@ -398,7 +400,7 @@ async function load(){onAuthStateChanged(auth,async user=>{if(!user){location.hr
 load();
 document.querySelectorAll("[data-view]").forEach(b=>b.onclick=()=>showView(b.dataset.view));document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>showView(b.dataset.go));
 function showView(v){document.querySelectorAll(".view").forEach(x=>x.classList.remove("active"));$("view-"+v).classList.add("active");document.querySelectorAll(".nav button").forEach(x=>x.classList.toggle("active",x.dataset.view===v));$("sidebar").classList.remove("open");window.scrollTo({top:0,behavior:"smooth"})}
-$("menuBtn").onclick=()=>$("sidebar").classList.add("open");$("logoutBtn").onclick=async()=>{await signOut(auth);location.href="login.html"};$("resetLab").onclick=()=>{state.steps=[];state.labDone=false;buildSteps();render();save();notify("Langkah praktikum direset.")};$("openSimulator").onclick=()=>location.href="simulasi-lan.html";
+$("menuBtn").onclick=()=>$("sidebar").classList.add("open");$("logoutBtn").onclick=async()=>{await signOut(auth);location.href="login.html"};$("resetLab").onclick=()=>{state.steps=[];state.labDone=false;buildSteps();render();save();notify("Langkah praktikum direset.")};$("openSimulator").onclick=()=>location.href="simulasi-lan.html";$("openWorkshop").onclick=()=>location.href="virtual-workshop.html";
 const cli=$("cliInput");cli.addEventListener("keydown",e=>{if(e.key!=="Enter")return;const cmd=cli.value.trim().toLowerCase();const term=$("terminal");const known=["enable","configure terminal","conf t","interface g0/0","ip address","no shutdown","end","show ip interface brief","show running-config","ping"];let out=term.textContent+"\nRouter# "+cmd;if(cmd==="enable")out+="\nRouter#";else if(cmd.includes("show ip interface brief"))out+="\nG0/0 "+labConfig.routerIp+" YES manual "+(state.steps.includes(3)?"up up":"administratively down");else if(cmd==="no shutdown"){if(!state.steps.includes(3)){state.steps.push(3);addXp(10);buildSteps()}out+="\nInterface G0/0 enabled.";state.labDone=state.steps.length===5;render();save()}else if(cmd.startsWith("ping "))out+="\nSuccess rate is "+(state.steps.length>=4?"100":"0")+" percent.";else if(known.some(k=>cmd===k||cmd.startsWith(k+" ")))out+="\nCommand accepted.";else out+="\n% Unknown command. Periksa kembali perintah.";term.innerText=out+"\nRouter# ";cli.value="";});
 </script>
 </body></html>
