@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Daftar Siswa | TKJ Virtual Lab</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+
+      font-family: Arial, Helvetica, sans-serif;
+
+      background:
+        linear-gradient(
+          rgba(3, 12, 25, .82),
+          rgba(3, 12, 25, .92)
+        ),
+        url("https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=2000&q=80");
+
+      background-size: cover;
+      background-position: center;
+      color: white;
+    }
+
+    .register-box {
+      width: 100%;
+      max-width: 450px;
+
+      padding: 35px;
+
+      background: rgba(11, 24, 41, .96);
+
+      border: 1px solid rgba(255,255,255,.10);
+      border-radius: 20px;
+
+      box-shadow:
+        0 25px 70px rgba(0,0,0,.45);
+
+      backdrop-filter: blur(15px);
+    }
+
+    .logo {
+      width: 65px;
+      height: 65px;
+
+      margin: 0 auto 18px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border-radius: 16px;
+
+      background: #1677ff;
+
+      font-size: 32px;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 25px;
+      margin-bottom: 8px;
+    }
+
+    .subtitle {
+      text-align: center;
+
+      color: rgba(255,255,255,.55);
+
+      font-size: 13px;
+
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      margin-bottom: 17px;
+    }
+
+    label {
+      display: block;
+
+      margin-bottom: 7px;
+
+      font-size: 13px;
+
+      color: rgba(255,255,255,.75);
+    }
+
+    input,
+    select {
+      width: 100%;
+
+      padding: 13px 14px;
+
+      border: 1px solid rgba(255,255,255,.10);
+
+      border-radius: 10px;
+
+      outline: none;
+
+      background: #07111f;
+
+      color: white;
+
+      font-size: 14px;
+
+      transition: .2s;
+    }
+
+    input:focus,
+    select:focus {
+      border-color: #1677ff;
+
+      box-shadow:
+        0 0 0 3px rgba(22,119,255,.12);
+    }
+
+    select option {
+      background: #07111f;
+      color: white;
+    }
+
+    .password-box {
+      position: relative;
+    }
+
+    .password-box input {
+      padding-right: 50px;
+    }
+
+    .show-password {
+      position: absolute;
+
+      right: 12px;
+      top: 50%;
+
+      transform: translateY(-50%);
+
+      border: none;
+
+      background: transparent;
+
+      color: rgba(255,255,255,.55);
+
+      cursor: pointer;
+
+      font-size: 18px;
+    }
+
+    .register-button {
+      width: 100%;
+
+      margin-top: 8px;
+
+      padding: 14px;
+
+      border: none;
+
+      border-radius: 10px;
+
+      background: #1677ff;
+
+      color: white;
+
+      font-size: 14px;
+
+      font-weight: bold;
+
+      cursor: pointer;
+
+      transition: .2s;
+    }
+
+    .register-button:hover {
+      background: #0d68e8;
+
+      transform: translateY(-1px);
+    }
+
+    .register-button:disabled {
+      opacity: .6;
+
+      cursor: not-allowed;
+
+      transform: none;
+    }
+
+    .message {
+      display: none;
+
+      margin-top: 15px;
+
+      padding: 12px;
+
+      border-radius: 10px;
+
+      font-size: 12px;
+
+      line-height: 1.5;
+    }
+
+    .message.error {
+      display: block;
+
+      background: rgba(255,70,70,.10);
+
+      border: 1px solid rgba(255,70,70,.25);
+
+      color: #ff9d9d;
+    }
+
+    .message.success {
+      display: block;
+
+      background: rgba(50,200,120,.10);
+
+      border: 1px solid rgba(50,200,120,.25);
+
+      color: #7ff0b2;
+    }
+
+    .login-link {
+      margin-top: 22px;
+
+      text-align: center;
+
+      font-size: 13px;
+
+      color: rgba(255,255,255,.55);
+    }
+
+    .login-link a {
+      color: #64a9ff;
+
+      text-decoration: none;
+
+      font-weight: bold;
+    }
+
+    .login-link a:hover {
+      text-decoration: underline;
+    }
+
+    .info {
+      margin-top: 20px;
+
+      padding: 12px;
+
+      border-radius: 10px;
+
+      background: rgba(22,119,255,.07);
+
+      border: 1px solid rgba(22,119,255,.12);
+
+      color: rgba(255,255,255,.55);
+
+      font-size: 11px;
+
+      line-height: 1.6;
+
+      text-align: center;
+    }
+
+    @media (max-width: 500px) {
+
+      .register-box {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="register-box">
+
+    <div class="logo">
+      🖥️
+    </div>
+
+    <h1>
+      Daftar Siswa
+    </h1>
+
+    <div class="subtitle">
+      TKJ Virtual Lab
+    </div>
+
+
+    <form id="registerForm">
+
+      <div class="form-group">
+
+        <label for="nama">
+          Nama Lengkap
+        </label>
+
+        <input
+          type="text"
+          id="nama"
+          placeholder="Masukkan nama lengkap"
+          autocomplete="name"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="contoh@email.com"
+          autocomplete="email"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="kelas">
+          Kelas
+        </label>
+
+        <select
+          id="kelas"
+          required
+        >
+
+          <option value="">
+            Pilih kelas
+          </option>
+
+          <option value="X TKJ">
+            X TKJ
+          </option>
+
+          <option value="XI TKJ">
+            XI TKJ
+          </option>
+
+          <option value="XII TKJ">
+            XII TKJ
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <div class="password-box">
+
+          <input
+            type="password"
+            id="password"
+            placeholder="Minimal 6 karakter"
+            autocomplete="new-password"
+            minlength="6"
+            required
+          >
+
+          <button
+            type="button"
+            class="show-password"
+            id="showPassword"
+          >
+            👁
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="confirmPassword">
+          Konfirmasi Password
+        </label>
+
+        <div class="password-box">
+
+          <input
+            type="password"
+            id="confirmPassword"
+            placeholder="Ulangi password"
+            autocomplete="new-password"
+            minlength="6"
+            required
+          >
+
+          <button
+            type="button"
+            class="show-password"
+            id="showConfirmPassword"
+          >
+            👁
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="register-button"
+        id="registerButton"
+      >
+        Daftar Sebagai Siswa
+      </button>
+
+
+      <div
+        class="message"
+        id="message"
+      ></div>
+
+    </form>
+
+
+    <div class="login-link">
+
+      Sudah mempunyai akun?
+
+      <a href="login.html">
+        Login
+      </a>
+
+    </div>
+
+
+    <div class="info">
+
+      Akun siswa dibuat secara mandiri.
+      Setelah pendaftaran berhasil, data akun
+      akan otomatis terintegrasi dengan sistem
+      TKJ Virtual Lab dan dapat dikelola oleh Admin.
+
+    </div>
+
+  </div>
+
+
+  <script type="module">
+
+    import {
+      initializeApp
+    } from
+    "https://www.gstatic.com/firebasejs/11.0.2/firebase-app.js";
+
+
+    import {
+      getAuth,
+      createUserWithEmailAndPassword
+    } from
+    "https://www.gstatic.com/firebasejs/11.0.2/firebase-auth.js";
+
+
+    import {
+      getFirestore,
+      doc,
+      setDoc,
+      serverTimestamp
+    } from
+    "https://www.gstatic.com/firebasejs/11.0.2/firebase-firestore.js";
+
+
+    // ==========================================
+    // FIREBASE CONFIG
+    // ==========================================
+
+    const firebaseConfig = {
+
+      apiKey:
+        "AIzaSyBD3EduiDBbGI9M381i9GMkfD74RfpCM78",
+
+      authDomain:
+        "tkj-virtual-lab-web-43aca.firebaseapp.com",
+
+      projectId:
+        "tkj-virtual-lab-web-43aca",
+
+      storageBucket:
+        "tkj-virtual-lab-web-43aca.firebasestorage.app",
+
+      messagingSenderId:
+        "860991490192",
+
+      appId:
+        "1:860991490192:web:019928cbca09128af4b015"
+
+    };
+
+
+    const app =
+      initializeApp(firebaseConfig);
+
+
+    const auth =
+      getAuth(app);
+
+
+    const db =
+      getFirestore(app);
+
+
+    // ==========================================
+    // ELEMENT
+    // ==========================================
+
+    const form =
+      document.getElementById(
+        "registerForm"
+      );
+
+
+    const nama =
+      document.getElementById(
+        "nama"
+      );
+
+
+    const email =
+      document.getElementById(
+        "email"
+      );
+
+
+    const kelas =
+      document.getElementById(
+        "kelas"
+      );
+
+
+    const password =
+      document.getElementById(
+        "password"
+      );
+
+
+    const confirmPassword =
+      document.getElementById(
+        "confirmPassword"
+      );
+
+
+    const button =
+      document.getElementById(
+        "registerButton"
+      );
+
+
+    const message =
+      document.getElementById(
+        "message"
+      );
+
+
+    // ==========================================
+    // PASSWORD VISIBILITY
+    // ==========================================
+
+    document
+      .getElementById("showPassword")
+      .addEventListener(
+        "click",
+        () => {
+
+          if (
+            password.type ===
+            "password"
+          ) {
+
+            password.type =
+              "text";
+
+          } else {
+
+            password.type =
+              "password";
+
+          }
+
+        }
+      );
+
+
+    document
+      .getElementById("showConfirmPassword")
+      .addEventListener(
+        "click",
+        () => {
+
+          if (
+            confirmPassword.type ===
+            "password"
+          ) {
+
+            confirmPassword.type =
+              "text";
+
+          } else {
+
+            confirmPassword.type =
+              "password";
+
+          }
+
+        }
+      );
+
+
+    // ==========================================
+    // MESSAGE
+    // ==========================================
+
+    function showMessage(
+      text,
+      type
+    ) {
+
+      message.textContent =
+        text;
+
+      message.className =
+        "message " + type;
+
+    }
+
+
+    // ==========================================
+    // PENDAFTARAN SISWA
+    // ==========================================
+
+    form.addEventListener(
+      "submit",
+      async (event) => {
+
+        event.preventDefault();
+
+
+        const namaValue =
+          nama.value.trim();
+
+
+        const emailValue =
+          email.value.trim();
+
+
+        const kelasValue =
+          kelas.value;
+
+
+        const passwordValue =
+          password.value;
+
+
+        const confirmPasswordValue =
+          confirmPassword.value;
+
+
+        // Validasi nama
+
+        if (
+          namaValue.length < 3
+        ) {
+
+          showMessage(
+            "Nama lengkap minimal 3 karakter.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        // Validasi kelas
+
+        if (!kelasValue) {
+
+          showMessage(
+            "Silakan pilih kelas.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        // Validasi password
+
+        if (
+          passwordValue.length < 6
+        ) {
+
+          showMessage(
+            "Password minimal 6 karakter.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        // Validasi password
+
+        if (
+          passwordValue !==
+          confirmPasswordValue
+        ) {
+
+          showMessage(
+            "Konfirmasi password tidak sama.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        button.disabled =
+          true;
+
+        button.textContent =
+          "Mendaftarkan...";
+
+
+        try {
+
+          // ==================================
+          // 1. BUAT AKUN FIREBASE AUTH
+          // ==================================
+
+          const credential =
+            await createUserWithEmailAndPassword(
+              auth,
+              emailValue,
+              passwordValue
+            );
+
+
+          const user =
+            credential.user;
+
+
+          // ==================================
+          // 2. BUAT PROFIL SISWA
+          // ==================================
+
+          await setDoc(
+            doc(
+              db,
+              "users",
+              user.uid
+            ),
+            {
+
+              nama:
+                namaValue,
+
+              email:
+                emailValue,
+
+              kelas:
+                kelasValue,
+
+              role:
+                "siswa",
+
+              createdAt:
+                serverTimestamp()
+
+            }
+          );
+
+
+          // ==================================
+          // 3. BERHASIL
+          // ==================================
+
+          showMessage(
+            "Pendaftaran berhasil. Akun siswa sudah terintegrasi dengan sistem Admin. Anda akan diarahkan ke halaman login.",
+            "success"
+          );
+
+
+          form.reset();
+
+
+          setTimeout(
+            () => {
+
+              window.location.href =
+                "login.html";
+
+            },
+            1800
+          );
+
+
+        }
+
+        catch (error) {
+
+          console.error(
+            "REGISTER ERROR:",
+            error
+          );
+
+
+          let errorMessage =
+            "Pendaftaran gagal. Silakan coba lagi.";
+
+
+          if (
+            error.code ===
+            "auth/email-already-in-use"
+          ) {
+
+            errorMessage =
+              "Email tersebut sudah terdaftar. Silakan gunakan email lain atau login.";
+
+          }
+
+
+          else if (
+            error.code ===
+            "auth/invalid-email"
+          ) {
+
+            errorMessage =
+              "Format email tidak valid.";
+
+          }
+
+
+          else if (
+            error.code ===
+            "auth/weak-password"
+          ) {
+
+            errorMessage =
+              "Password terlalu lemah. Gunakan minimal 6 karakter.";
+
+          }
+
+
+          else if (
+            error.code ===
+            "permission-denied"
+          ) {
+
+            errorMessage =
+              "Akun berhasil dibuat, tetapi profil siswa tidak dapat disimpan. Periksa Firestore Rules.";
+
+          }
+
+
+          else if (
+            error.code ===
+            "auth/operation-not-allowed"
+          ) {
+
+            errorMessage =
+              "Pendaftaran Email/Password belum diaktifkan di Firebase Authentication.";
+
+          }
+
+
+          showMessage(
+            errorMessage,
+            "error"
+          );
+
+
+          button.disabled =
+            false;
+
+          button.textContent =
+            "Daftar Sebagai Siswa";
+
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>
